@@ -1,0 +1,230 @@
+[
+ {
+  "id": "stories",
+  "name": "Short stories",
+  "description": "Twelve short pieces of deliberately mixed quality, from a flat diary entry to a careful story. A quick first ranking.",
+  "rubric": "Which piece is the better piece of short fiction? Consider voice, structure, specificity and whether it earns its ending.",
+  "credit": null,
+  "items": [
+   {
+    "title": "An Inheritance of Clocks",
+    "filename": "inheritance-of-clocks.md",
+    "text": "# An Inheritance of Clocks\n\nWhen my father's shop was cleared there were two hundred and six clocks and none of them agreed. He had been a repairer for fifty years and had, I slowly understood, never once finished a job for himself.\n\nI wound them all on the first night out of something like spite. By morning the shop sounded like rain on a tin roof, each tick a fraction off its neighbour. A customer came by, one of the old ones, and stood in the doorway with his hat in his hands.\n\n\"He used to say that,\" the man said. \"That a clock that's right is only agreeing with a rumour.\"\n\nI had never heard my father say anything of the kind. I had heard him say pass the oil, and mind the spring, and not now. I let the man believe he was telling me something I already knew, and sold him a carriage clock eleven minutes fast, and after he left I did not correct a single one."
+   },
+   {
+    "title": "My Cat",
+    "filename": "my-cat.md",
+    "text": "# My Cat\n\nI have a cat named Whiskers. Whiskers is orange and likes to sleep. Every morning he wakes me up by meowing. Then I feed him. He eats his food very fast.\n\nOne day Whiskers was missing. I looked everywhere. I looked under the bed and in the closet and outside. I was very worried. I called his name a lot of times. Then I heard a meow. He was in the laundry basket the whole time! I was so happy and relieved.\n\nCats are great pets because they are funny and soft. Whiskers is my best friend and I love him very much. The end."
+   },
+   {
+    "title": "Quarterly Review",
+    "filename": "quarterly-review.md",
+    "text": "# Quarterly Review\n\nThe dragon had been in middle management for six hundred years, which is longer than the company had existed, a fact HR preferred not to examine.\n\n\"Your hoard metrics are strong,\" said Dennis from People Operations, not looking up. \"But we've had feedback about the burning.\"\n\n\"I burned one intern.\"\n\n\"Three.\"\n\n\"Three sounds like more than it was. They were standing close together.\"\n\nDennis slid a form across the desk. It was already slightly on fire at one corner, as most forms were by the time they reached this office. The dragon signed it with a claw, the way it had signed the Magna Carta, the lease, and four hundred and twelve previous performance improvement plans.\n\n\"Same time next quarter?\" said Dennis.\n\n\"I'll be here,\" said the dragon, and it was not a threat, exactly, just the truest thing anyone said in that building all year."
+   },
+   {
+    "title": "Rain",
+    "filename": "rain.md",
+    "text": "# Rain\n\nIt was raining. The rain fell down from the sky and hit the ground. John looked out of the window and felt sad because it was raining and he was sad. He thought about his life and how it was like the rain, because it was falling. He remembered when he was happy but now he was not happy.\n\nSuddenly the phone rang. It was his friend Mike. \"Do you want to get pizza?\" asked Mike. \"Okay,\" said John. They got pizza. The pizza was good. John felt a bit better but still thought about the rain.\n\nIn the end John learned that sometimes it rains but also sometimes there is pizza. That is what life is about."
+   },
+   {
+    "title": "Salt",
+    "filename": "salt.md",
+    "text": "# Salt\n\nThe year the sea withdrew, my mother took a job counting what it left. The town paid her by the page. She walked the new flats each dawn with a ledger and a stick, noting anchors, bottles, the ribs of a boat nobody claimed, and once a piano standing upright in the mud as if someone had only stepped away from it.\n\nPeople asked her what she thought it meant. She said she was paid to count, not to mean. But I saw her at night, copying the day's list a second time into a book the town never saw, and in that one she wrote the things in a different order.\n\nI found it after the water came back. The lists read, if you let them, almost like sentences. Anchor, bottle, bottle, child's shoe. Piano, rope, rope, rope. I have never decided whether she was writing something or only could not bear to leave the things in the order the sea had chosen."
+   },
+   {
+    "title": "Notes Toward a Second Moon",
+    "filename": "second-moon.md",
+    "text": "# Notes Toward a Second Moon\n\nThe petition to build a second moon failed in committee, eleven to two, and I was one of the two, so I should explain myself.\n\nIt was never about tides or light. The engineers were clear that it would do almost nothing; it was to be small, and far, and visible perhaps one night in nine. That was what I liked. We have filled the sky with things that do something. I wanted one object up there whose entire function was to be occasionally noticed by somebody walking home, who would stop and think: that wasn't there when I was a child.\n\nMy colleague who voted with me had a different reason. She said every civilisation should attempt one thing its grandchildren will find embarrassing, as a courtesy, so they have something to feel superior about. I think hers was the better argument. I have asked that both be entered in the record, in case the question comes up again when we are not here to be outvoted."
+   },
+   {
+    "title": "The Battle of Zorgon Prime",
+    "filename": "space-battle.md",
+    "text": "# The Battle of Zorgon Prime\n\nCaptain Rex Steele gripped the controls of his starfighter as a thousand enemy ships appeared on the scanner. \"There's too many of them!\" shouted Lieutenant Vega. \"Never tell me the odds,\" said Rex with a grin.\n\nHe flew into the enemy fleet, lasers blazing. Explosions were everywhere. It was really intense. Ship after ship exploded in a huge fireball. Rex did a barrel roll and then another barrel roll. The enemy commander, the evil Lord Kragg, laughed an evil laugh from his dark throne.\n\n\"You cannot defeat me, Steele!\" But Rex fired his special torpedo which he had been saving and it flew right into the weak spot of the mothership, which exploded. Everyone cheered. Rex smiled. He had saved the galaxy once again. But somewhere in the darkness, a new threat was rising..."
+   },
+   {
+    "title": "The Most Beautiful Sunset",
+    "filename": "sunset.md",
+    "text": "# The Most Beautiful Sunset\n\nThe sunset was incredibly, breathtakingly beautiful. Its magnificent golden rays cascaded gloriously across the shimmering, glittering, endless ocean like a symphony of liquid amber fire dancing upon the infinite canvas of eternity. Sarah's heart soared like an eagle on wings of pure, unbridled, transcendent joy as tears of profound emotion streamed down her porcelain cheeks.\n\n\"It's so beautiful,\" she whispered breathlessly, her voice trembling like a delicate autumn leaf in the gentle, caressing breeze of destiny.\n\nNever before in the entire history of the universe had there been a sunset so utterly, devastatingly, heart-stoppingly gorgeous. It was a tapestry woven from the very threads of heaven itself. Sarah knew, deep in the innermost depths of her eternal soul, that nothing would ever be the same again."
+   },
+   {
+    "title": "The Census Taker",
+    "filename": "the-census.md",
+    "text": "# The Census Taker\n\nThe form had a box for \"number of persons in household\" and old Mrs. Abara wrote 7, though I could see through the door that she lived alone.\n\nI am trained not to argue. I asked for names. She gave them easily, with ages, the way you'd list your own children: a husband, two sons, a daughter, a sister, and a boy called Tunde who she said was \"just staying.\" All of them, I checked later, were in the parish register. The most recent had been dead for twenty-two years.\n\nThe honest thing was to write 1. The form has no box for what she meant. I sat in the car a long time. The government uses these numbers to decide where to put bus routes and clinics, and one old woman is not much of a claim on either.\n\nI wrote 7. If anyone audits Kiln Lane they will find a very quiet house that, on paper, deserves a bus."
+   },
+   {
+    "title": "The Lighthouse Keeper's Ledger",
+    "filename": "the-lighthouse-keeper.md",
+    "text": "# The Lighthouse Keeper's Ledger\n\nMy grandmother kept the light at Carrow Point for forty-one years and wrote down every ship that passed. Not the names. She could rarely read the names. She wrote what they looked like: \"low and tired, two masts, a red patch on the fores'l like a scraped knee.\"\n\nWhen she died I inherited eleven ledgers and no instructions. I read them the winter I was laid off, mostly because the cottage had no television. Around the fourth ledger I noticed the scraped knee came back. Every March, heading north; every October, heading south, a little lower in the water. For nineteen years she watched one boat grow old and never once learned who was aboard.\n\nThe last entry for it reads: \"October. Did not come.\" Then, a line below, in different ink, as if she had returned to it days later: \"Left the lamp on an extra hour anyway.\"\n\nI think about that hour more than I think about most of the people I have actually met."
+   },
+   {
+    "title": "The Meeting That Could Have Been An Email",
+    "filename": "the-meeting.md",
+    "text": "# The Meeting That Could Have Been An Email\n\nEveryone agrees that meetings are bad. In this essay I will explain why meetings are bad and what we can do about it.\n\nFirst, meetings take a lot of time. Time is valuable. When you are in a meeting you cannot do other work. This is a problem for productivity, which is important in today's fast-paced world.\n\nSecond, many meetings do not have an agenda. Without an agenda, people do not know what the meeting is about. This leads to confusion. It is important to have an agenda.\n\nThird, some people talk too much in meetings. This is unfair to people who talk less. Everyone should get a turn.\n\nIn conclusion, meetings are bad for several reasons, as I have shown above. We should have fewer meetings and send more emails instead. Thank you for reading."
+   },
+   {
+    "title": "The Translator",
+    "filename": "the-translator.md",
+    "text": "# The Translator\n\nFor eleven years Ilse translated between the two delegations, and for eleven years the treaty did not get signed. She was very good. That was the trouble.\n\nWhen the northern minister said \"we cannot accept this insult,\" she rendered it \"we find this difficult,\" because that was what he meant, beneath the theatre. When the southern envoy said \"perhaps,\" she said \"no,\" because she had learned what his perhaps was worth. Each side thought the other blunt but reasonable. Each side grew fond of her.\n\nIt was a junior clerk who noticed that the delegations only ever reached agreement on days Ilse was ill, when her replacement translated every word exactly, and both rooms, hearing at last how the other really spoke, were frightened into honesty.\n\nShe retired the following spring. The treaty was signed in June. She was not invited to the ceremony, and she understood every word of why."
+   }
+  ]
+ },
+ {
+  "id": "grants",
+  "name": "Grant applications",
+  "description": "Thirty short applications to an invented community fund, from vague to well evidenced. Every applicant is fictional. Which should be funded?",
+  "rubric": "Which application makes the stronger case for a grant from a small community fund? Weigh evidence of a real need, a specific and feasible plan, a credible itemised budget, the applicants' ability to deliver, and how they will know whether it worked. Ignore polish and length for their own sake.",
+  "credit": null,
+  "items": [
+   {
+    "title": "Shelf Life: a seed library for Eastmoor",
+    "filename": "shelf-life-a-seed-library-for-eastmoor.md",
+    "text": "Eastmoor Allotment Association asks for $8,400 to start a seed library in the Eastmoor branch library. Our 2025 survey of 212 plot holders found that 61% spend over $40 a year on seed, and 38% said cost stops them trying new crops. We will run it with the library: a catalogued cabinet of 120 open-pollinated varieties, eight seed-saving workshops, and a return shelf so members bring back seed from what they grow. Budget: cabinet and envelopes $1,900; seed stock $2,600; workshop tutor at $45 an hour for 48 hours, $2,160; printed guides $940; contingency $800. The branch manager, Alma Rees, has confirmed space and staff time in writing (attached). Success in year one means 150 borrowers, 60 returned packets, and at least two varieties grown out locally. We will report borrowing and return counts each quarter from the library's own system.\n\nIf the library outgrows one cabinet, the branch has offered a second wall in its community room at no cost."
+   },
+   {
+    "title": "Warm Rooms for Older Residents of Calder Street",
+    "filename": "warm-rooms-for-older-residents-of-calder-street.md",
+    "text": "We are requesting $24,500 to keep the Calder Street community hall open as a warm room on weekday afternoons from November to March. Last winter the council's welfare team referred 74 residents over 70 to us after home visits found indoor temperatures below 16°C; we could host only on Fridays. The grant pays heating ($9,800 at last year's tariff, metered), a part-time coordinator for 20 weeks ($11,200), hot drinks and soup ($2,100), and insurance for extended hours ($1,400). Volunteers from St Bride's and the Calder Tenants' Group (23 signed up, rota attached) cover each session. We will count attendance at the door, record referrals back to the welfare team when someone needs more help, and ask regular visitors a three-question survey in December and March. The hall committee has run a lunch club here since 2014 and has audited accounts for every year."
+   },
+   {
+    "title": "Coding Club for Girls, Hartwell Secondary",
+    "filename": "coding-club-for-girls-hartwell-secondary.md",
+    "text": "Hartwell Secondary's computing department asks for $6,200 to run an after-school coding club for girls in years 8 to 10. Only 9 of the 64 students who chose GCSE Computer Science this year are girls. Two teachers, Ms Okafor and Mr Lindqvist, will run 30 weekly sessions using micro:bit and Python, ending with a showcase for parents. Costs: 20 micro:bit kits $1,100; two refurbished laptops $900; teacher time beyond contract, 60 hours at $55, $3,300; showcase and transport to one regional competition $900. We will track how many club members choose Computer Science at options evening, compared with the same year group last year, and keep attendance registers. The head teacher has agreed to cover room costs and caretaking.\n\nTwo former students now studying computing at Eastgate College have offered to visit as mentors each half term. If the club works, the department will fund it from its own budget from the second year."
+   },
+   {
+    "title": "Bikes for Work",
+    "filename": "bikes-for-work.md",
+    "text": "Northgate Cycle Kitchen requests $18,000 to refurbish 90 donated bicycles and give them, with locks, lights and a two-hour safety session, to unemployed adults referred by the Northgate jobcentre who have job offers they cannot reach by bus. The jobcentre's adviser team logged 41 such cases in the last six months. Our two paid mechanics already refurbish about 4 bikes a week; the grant funds a third mechanic for 30 weeks ($12,600), parts at $40 a bike ($3,600) and locks and lights ($1,800). Each recipient signs a simple agreement; we follow up at 1, 3 and 6 months by phone to ask whether they are still in work and still riding. Our accounts for 2024 and 2025 are published on our website, and our previous grant from the Mersey Trust was delivered on time."
+   },
+   {
+    "title": "Riverside Litter Picking Kit",
+    "filename": "riverside-litter-picking-kit.md",
+    "text": "The Friends of Ashby Riverside want $1,850 for litter-picking equipment so our monthly clean-ups can take more volunteers. We currently share 12 pickers between up to 30 people. We will buy 30 pickers, 30 hi-vis vests, hoops, gloves and a lockable storage box kept at the boathouse, which the rowing club has offered free. The council collects the bags. We have run 26 clean-ups since 2023 and log the bags collected each time (log attached: 412 bags so far). We expect to reach 40 volunteers a session in summer and will keep logging bags and attendance.\n\nClean-ups run on the first Sunday of each month from 10am to noon and are advertised on the noticeboard at the boathouse and in the parish newsletter. Families with children are welcome, and we keep a smaller set of junior pickers for them. A committee member checks and repairs the kit after each session and keeps an inventory, so nothing goes missing between clean-ups."
+   },
+   {
+    "title": "Translation Desk at the Westbrook Health Centre",
+    "filename": "translation-desk-at-the-westbrook-health-centre.md",
+    "text": "Westbrook Refugee Support asks for $21,000 to place trained volunteer interpreters in Arabic, Dari, Tigrinya and Ukrainian at the Westbrook Health Centre two mornings a week for a year. The practice manager reports that 11% of missed appointments last year were patients who had no interpreter booked, and phone interpreting often fails at reception. We will recruit and train 16 volunteers through a 20-hour accredited course ($6,400), pay a part-time coordinator ($10,800), cover DBS checks and travel ($2,300) and print multilingual signage ($1,500). Volunteers interpret at reception and for booking only; clinical consultations still use professional interpreters. The practice will share monthly missed-appointment counts by language, which we will compare with the previous year.\n\nVolunteers will be supervised by the practice's patient services lead and will sign the practice's confidentiality agreement. We already run a weekly drop-in at the Westbrook mosque and the Ukrainian Saturday school, which is where most of our volunteers will come from."
+   },
+   {
+    "title": "Changing Lives Through Art",
+    "filename": "changing-lives-through-art.md",
+    "text": "Art changes lives. We are a passionate group of artists who believe that everyone deserves to experience the transformative power of creativity. With your support of $25,000 we will bring art to the community in exciting new ways, including workshops, murals, exhibitions and much more. Our team has a wealth of experience and a deep commitment to making a difference. The impact of this project will be felt for generations. We will measure our success by the smiles on people's faces and the stories they tell. Please help us make this dream a reality.\n\nWe have so many ideas and are excited to get started. Our workshops will be open to all ages and abilities and will cover painting, sculpture, photography, textiles and digital art. We will also hold a big festival at the end of the year to celebrate everything we have achieved together. Art is for everyone, and with your help we can show the whole town what is possible when people come together."
+   },
+   {
+    "title": "Tenants' Repair Café",
+    "filename": "tenants-repair-café.md",
+    "text": "The Holloway Estate Tenants' Association requests $5,600 for a monthly repair café in our community room. Residents bring broken lamps, toasters, clothes and bikes; volunteer fixers repair them with the owner watching and learning. A trial in September and October fixed 37 of 52 items brought in. Funding covers tools and a PAT tester ($2,300), consumables ($1,200), public liability insurance ($600) and refreshments and flyers for 12 sessions ($1,500). Fixers are retired electricians and tailors from the estate (eight so far). We will record each item, whether it was fixed, and its weight, so we can report how much was kept out of landfill.\n\nItems that cannot be fixed on the day are labelled with the parts needed, and a fixer orders them for the next session. Two younger residents have asked to learn soldering, so each session will pair a learner with an experienced fixer. The community room is free to the association, and the caretaker opens and closes it."
+   },
+   {
+    "title": "Youth Football League Expansion",
+    "filename": "youth-football-league-expansion.md",
+    "text": "We want $20,000 to expand our youth football league. Football is very popular and lots of kids want to play. We need new kits, balls, nets and coaches. Some of the money will also go towards a minibus. We have been running for a few years and the parents are very supportive. We think we could double the number of teams if we had the money. This will help keep kids off the streets and make them healthier. We will send you photos of the matches.\n\nOur coaches are all volunteers and some of them have their badges. We play on the rec on Saturday mornings but the pitches are not always good, especially in winter, so we might use some of the money for that too. We have about 120 kids at the moment, aged from 6 to 14. The minibus would be used for away games and tournaments, which the kids love. We are a very friendly club and everyone is welcome."
+   },
+   {
+    "title": "Pop-up Pantry at Lowfield Primary",
+    "filename": "pop-up-pantry-at-lowfield-primary.md",
+    "text": "Lowfield Primary School asks for $9,750 to run a weekly pop-up pantry at the school gate on Thursday afternoons. 43% of our pupils are eligible for free school meals, above the city average of 24%. FareShare supplies surplus food at $3.20 a crate; families pay a voluntary $3 for a bag worth around $15. The grant covers 40 weeks of food membership and delivery ($5,200), two chest freezers and a fridge ($1,450), and a coordinator for 3 hours a week ($3,100). Parent volunteers (14 on the list) pack and run the stall. We will count households served each week and ask families once a term what difference it makes.\n\nFood is stored in the school kitchen's dry store with the cook's agreement, and the freezers will sit in the old PE store, which has power. The pantry is open to any family at the school, not only those on free school meals, so no one has to show that they qualify."
+   },
+   {
+    "title": "Digital Skills for Over-60s",
+    "filename": "digital-skills-for-over-60s.md",
+    "text": "The Farley Road Library Friends request $7,300 for ten-week digital skills courses for people over 60: using email, video calls, online banking safely and booking GP appointments. 52 people are on the library's waiting list. Six courses of eight learners each, run by a qualified adult-education tutor ($4,800), with 8 loan tablets ($1,600) and printed handbooks ($900). The library provides the room and wifi. Each learner takes a short skills checklist at the start and end; we will report how many can complete each task unaided by week ten.\n\nCourses run on Tuesday and Thursday mornings, when the library is quiet, and learners can borrow a tablet between sessions to practise at home. The tutor, Margaret Duffy, has taught the adult-education service's digital course for six years. Learners who finish will be invited to come back as helpers for the next group, so each course has a volunteer alongside the tutor."
+   },
+   {
+    "title": "A Mural for Kestrel Lane Underpass",
+    "filename": "a-mural-for-kestrel-lane-underpass.md",
+    "text": "Kestrel Lane Residents' Group asks for $12,800 to paint a mural in the Kestrel Lane underpass, which residents avoid after dark. Our survey of 96 households found 71% avoid it at night. The council has agreed to repair the lighting if the walls are cleaned and painted, and has given written permission. The design will come from four workshops with pupils at Kestrel Primary, led by muralist Dana Whitcombe, who painted the Bramley Road wall in 2024. Costs: artist fee $6,500, anti-graffiti paint and coating $3,100, scaffolding and access $2,200, workshops $1,000. We will repeat the survey six months after completion.\n\nThe coating allows graffiti to be washed off with water, and the council's street-care team has agreed to include the underpass in its monthly cleaning round. Pupils will help paint the lower panels on two supervised Saturday mornings, with the artist completing the rest."
+   },
+   {
+    "title": "Men's Shed",
+    "filename": "men-s-shed.md",
+    "text": "We would like money to start a men's shed. Loneliness is a big problem for older men. A men's shed is a place where men can come together and make things in a workshop. We have found a possible building but it needs work. We would need tools, benches, insurance and some money for rent. We have not worked out exact costs yet but think about $15,000 should cover it. A few men from the bowls club are interested.\n\nThere are men's sheds in other towns and they seem to work really well, so we would like to start one here. The building we have found is an old garage behind the scout hut, but it would need a new roof and electrics before anyone could use it. We have not asked the owner about the rent yet. We would like to open as soon as possible because there is a real need and a lot of interest."
+   },
+   {
+    "title": "Swim Lessons for Year 6 Non-Swimmers",
+    "filename": "swim-lessons-for-year-6-non-swimmers.md",
+    "text": "Brackley Schools Partnership asks for $14,400 to give intensive swimming lessons to Year 6 pupils who cannot yet swim 25 metres, the national curriculum standard. Across our five primary schools, 88 of 241 Year 6 pupils did not meet it last summer. The leisure centre will provide 10-session intensive blocks with qualified instructors at $120 a pupil; the grant covers 100 places ($12,000) and coach transport ($2,400). Each instructor records distance swum at the first and last session. Last year a smaller pilot with 22 pupils saw 17 reach 25 metres. The partnership business manager will administer the grant.\n\nLessons run during the school day in the summer term, so no child misses out because a parent cannot take them to the pool. Each school sends a member of staff with its group. The leisure centre has held these intensive blocks for other schools since 2022 and will report each pupil's result to their school."
+   },
+   {
+    "title": "Community Fridge, Granby Market",
+    "filename": "community-fridge-granby-market.md",
+    "text": "We request $3,900 to set up a community fridge at Granby Market, where traders throw away fresh food every Saturday. Four stallholders have agreed to donate unsold produce. The money buys a commercial fridge ($1,800), a food-hygiene course for six volunteers ($600), temperature logging equipment ($300) and a year's electricity ($1,200, metered by the market). Hubbub's community-fridge network will register and support us. We will weigh food in and out each day and publish the totals monthly.\n\nThe fridge will stand in the market's covered loading bay, which is open from 7am to 7pm six days a week, so anyone can take food without signing up or explaining why. Volunteers will check it twice a day, record temperatures, and remove anything past its use-by date. The market manager has agreed in writing and will add the fridge to the market's insurance."
+   },
+   {
+    "title": "Transforming Our Neighbourhood",
+    "filename": "transforming-our-neighbourhood.md",
+    "text": "Our neighbourhood is facing many challenges, and we are determined to rise to meet them. This holistic, community-led initiative will address isolation, health, the environment, education, and economic opportunity through a range of interlinked activities. Drawing on best practice and lived experience, we will co-produce solutions with residents. We are requesting $25,000 to deliver this ambitious programme. A detailed plan will be developed in partnership with the community once funding is secured. Outcomes will be evaluated using a robust framework.\n\nOur steering group includes representatives from a wide variety of backgrounds who bring passion, energy and expertise. We are committed to equality, diversity and inclusion in everything we do. We will work in partnership with a range of stakeholders, building on existing assets and strengths, to create lasting, sustainable change. This is an exciting opportunity for the fund to be part of something truly transformational for our community."
+   },
+   {
+    "title": "Mobile Phone Repair Training for Care Leavers",
+    "filename": "mobile-phone-repair-training-for-care-leavers.md",
+    "text": "Fixwell CIC asks for $16,500 to train 12 care leavers aged 18 to 24 in phone and tablet repair over six months, with a paid placement at our shop. The local authority's leaving-care team has nominated 19 young people interested. Training uses our existing workshop. Costs: trainee bursaries at $80 a week for 24 weeks ($23,040 total, of which the leaving-care team pays $9,000), parts and practice devices ($2,000), and a level-2 certificate fee ($460). The trainer, Ravi Mendes, has trained 30 apprentices since 2019. We will report completions, certificates gained, and who is in work or education three months after.\n\nTrainees work four days a week in the workshop and one day on the certificate. Each has a named mentor from our staff, and the leaving-care team's personal advisers will meet trainees monthly. Repaired devices are sold in our shop, and the income pays for the next group's practice parts."
+   },
+   {
+    "title": "Hedgehog Highways for Thornfield",
+    "filename": "hedgehog-highways-for-thornfield.md",
+    "text": "Thornfield Wildlife Group asks for $2,400 to create 'hedgehog highways', 13cm holes in garden fences, across three streets, and to survey hedgehogs before and after. 64 households have signed up. The money pays for six footprint tunnels and two trail cameras ($900), hole-cutting by a local carpenter at $15 a fence ($900 for 60 fences), and leaflets ($600). Volunteers run footprint surveys in April and September. We will share records with the county biological records centre.\n\nHedgehog numbers in rural Britain have fallen sharply since 2000, and gardens are now among their most important habitats, but fences stop them moving between gardens to feed and find mates. Each participating house gets a small plaque so neighbours can see where the highway runs. Two volunteers already trained by the county wildlife trust will lead the footprint surveys and show others how to read the tunnels."
+   },
+   {
+    "title": "Help Us Help Others",
+    "filename": "help-us-help-others.md",
+    "text": "We are a small charity that helps people in need. We have been doing this for a long time and know what works. Times are hard right now and more people need us than ever. We are asking for $10,000 towards our general running costs, including rent, phone, and volunteer expenses. Without this money we may have to cut back what we do. We help hundreds of people every year in many different ways. We would be happy to tell you more about our work if you would like.\n\nOur volunteers work very hard and give a lot of their time, and many of them have been with us for years. We get calls every day from people who don't know where else to turn. Other funders have supported us in the past, but some of that funding has now ended. We really hope you will be able to help us so that we can carry on being there for people."
+   },
+   {
+    "title": "Sensory Garden at Oakmere Day Centre",
+    "filename": "sensory-garden-at-oakmere-day-centre.md",
+    "text": "Oakmere Day Centre, which supports 46 adults with learning disabilities, asks for $19,200 to turn an unused yard into a sensory garden with raised beds, a water feature, scented planting and wheelchair-level paths. Our occupational therapist has designed it with the people who use the centre over four planning sessions. Costs: landscaping and paths $11,400 (quote attached), raised beds and water feature $4,600, plants $1,700, tools and storage $1,500. Gardening sessions will run three times a week as part of the timetable. Staff will record weekly participation and use the centre's existing wellbeing measure, completed each quarter.\n\nThe design keeps every bed reachable from a wheelchair and uses non-toxic plants throughout. Two of the people who use the centre have asked to be 'garden leads' and will help plan each season's planting with staff. A local garden centre has offered surplus plants each spring, so planting costs fall after the first year."
+   },
+   {
+    "title": "Free Breakfast Club",
+    "filename": "free-breakfast-club.md",
+    "text": "Bramwell Junior School wants $6,000 for a free breakfast club. Teachers say some children arrive hungry and can't concentrate. We will open at 8am every day with cereal, toast and fruit. The money pays for food and a member of staff. We think about 30 children will come. We will ask teachers if children are concentrating better.\n\nChildren are very important to us and we want them all to have a good start to the day. A lot of families are struggling at the moment with the cost of living. The breakfast club will be open to everyone. We have a hall we can use and a kitchen. We will need to buy some toasters and bowls as well. Some parents may be able to help out in the mornings. We are sure it will be a big success and the children will love it."
+   },
+   {
+    "title": "Ferry Lane Community Choir",
+    "filename": "ferry-lane-community-choir.md",
+    "text": "Ferry Lane Singers ask for $4,200 to run a free weekly community choir for a year at the Ferry Lane centre, with a professional choir leader. No auditions, no need to read music. Our six-week taster in spring drew 35 people, 12 of whom told us they lived alone. Costs: choir leader $3,120 (52 sessions at $60), sheet music and a keyboard $480, two concerts $600. Members run refreshments. We will keep a register and, with permission, ask members to complete a short loneliness scale at the start and after six months.\n\nThe choir leader, Tom Agyeman, runs two other community choirs in the county and has agreed a rate below his usual fee. Songs are taught by ear, with words sheets, and the repertoire is chosen with the members. The Ferry Lane centre is on two bus routes and has step-free access and a hearing loop."
+   },
+   {
+    "title": "Tree Planting on Hob Hill",
+    "filename": "tree-planting-on-hob-hill.md",
+    "text": "Hob Hill Conservation Volunteers request $11,000 to plant 2,500 native trees on 3 hectares of former grazing land owned by the parish council, which has granted a 25-year agreement. Species mix and spacing follow advice from the county Woodland Trust officer. Costs: whips and guards $6,800, fencing against deer $2,900, tools $500, and three years of watering and weeding visits $800. Volunteer days will be open to the public and to two local schools. We will count survival each autumn for three years and replace losses.\n\nPlanting will happen over four volunteer days between December and February, when the whips are dormant. The parish council will add the site to its public footpath map, and a new permissive path will run along its northern edge. The Woodland Trust officer will visit at the end of the first year to check progress and advise on replacing any losses."
+   },
+   {
+    "title": "Saturday Maths Catch-Up",
+    "filename": "saturday-maths-catch-up.md",
+    "text": "We would like $22,000 for Saturday maths catch-up classes. Many children are behind in maths since the pandemic. Classes will be taught by university students. We will run classes for as many children as want to come, in a hall we are hoping to rent. Children will learn lots and become more confident. We plan to buy laptops for all the children to use, as technology is the future of learning. We haven't run this before, but we are very motivated.\n\nWe have spoken to some students who said they would be interested in teaching. We would advertise the classes on social media and through word of mouth. Children of all ages would be welcome, from reception to year 11. The classes would be fun and interactive, with games and prizes. We would also like to run a summer school if this goes well."
+   },
+   {
+    "title": "Listening Line for Farmers",
+    "filename": "listening-line-for-farmers.md",
+    "text": "The Upland Farming Network asks for $17,600 to extend our farmers' listening line from two evenings to five evenings a week. Calls rose from 210 in 2024 to 390 in 2025, and the two-evening rota is turning calls away. Volunteers are farmers and farm families trained by the Samaritans-accredited course we have used since 2021. Costs: training 14 new volunteers ($5,600), a part-time coordinator ($9,400), phone system and call logging ($1,400), supervision for volunteers ($1,200). We record call volumes and missed calls, and refer callers to the rural mental health service with consent.\n\nMany of our callers live miles from the nearest town, work alone, and would not go to a GP about how they are feeling, but will talk to someone who knows farming. Each volunteer takes no more than two evenings a month, and every volunteer has a debrief call after each shift. Callers can stay anonymous."
+   },
+   {
+    "title": "Youth Podcast Studio",
+    "filename": "youth-podcast-studio.md",
+    "text": "Sparks Youth Club asks for $9,900 to equip a small podcast studio and run a ten-week course for 24 young people aged 14 to 18, who will produce a monthly show about life in Southvale. We already have the room. Equipment: four microphones, an interface, headphones, acoustic panels and a laptop with editing software ($4,300). A local radio producer, Kemi Adebayo, will teach the course ($4,000), and we will publish episodes on the club's channel ($600 hosting and promotion, $1,000 for the launch event). We will count episodes, listeners and completions, and two participants will join our steering group.\n\nYoung people will choose the topics, book the guests and do the editing themselves, with Kemi reviewing each episode before it goes out. The studio will be open to other community groups at the club on weekday mornings, when the room is otherwise empty."
+   },
+   {
+    "title": "Allotment Water Tanks",
+    "filename": "allotment-water-tanks.md",
+    "text": "The Mill Road Allotment Society asks for $3,100 to install rainwater harvesting tanks on our two sheds, so plot holders stop using mains water in summer. Last summer the society's water bill was $2,450, and a hosepipe ban stopped watering for five weeks. Eight 1,000-litre tanks with guttering and stands cost $2,700 (quote attached); signs and a rota board $400. Members will install them on a work day. We will compare the water bill with last year's.\n\nMill Road has 48 plots and a waiting list of 30. Tanks will be fitted with lockable taps and filters, and the society's maintenance volunteer will clean the gutters each autumn. The society's treasurer will keep receipts and send the fund a short note with the two water bills next autumn. Any underspend will go back to the fund."
+   },
+   {
+    "title": "Community Wellbeing Hub",
+    "filename": "community-wellbeing-hub.md",
+    "text": "We plan to create a Community Wellbeing Hub, a one-stop shop for wellbeing. The hub will offer yoga, mindfulness, counselling, nutrition advice, benefits advice, employment support, a café, a crèche and a community garden. We are requesting $25,000 as seed funding and will apply for further grants for the remaining $340,000. We do not yet have premises but are in talks with several landlords. We believe the hub will become self-sustaining through the café within six months.\n\nWe have a strong vision and a dedicated team who are ready to make it happen. The hub will be open seven days a week and will employ around 12 staff. We are confident that there is demand for all of these services, because we hear about these needs all the time."
+   },
+   {
+    "title": "First Aid for Parents of Babies",
+    "filename": "first-aid-for-parents-of-babies.md",
+    "text": "St Anne's Children's Centre asks for $2,800 to run twelve free baby and child first-aid sessions for parents of under-2s, delivered by a qualified paramedic trainer. 140 parents have asked about the course at our baby groups this year; commercial courses cost $45 a place. Each two-hour session takes 12 parents: trainer fees $1,980, two infant training manikins $520, handouts $300. The centre provides the room and a crèche. Trainees complete a short practical check at the end of each session, which the trainer records.\n\nSessions cover choking, CPR for babies and toddlers, burns, febrile convulsions and when to call for help. We will run them on weekday mornings and on two Saturdays, so working parents can come too. Parents who cannot speak English confidently can bring someone to interpret."
+   },
+   {
+    "title": "Music Lessons",
+    "filename": "music-lessons.md",
+    "text": "We want to give music lessons to children. Music is good for the brain and helps children do better at school. We would buy instruments and pay teachers. We would like $14,000. We will start as soon as we get the money. Lots of children will benefit.\n\nLearning an instrument teaches discipline, teamwork and confidence, and it is a shame that so many children never get the chance. We would like to offer lots of different instruments, including guitar, piano, drums, violin and maybe singing as well. We are still deciding where the lessons would happen, but we have a few ideas. We think there would be a lot of demand from parents. We would love your support to make this happen."
+   }
+  ]
+ }
+]

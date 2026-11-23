@@ -1,0 +1,39 @@
+# Publish to PyPI when a version tag (v0.1.0, ...) is pushed. Uses PyPI trusted publishing (OIDC): no API
+# token is stored. PyPI must first list this repository and workflow as a trusted publisher for `supposing`,
+# with the GitHub environment `pypi`.
+name: publish
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Tag matches the package version
+        run: test "v$(uv version --short)" = "${GITHUB_REF_NAME}"
+      - run: uv sync
+      - run: uv run pytest -q
+      - run: uv build
+      - run: uvx twine check --strict dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

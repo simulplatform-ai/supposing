@@ -1,8 +1,8 @@
 """MCP server over stdio, for coding agents on this machine: ``supposing mcp``.
 
-Needs the optional extra: ``pip install 'supposing[mcp]'``.
+Needs the optional extra: ``uv tool install 'supposing[mcp]'``, or ``uvx 'supposing[mcp]' mcp``.
 
-It offers the same four tools as the hosted server at https://api.supposing.app/mcp, with the same arguments
+It offers the same tools as the hosted server at https://api.supposing.app/mcp, with the same arguments
 and result shapes. Where the work happens depends on credentials:
 
 - **cloud**, when an API key is found (``SUPPOSING_API_KEY`` or ``supposing login``): runs go to the Supposing
@@ -26,7 +26,8 @@ from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Annotated, Any, Literal, Protocol
+from typing import Annotated, Any, Protocol
+from uuid import UUID
 
 import anyio
 from mcp.server import MCPServer
@@ -35,28 +36,28 @@ from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import CallToolResult, TextContent, ToolAnnotations
 from pydantic import BaseModel, Field
 
-from . import present
+from . import present, samples
 from . import ranking as rk
-from .cloud import AsyncClient, CloudError, read_folder, resolve
+from .cloud import JUDGE_HELP, AsyncClient, CloudError, JudgeError, parse_judge, read_folder, resolve
 from .providers import ProviderError, make_provider
 from .report import summarize
-from .runner import DEFAULT_MODEL, RunError, run_ranking
+from .runner import RunError, run_ranking
 from .store import MemoryStore
 
 MAX_OPTIONS = 8
-ROUND_ROBIN = {"rounds": 1, "pairing": "round_robin", "both_orders": True}
+ROUND_ROBIN = {"rounds": 1, "pairing": "round_robin"}
 MAX_OPTION_CHARS = 20_000
 POLL_SECONDS = 0.5
 DONE = ("done", "failed", "canceled")
 FREE = ("mock", "claude_cli")
 
 INSTRUCTIONS = """\
-Supposing ranks texts with an LLM judge: it runs a pairwise tournament (every comparison judged in both \
-orders) and reports each item's rank with a 90% interval, so you know when a winner is real and when \
+Supposing ranks texts with an LLM judge: it runs a pairwise tournament and reports each item's rank with a 90% interval, so you know when a winner is real and when \
 items are tied.
 
 - Picking the best of 2 to 8 short options (drafts, prompts, names, answers): call compare_options. \
 It waits for the answer, usually 10 to 60 seconds.
+- No documents at hand: list_samples, then rank_documents(sample=<id>).
 - Ranking more or longer documents, or a folder of files: call rank_documents (it returns at once with a run \
 id and the number of judge calls), then get_run until status is done, then get_results. Pass \
 estimate_only=true first to see the number of calls before anything is spent.
@@ -82,8 +83,7 @@ class RunSpec:
     dataset_id: str
     rubric: str
     name: str | None = None
-    provider: str | None = None
-    model: str | None = None
+    judge: str | None = None  # quick, balanced, thorough, an OpenRouter model id, mock or claude_cli
     max_cost_usd: float | None = None
     options: dict[str, Any] = field(default_factory=dict)  # the ranking's own: rounds, goal, top_n, ...
     ephemeral: bool = False  # a one-off: kept out of the web app's lists
@@ -101,6 +101,7 @@ class Backend(Protocol):
     async def get_run(self, run_id: str) -> dict[str, Any]: ...
     async def cancel_run(self, run_id: str) -> dict[str, Any]: ...
     async def results(self, run_id: str) -> dict[str, Any]: ...
+    async def open_sample(self, sample_id: str) -> dict[str, Any] | None: ...
 
 
 # --- cloud: the Supposing API through supposing.cloud ----------------------------------------------------------
@@ -118,8 +119,7 @@ class CloudBackend:
 
     @staticmethod
     def _kw(spec: RunSpec) -> dict[str, Any]:
-        return {"name": spec.name, "provider": spec.provider, "model": spec.model,
-                "max_cost_usd": spec.max_cost_usd, "ephemeral": spec.ephemeral, **spec.options}
+        return {"name": spec.name, "judge": spec.judge, "max_cost_usd": spec.max_cost_usd, "ephemeral": spec.ephemeral, **spec.options}
 
     async def create_dataset(self, name: str, items: list[dict[str, str]], ephemeral: bool = False
                              ) -> dict[str, Any]:
@@ -144,6 +144,9 @@ class CloudBackend:
     async def results(self, run_id: str) -> dict[str, Any]:
         return (await self._do(self.c.runs.results(run_id))).raw
 
+    async def open_sample(self, sample_id: str) -> dict[str, Any] | None:
+        return (await self._do(self.c.open_sample(sample_id))).raw
+
 
 # --- local: the engine, in this process ---------------------------------------------------------------------
 def _iso(t: float | None) -> str | None:
@@ -157,7 +160,7 @@ class LocalRun:
     dataset: dict[str, Any]
     spec: RunSpec
     cfg: rk.RankConfig
-    judge: dict[str, str]
+    judge: dict[str, Any]
     store: MemoryStore = field(default_factory=MemoryStore)
     status: str = "queued"
     note: str | None = None
@@ -223,23 +226,31 @@ class LocalBackend:
         hi, lo = rk.planned_calls(n, cfg), rk.fewest_calls(n, cfg)
         chars = sum(min(i["n_chars"], cfg.max_chars or 10**9) for i in ds["items"]) / max(1, n)
         per_call = int(2 * chars / 4 + 450 + len(spec.rubric) / 4)
-        free = (spec.provider or "openrouter") in FREE
+        free = self._parse(spec)["provider"] in FREE
         return {"type": "ranking", "n_items": n, "min_calls": lo, "max_calls": hi, "est_input_tokens": hi * per_call,
                 "est_output_tokens": hi * 150, "est_cost_usd": 0.0 if free else None,
                 "est_cost_usd_min": 0.0 if free else None, "est_seconds": None}
 
-    def _judge(self, spec: RunSpec) -> dict[str, str]:
-        provider = spec.provider or "openrouter"
-        model = spec.model or {"mock": "mock", "claude_cli": "haiku"}.get(provider, DEFAULT_MODEL)
+    @staticmethod
+    def _parse(spec: RunSpec) -> dict[str, Any]:
+        try:
+            return parse_judge(spec.judge)
+        except JudgeError as exc:
+            raise BackendError("invalid_request", str(exc), "Leave judge out for quick, or pass balanced, "
+                               "thorough, an OpenRouter model id, mock or claude_cli.") from exc
+
+    def _judge(self, spec: RunSpec) -> dict[str, Any]:
+        judge = self._parse(spec)
+        provider = judge["provider"]
         if provider == "openrouter" and not os.environ.get("OPENROUTER_API_KEY"):
             raise BackendError("provider_unavailable", "No OpenRouter key: OPENROUTER_API_KEY is not set for the "
                                "MCP server.", "Set it in the server's env, log in with `supposing login` to use "
-                               "the cloud, or pass judge {provider: claude_cli} (your Claude login) or "
-                               "{provider: mock} (free, fake verdicts).")
+                               "the cloud, or pass judge claude_cli (your Claude login) or mock "
+                               "(free, fake verdicts).")
         if provider == "claude_cli" and not shutil.which("claude"):
             raise BackendError("provider_unavailable", "The claude CLI is not on PATH.",
                                "Install Claude Code, or use another judge.")
-        return {"provider": provider, "model": model}
+        return judge
 
     async def create_run(self, spec: RunSpec) -> dict[str, Any]:
         ds, cfg = self._dataset(spec.dataset_id), self._config(spec)
@@ -291,6 +302,9 @@ class LocalBackend:
             await asyncio.gather(run.task, return_exceptions=True)
         return await self.get_run(run_id)
 
+    async def open_sample(self, sample_id: str) -> dict[str, Any] | None:
+        return None  # no stored rankings on this machine: the sample is ranked with your judge
+
     async def results(self, run_id: str) -> dict[str, Any]:
         run = self._run(run_id)
         cfg = run.cfg
@@ -317,28 +331,34 @@ class Item(BaseModel):
     text: str = Field(min_length=1, description="The full text to judge.")
 
 
-class Judge(BaseModel):
-    provider: Literal["openrouter", "mock", "claude_cli"] = Field(
-        default="openrouter", description="openrouter (billed to your key). claude_cli uses this machine's Claude "
-        "login (local mode only). mock is free and fake, for trying the tools.")
-    model: str | None = Field(default=None, description="Model id. Default: Claude Haiku.")
-
-
 Rubric = Annotated[str, Field(min_length=1, max_length=20000, description=(
     "What makes one text better than another, in a sentence or short paragraph. Say what to ignore too, "
     "e.g. 'Which is clearest to a new user? Ignore length.'"))]
-JudgeArg = Annotated[Judge | None, Field(description="Judge model. Default: Claude Haiku on OpenRouter.")]
-RunId = Annotated[str, Field(description="The run_id returned by rank_documents or compare_options.")]
+JudgeArg = Annotated[str | None, Field(description="The judge: " + JUDGE_HELP)]
+BothOrders = Annotated[bool, Field(description=(
+    "Judge every pair twice, once in each order. Twice the cost; adds the order check."))]
+RubricOrSample = Annotated[str | None, Field(min_length=1, max_length=20000, description=(
+    "What makes one text better than another, in a sentence or short paragraph. Say what to ignore too, "
+    "e.g. 'Which is clearest to a new user? Ignore length.' Required unless you pass sample."))]
+RunId = Annotated[UUID, Field(description="The run_id returned by rank_documents or compare_options.")]
+
+
+def _sample(sample_id: str) -> dict[str, Any]:
+    """A built-in sample with its items as {title, text}; an unknown id says which exist."""
+    try:
+        s = samples.load(sample_id)
+    except KeyError as exc:
+        raise ToolError(present.error_text("sample_not_found", exc.args[0], "Call list_samples.")) from exc
+    return {**s, "items": [{"title": i["title"], "text": i["text"]} for i in s["items"]]}
 
 
 def _now() -> str:
     return datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
 
-def _spec(dataset_id: str, rubric: str, name: str | None, judge: Judge | None, options: dict[str, Any],
+def _spec(dataset_id: str, rubric: str, name: str | None, judge: str | None, options: dict[str, Any],
           max_cost_usd: float | None = None) -> RunSpec:
-    return RunSpec(dataset_id, rubric, name, judge.provider if judge else None, judge.model if judge else None,
-                   max_cost_usd, {k: v for k, v in options.items() if v is not None})
+    return RunSpec(dataset_id, rubric, name, judge, max_cost_usd, {k: v for k, v in options.items() if v is not None})
 
 
 async def wait_for_run(backend: Backend, run_id: str, wait_seconds: float,
@@ -346,7 +366,7 @@ async def wait_for_run(backend: Backend, run_id: str, wait_seconds: float,
     deadline = time.monotonic() + wait_seconds
     last = -1
     while True:
-        run = await backend.get_run(run_id)
+        run = await backend.get_run(str(run_id))
         done = (run.get("progress") or {}).get("done", 0)
         if done > last:
             last = done
@@ -354,6 +374,18 @@ async def wait_for_run(backend: Backend, run_id: str, wait_seconds: float,
         if run["status"] in DONE or time.monotonic() >= deadline:
             return run
         await asyncio.sleep(POLL_SECONDS)
+
+
+# Tool annotations, explicit on every tool (OpenAI requires destructiveHint; Claude's directory scan wants them all).
+# Starting a ranking spends the workspace's credit or model key and creates a run, but changes or deletes nothing
+# that exists: not read-only, not destructive. Calling it twice starts two runs and spends twice: not idempotent.
+# Reading a run is read-only and idempotent. No tool reaches beyond Supposing and its judge model: not open-world.
+WRITE = ToolAnnotations(read_only_hint=False, destructive_hint=False, idempotent_hint=False, open_world_hint=False)
+READ = ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False)
+
+
+def hints(title: str, base: ToolAnnotations) -> ToolAnnotations:
+    return base.model_copy(update={"title": title})
 
 
 def build_server(backend: Backend) -> MCPServer:
@@ -366,14 +398,29 @@ def build_server(backend: Backend) -> MCPServer:
         except BackendError as exc:
             raise ToolError(exc.text()) from exc
 
-    @mcp.tool(annotations=ToolAnnotations(title="Rank documents", read_only_hint=False, open_world_hint=True))
+    @mcp.tool(title="List samples", annotations=hints("List samples", READ))
+    async def list_samples() -> CallToolResult:
+        """Built-in sample datasets, for trying a ranking when you have no documents of your own.
+
+        Free and instant. Each has an id, a description, its rubric and how many items it holds; pass the id as
+        rank_documents(sample=...).
+        """
+        rows = samples.list_samples()
+        return result("%d samples: %s. Rank one with rank_documents(sample=<id>)."
+                      % (len(rows), ", ".join(s["id"] for s in rows)), {"data": rows})
+
+    @mcp.tool(title="Rank documents", annotations=hints("Rank documents", WRITE))
     async def rank_documents(
-        rubric: Rubric,
+        rubric: RubricOrSample = None,
         items: Annotated[list[Item] | None, Field(
             description="The documents to rank, 2 to 2000, as {title, text}. Or pass folder or dataset_id.")] = None,
         folder: Annotated[str | None, Field(description=(
             "Absolute path of a folder on this machine: every .md, .txt and .html file in it is one item."))] = None,
-        dataset_id: Annotated[str | None, Field(description="Rank an existing dataset instead.")] = None,
+        dataset_id: Annotated[UUID | None, Field(description="Rank an existing dataset instead.")] = None,
+        sample: Annotated[str | None, Field(description=(
+            "A built-in sample instead (ids from list_samples). In cloud mode, alone it opens the sample's stored "
+            "ranking, free and instant; with a judge or a rubric it is a new run. Locally it is ranked with your "
+            "judge and the sample's rubric unless you pass one."))] = None,
         judge: JudgeArg = None,
         rounds: Annotated[int | None, Field(ge=1, le=200, description=(
             "Opponents per document (default 8). More rounds, tighter intervals, more calls."))] = None,
@@ -384,33 +431,54 @@ def build_server(backend: Backend) -> MCPServer:
         estimate_only: Annotated[bool, Field(description=(
             "Return the number of judge calls without starting anything. Items and folders are still saved as a "
             "dataset, whose id you can pass next time."))] = False,
+        both_orders: BothOrders = False,
         name: Annotated[str | None, Field(description="A name for the run.")] = None,
     ) -> CallToolResult:
         """Start ranking a set of documents against your rubric, in the background.
 
         Use for more than 8 options, for long documents, or for a folder of files; for 2 to 8 short options use
         compare_options, which waits for the answer. Returns at once with a run_id and the estimate. Each
-        document meets `rounds` opponents and every pair is judged in both orders, so a run makes about
-        rounds x documents judge calls (8 rounds over 20 documents: 160 calls). Small runs finish in a
+        document meets `rounds` opponents, one judge call each, so a run makes about rounds x documents / 2
+        judge calls (8 rounds over 20 documents: 80 calls; twice that with both_orders). Small runs finish in a
         minute or two. Follow with get_run, then get_results. Costs go to the judge's account.
         """
-        if sum(x is not None for x in (items, folder, dataset_id)) != 1:
-            raise ToolError("Pass exactly one of items (a list of {title, text}), folder or dataset_id.")
+        if sum(x is not None for x in (items, folder, dataset_id, sample)) != 1:
+            raise ToolError("Pass exactly one of items (a list of {title, text}), folder, dataset_id or sample.")
         skipped: list[Any] = []
+        if sample is not None and judge is None and rubric is None and backend.mode == "cloud":
+            s = _sample(sample)
+            if estimate_only:
+                return result("Free: the %s sample's stored ranking opens at once, with no judge calls. Call "
+                              "rank_documents with sample=%s and estimate_only=false to open it." % (s["name"], sample),
+                              {"sample": sample, "estimate": None})
+            run = await call(backend.open_sample(sample))
+            assert run is not None
+            res = await call(backend.results(str(run["id"])))
+            text, data = present.results_payload(res, run, 20)
+            lead = "The %s sample's stored ranking (judged by %s, free): " % (
+                s["name"], (run.get("judge") or {}).get("model") or "a real model")
+            return result(res["summary"], data, lead + text)
+        if sample is not None:
+            s = _sample(sample)
+            rubric = rubric or s["rubric"]
+            ds = await call(backend.create_dataset("Sample: %s" % s["name"], s["items"]))
+            dataset_id = UUID(str(ds["id"]))
+        if rubric is None:
+            raise ToolError("Pass a rubric: what makes one text better than another.")
         if items is not None:
             if len(items) < 2:
                 raise ToolError("A ranking needs at least two items.")
             ds = await call(backend.create_dataset(name or "rank_documents %s" % _now(),
                                                    [d.model_dump() for d in items]))
-            dataset_id = ds["id"]
+            dataset_id = UUID(str(ds["id"]))
         elif folder is not None:
             ds = await call(backend.push_folder(folder, name))
-            dataset_id, skipped = ds["id"], ds.get("skipped") or []
+            dataset_id, skipped = UUID(str(ds["id"])), ds.get("skipped") or []
         assert dataset_id is not None
-        options: dict[str, Any] = {"rounds": rounds}
+        options: dict[str, Any] = {"rounds": rounds, "both_orders": both_orders}
         if top_n:
             options.update(goal="top_n", top_n=top_n)
-        spec = _spec(dataset_id, rubric, name, judge, options, max_cost_usd)
+        spec = _spec(str(dataset_id), rubric, name, judge, options, max_cost_usd)
         est = await call(backend.estimate(spec))
         extra = {"skipped_files": skipped[:20]} if skipped else {}
         if estimate_only:
@@ -422,17 +490,17 @@ def build_server(backend: Backend) -> MCPServer:
                       "ranking; results are readable while it runs." % (run["id"], present.estimate_line(est)),
                       {"run": run, "estimate": est, **extra})
 
-    @mcp.tool(annotations=ToolAnnotations(title="Get run", read_only_hint=True, open_world_hint=False))
+    @mcp.tool(title="Get run", annotations=hints("Get run", READ))
     async def get_run(run_id: RunId) -> CallToolResult:
         """Status and progress of a run: queued, running, done, failed or canceled, with calls done and money spent.
 
         Free and instant. Poll it every 10 to 30 seconds while a run is going; when status is done, call
         get_results.
         """
-        run = await call(backend.get_run(run_id))
+        run = await call(backend.get_run(str(run_id)))
         return result(present.run_line(run), {"run": run})
 
-    @mcp.tool(annotations=ToolAnnotations(title="Get results", read_only_hint=True, open_world_hint=False))
+    @mcp.tool(title="Get results", annotations=hints("Get results", READ))
     async def get_results(
         run_id: RunId,
         top: Annotated[int, Field(ge=1, le=2000, description="How many leaderboard rows to return.")] = 20,
@@ -441,29 +509,29 @@ def build_server(backend: Backend) -> MCPServer:
         diagnostics.
 
         Free and instant. Works while the run is still going (marked provisional). Items whose rank intervals
-        overlap may be tied; order_consistency and first_position_win_rate in diagnostics show whether the judge
-        was reliable.
+        overlap may be tied; diagnostics.reliability grades the judge (the order check only with both_orders).
         """
-        run = await call(backend.get_run(run_id))
-        res = await call(backend.results(run_id))
+        run = await call(backend.get_run(str(run_id)))
+        res = await call(backend.results(str(run_id)))
         text, data = present.results_payload(res, run, top)
         return result(res["summary"], data, text)
 
-    @mcp.tool(annotations=ToolAnnotations(title="Compare options", read_only_hint=False, open_world_hint=True))
+    @mcp.tool(title="Compare options", annotations=hints("Compare options", WRITE))
     async def compare_options(
         rubric: Rubric,
         options: Annotated[list[Annotated[str, Field(min_length=1, max_length=MAX_OPTION_CHARS)]], Field(
             min_length=2, max_length=MAX_OPTIONS, description="2 to 8 candidate texts, each up to 20,000 characters.")],
         ctx: Context,
         judge: JudgeArg = None,
+        both_orders: BothOrders = False,
         wait_seconds: Annotated[int, Field(ge=0, le=300, description=(
             "How long to wait for the answer before handing back a run_id to poll. Keep it under your client's "
             "tool timeout."))] = 45,
     ) -> CallToolResult:
         """Pick the best of 2 to 8 short options (drafts, prompts, names, answers) and wait for the answer.
 
-        Every option meets every other, judged in both orders: n x (n-1) judge calls (4 options: 12 calls,
-        8 options: 56), a few cents with the default Haiku judge. It usually answers in 10 to 60 seconds. If it
+        Every option meets every other once: n x (n-1) / 2 judge calls (4 options: 6 calls, 8 options: 28;
+        twice that with both_orders), a few cents with the default quick judge. It usually answers in 10 to 60 seconds. If it
         is not finished within wait_seconds you get a run_id and a provisional ranking: call get_results later.
         Options are named "option 1", "option 2", ... in the order given.
         """
@@ -471,7 +539,7 @@ def build_server(backend: Backend) -> MCPServer:
         # A one-off: ephemeral keeps it out of the web app's lists. Every pair is judged in one round.
         ds = await call(backend.create_dataset("compare_options %s" % _now(), [
             {"title": "option %d" % (i + 1), "text": text} for i, text in enumerate(options)], ephemeral=True))
-        spec = _spec(ds["id"], rubric, "compare_options %s" % _now(), judge, ROUND_ROBIN)
+        spec = _spec(ds["id"], rubric, "compare_options %s" % _now(), judge, {**ROUND_ROBIN, "both_orders": both_orders})
         spec.ephemeral = True
         run = await call(backend.create_run(spec))
         texts = {str(item["id"]): text for item, text in zip(ds["items"], options, strict=True)}

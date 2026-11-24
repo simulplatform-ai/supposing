@@ -21,6 +21,20 @@ def test_consistent_judge_is_good():
     assert by_key(report)["order"]["shown"] == "92%"
 
 
+def test_position_gaps_within_chance_are_not_poor():
+    """16 verdicts from a fair judge are 25 points off 50% one time in twenty; 200 verdicts almost never."""
+    few = by_key(judge_checks({**CLEAN, "decided": 16, "first_position_win_rate": 0.25}))["position"]
+    many = by_key(judge_checks({**CLEAN, "decided": 200, "first_position_win_rate": 0.25}))["position"]
+    assert few["grade"] == "caution" and many["grade"] == "poor"
+    assert by_key(judge_checks({**CLEAN, "decided": 16, "first_position_win_rate": 0.4}))["position"]["grade"] == "good"
+
+
+def test_one_order_runs_have_no_order_check():
+    report = judge_checks({**CLEAN, "order_consistency": None, "pairs_both_orders": 0})
+    assert "order" not in by_key(report)
+    assert report["grade"] == "good" and "both orders" not in report["line"]
+
+
 def test_nothing_measured_yet():
     report = judge_checks({"decided": 0})
     assert report["grade"] is None
@@ -55,7 +69,7 @@ def test_several_poor_checks_name_the_first_and_count_the_rest():
 def test_planted_position_bias_is_reported():
     """A judge with a first-position bias of 1.5 units, on items close in quality: most both-order pairs
     flip toward the first-shown text, and the report says so."""
-    items, comps = judge_run(np.linspace(0, 1, 12), RankConfig(rounds=8), seed=0, bias=1.5)
+    items, comps = judge_run(np.linspace(0, 1, 12), RankConfig(rounds=8, both_orders=True), seed=0, bias=1.5)
     diag = results(items, comps)["diagnostics"]
     assert diag["first_shown_won_both"] > 0.4
     assert diag["second_shown_won_both"] < 0.1
@@ -66,7 +80,7 @@ def test_planted_position_bias_is_reported():
 
 
 def test_unbiased_judge_flips_both_ways_equally():
-    items, comps = judge_run(np.linspace(0, 1, 12), RankConfig(rounds=8), seed=0)
+    items, comps = judge_run(np.linspace(0, 1, 12), RankConfig(rounds=8, both_orders=True), seed=0)
     diag = results(items, comps)["diagnostics"]
     assert abs(diag["first_shown_won_both"] - diag["second_shown_won_both"]) < 0.1
     assert by_key(diag["reliability"])["position"]["grade"] == "good"
@@ -112,7 +126,7 @@ def test_top_n_settled_and_contested():
                                                        "last 1 place.")
     settled = [row("a", 1, 1, 1.0), row("b", 2, 2, 0.99), row("c", 3, 3, 0.97), row("d", 4, 6, 0.02),
                row("e", 4, 6, 0.0), row("f", 4, 6, 0.0)]
-    assert summarize(settled, CLEAN, top_n=3) == "The top 3 are settled: a, b and c. 4 clear tiers."
+    assert summarize(settled, CLEAN, top_n=3) == "The top 3 are settled: a, b and c."  # groups, not tiers
 
 
 def test_provisional_and_caution():

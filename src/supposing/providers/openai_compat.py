@@ -14,6 +14,19 @@ OPENROUTER_URL = "https://openrouter.ai/api/v1"
 FATAL_STATUS = (400, 401, 402, 403, 404)
 
 
+def error_message(response: httpx.Response) -> str:
+    """The API's own error message, without the rest of the body (OpenRouter adds the account's user_id)."""
+    try:
+        err = response.json().get("error")
+    except ValueError:
+        err = None
+    if isinstance(err, dict) and err.get("message"):
+        return str(err["message"])[:300]
+    if isinstance(err, str) and err:
+        return err[:300]
+    return response.text[:300]
+
+
 class OpenAICompatProvider:
     name = "openai_compat"
 
@@ -76,7 +89,7 @@ class OpenAICompatProvider:
                             )
                         last_error = "empty response from model"
                 else:
-                    last_error = "HTTP %s: %s" % (response.status_code, response.text[:300])
+                    last_error = "HTTP %s: %s" % (response.status_code, error_message(response))
                     if response.status_code in FATAL_STATUS:
                         raise ProviderError(last_error, retryable=False)
             if attempt + 1 < self.max_attempts:

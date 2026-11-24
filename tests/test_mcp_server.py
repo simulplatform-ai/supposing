@@ -11,7 +11,7 @@ from mcp import Client, StdioServerParameters  # noqa: E402
 
 from supposing.mcp_server import LocalBackend, build_server  # noqa: E402
 
-MOCK = {"provider": "mock", "model": "mock"}
+MOCK = "mock"
 
 
 def text(res) -> str:
@@ -22,11 +22,16 @@ def local() -> Client:
     return Client(build_server(LocalBackend()), raise_exceptions=True)
 
 
-async def test_same_four_tools_as_the_hosted_server():
+async def test_same_tools_as_the_hosted_server():
     async with local() as client:
         tools = {t.name: t for t in (await client.list_tools()).tools}
-        assert set(tools) == {"rank_documents", "get_run", "get_results", "compare_options"}
+        assert set(tools) == {"list_samples", "rank_documents", "get_run", "get_results", "compare_options"}
         assert "folder" in tools["rank_documents"].input_schema["properties"]
+        for name, read_only in (("list_samples", True), ("rank_documents", False), ("compare_options", False), ("get_run", True),
+                                ("get_results", True)):
+            a = tools[name].annotations
+            assert tools[name].title and a is not None and a.destructive_hint is False, name
+            assert (a.read_only_hint, a.idempotent_hint, a.open_world_hint) == (read_only, read_only, False), name
 
 
 async def test_compare_options_locally():
@@ -36,9 +41,30 @@ async def test_compare_options_locally():
                                                          "judge": MOCK})
         assert not res.is_error, text(res)
         data = res.structured_content
-        assert data["final"] and data["run"]["status"] == "done" and data["run"]["progress"]["done"] == 12
+        assert data["final"] and data["run"]["status"] == "done" and data["run"]["progress"]["done"] == 6
         assert data["ranking"]["leaderboard"][0]["title"] == "option 2"
         assert 'Top option: "option 2" (rank 1-' in text(res)
+        res = await client.call_tool("compare_options", {"rubric": "Which is clearest?", "options": options,
+                                                         "judge": MOCK, "both_orders": True})
+        assert res.structured_content["run"]["progress"]["done"] == 12  # every pair in both orders
+
+
+async def test_rank_a_sample():
+    async with local() as client:
+        listed = await client.call_tool("list_samples", {})
+        ids = [s["id"] for s in listed.structured_content["data"]]
+        assert "stories" in ids and text(listed).startswith("%d samples: " % len(ids))
+        est = await client.call_tool("rank_documents", {"sample": "stories", "judge": MOCK, "estimate_only": True})
+        assert not est.is_error, text(est)
+        assert est.structured_content["estimate"]["n_items"] == listed.structured_content["data"][ids.index(
+            "stories")]["n_items"]
+        run = await client.call_tool("rank_documents", {"sample": "stories", "judge": MOCK, "rounds": 2})
+        assert run.structured_content["run"]["ranking"]["rubric"] == listed.structured_content["data"][ids.index(
+            "stories")]["rubric"]  # the sample's own rubric
+        res = await client.call_tool("rank_documents", {"sample": "nope", "judge": MOCK})
+        assert res.is_error and "sample_not_found" in text(res) and "list_samples" in text(res)
+        res = await client.call_tool("rank_documents", {"items": [{"title": "a", "text": "a"}] * 2, "judge": MOCK})
+        assert res.is_error and "rubric" in text(res)
 
 
 async def test_rank_a_folder_then_poll(tmp_path):
@@ -48,7 +74,7 @@ async def test_rank_a_folder_then_poll(tmp_path):
         (tmp_path / "notes.pdf").write_bytes(b"%PDF")
         est = await client.call_tool("rank_documents", {"rubric": "Which is better?", "folder": str(tmp_path),
                                                         "judge": MOCK, "rounds": 3, "estimate_only": True})
-        assert text(est).startswith("Estimate: 6 items, 18 judge calls, free"), text(est)
+        assert text(est).startswith("Estimate: 6 items, 9 judge calls, free"), text(est)
         assert est.structured_content["skipped_files"][0]["path"] == "notes.pdf"
         started = await client.call_tool("rank_documents", {"rubric": "Which is better?", "judge": MOCK, "rounds": 3,
                                                             "dataset_id": est.structured_content["dataset_id"]})
@@ -57,7 +83,7 @@ async def test_rank_a_folder_then_poll(tmp_path):
             run = await client.call_tool("get_run", {"run_id": run_id})
             if run.structured_content["run"]["status"] == "done":
                 break
-        assert text(run).startswith("Run %s is done: 18 of 18 judge calls done" % run_id)
+        assert text(run).startswith("Run %s is done: 9 of 9 judge calls done" % run_id)
         res = await client.call_tool("get_results", {"run_id": run_id, "top": 2})
         assert res.structured_content["final"] and len(res.structured_content["ranking"]["leaderboard"]) == 2
         assert res.structured_content["ranking"]["leaderboard"][0]["title"] == "doc5.md"
@@ -68,10 +94,14 @@ async def test_errors_say_what_to_do_next(monkeypatch):
         monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
         res = await client.call_tool("compare_options", {"rubric": "x", "options": ["a", "b"]})
         assert res.is_error and "provider_unavailable" in text(res) and "mock" in text(res)
-        res = await client.call_tool("get_run", {"run_id": "nope"})
+        res = await client.call_tool("get_run", {"run_id": "00000000-0000-0000-0000-000000000000"})
         assert res.is_error and "run_not_found" in text(res)
+        res = await client.call_tool("get_run", {"run_id": "../api-keys"})  # ids are UUIDs, never path text
+        assert res.is_error and "uuid" in text(res).lower()
         res = await client.call_tool("rank_documents", {"rubric": "x", "folder": "/no/such/folder"})
         assert res.is_error and "not_a_folder" in text(res)
+        res = await client.call_tool("compare_options", {"rubric": "x", "options": ["a", "b"], "judge": "fast"})
+        assert res.is_error and "invalid_request" in text(res) and "balanced" in text(res)
 
 
 async def test_runs_over_real_stdio(tmp_path):

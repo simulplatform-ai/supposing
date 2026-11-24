@@ -1,0 +1,276 @@
+{
+ "judge": {
+  "provider": "claude_cli",
+  "model": "haiku"
+ },
+ "engine": "0.1.0",
+ "n": 60,
+ "funded": 24,
+ "rankings": {
+  "fund": {
+   "rubric": "Which application would the Wikimedia Foundation's Rapid Fund be more likely to fund?",
+   "calls": 240,
+   "reliability": "Treat with care: rankings built from two halves of the comparisons disagree, so more rounds would help (split-half reliability 0.56; 1 more check is poor). Read some comparisons before relying on this ranking.",
+   "auc": 0.441,
+   "auc_lo": 0.316,
+   "auc_hi": 0.57,
+   "top20": {
+    "k": 12,
+    "precision": 0.417,
+    "lo": 0.167,
+    "hi": 0.667,
+    "base_rate": 0.4
+   },
+   "within_region": {
+    "auc": 0.369,
+    "auc_lo": 0.198,
+    "auc_hi": 0.556,
+    "pairs": 306,
+    "top20_funded": 5,
+    "top20_k": 15,
+    "regions": {
+     "CEECA": {
+      "n": 4,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 0
+     },
+     "ESEAP": {
+      "n": 13,
+      "funded": 7,
+      "top20_k": 3,
+      "top20_funded": 1
+     },
+     "LAC": {
+      "n": 2,
+      "funded": 0,
+      "top20_k": 1,
+      "top20_funded": 0
+     },
+     "MENA": {
+      "n": 1,
+      "funded": 1,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "SA": {
+      "n": 2,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "SSA": {
+      "n": 36,
+      "funded": 10,
+      "top20_k": 7,
+      "top20_funded": 1
+     },
+     "USCA": {
+      "n": 2,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     }
+    }
+   }
+  },
+  "neutral": {
+   "rubric": "Which application is stronger?",
+   "calls": 240,
+   "reliability": "Treat with care: the judge strongly favoured whichever text it read first (first-shown text wins 62%; 1 more check is poor). Read some comparisons before relying on this ranking.",
+   "auc": 0.545,
+   "auc_lo": 0.409,
+   "auc_hi": 0.671,
+   "top20": {
+    "k": 12,
+    "precision": 0.583,
+    "lo": 0.333,
+    "hi": 0.833,
+    "base_rate": 0.4
+   },
+   "within_region": {
+    "auc": 0.431,
+    "auc_lo": 0.265,
+    "auc_hi": 0.627,
+    "pairs": 306,
+    "top20_funded": 7,
+    "top20_k": 15,
+    "regions": {
+     "CEECA": {
+      "n": 4,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 0
+     },
+     "ESEAP": {
+      "n": 13,
+      "funded": 7,
+      "top20_k": 3,
+      "top20_funded": 2
+     },
+     "LAC": {
+      "n": 2,
+      "funded": 0,
+      "top20_k": 1,
+      "top20_funded": 0
+     },
+     "MENA": {
+      "n": 1,
+      "funded": 1,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "SA": {
+      "n": 2,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "SSA": {
+      "n": 36,
+      "funded": 10,
+      "top20_k": 7,
+      "top20_funded": 2
+     },
+     "USCA": {
+      "n": 2,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     }
+    }
+   }
+  }
+ },
+ "baselines": {
+  "longer_first": {
+   "auc": 0.4,
+   "auc_lo": 0.275,
+   "auc_hi": 0.527,
+   "top20": {
+    "k": 12,
+    "precision": 0.25,
+    "lo": 0.083,
+    "hi": 0.5,
+    "base_rate": 0.4
+   },
+   "within_region": {
+    "auc": 0.31,
+    "auc_lo": 0.15,
+    "auc_hi": 0.492,
+    "pairs": 306,
+    "top20_funded": 5,
+    "top20_k": 15,
+    "regions": {
+     "CEECA": {
+      "n": 4,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 0
+     },
+     "ESEAP": {
+      "n": 13,
+      "funded": 7,
+      "top20_k": 3,
+      "top20_funded": 1
+     },
+     "LAC": {
+      "n": 2,
+      "funded": 0,
+      "top20_k": 1,
+      "top20_funded": 0
+     },
+     "MENA": {
+      "n": 1,
+      "funded": 1,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "SA": {
+      "n": 2,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "SSA": {
+      "n": 36,
+      "funded": 10,
+      "top20_k": 7,
+      "top20_funded": 1
+     },
+     "USCA": {
+      "n": 2,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     }
+    }
+   }
+  },
+  "pointwise": {
+   "calls": 60,
+   "auc": 0.594,
+   "auc_lo": 0.458,
+   "auc_hi": 0.72,
+   "top20": {
+    "k": 12,
+    "precision": 0.583,
+    "lo": 0.333,
+    "hi": 0.833,
+    "base_rate": 0.4
+   },
+   "within_region": {
+    "auc": 0.431,
+    "auc_lo": 0.259,
+    "auc_hi": 0.609,
+    "pairs": 306,
+    "top20_funded": 7,
+    "top20_k": 15,
+    "regions": {
+     "CEECA": {
+      "n": 4,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "ESEAP": {
+      "n": 13,
+      "funded": 7,
+      "top20_k": 3,
+      "top20_funded": 1
+     },
+     "LAC": {
+      "n": 2,
+      "funded": 0,
+      "top20_k": 1,
+      "top20_funded": 0
+     },
+     "MENA": {
+      "n": 1,
+      "funded": 1,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "SA": {
+      "n": 2,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     },
+     "SSA": {
+      "n": 36,
+      "funded": 10,
+      "top20_k": 7,
+      "top20_funded": 2
+     },
+     "USCA": {
+      "n": 2,
+      "funded": 2,
+      "top20_k": 1,
+      "top20_funded": 1
+     }
+    }
+   }
+  }
+ }
+}

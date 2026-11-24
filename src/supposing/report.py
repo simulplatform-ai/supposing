@@ -23,7 +23,8 @@ def judge_checks(diagnostics: dict[str, Any]) -> dict[str, Any]:
 
     Each check has ``key``, ``label``, ``value`` (the number, or None when not measured yet), ``shown`` (the
     number as text), ``grade`` (``"good"``, ``"caution"``, ``"poor"`` or None), ``note`` (what the number
-    means) and ``warning`` (one clause to say when the grade is poor). ``grade`` is the worst graded check, and
+    means) and ``warning`` (one clause to say when the grade is poor). The ``order`` check is present only
+    when pairs were judged in both orders. ``grade`` is the worst graded check, and
     ``line`` says it in one plain sentence. Thresholds are rules of thumb, not statistical tests.
     """
     d = diagnostics
@@ -35,23 +36,25 @@ def judge_checks(diagnostics: dict[str, Any]) -> dict[str, Any]:
     first_both = d.get("first_shown_won_both")
     second_both = d.get("second_shown_won_both")
     bias = None if first is None else abs(first - 0.5)
+    # A gap from 50% that chance alone gives often is not graded: on 16 verdicts a fair judge is off by 25 points
+    # one time in twenty. 1.96 and 2.58 standard errors are the 95% and 99% two-sided bounds.
+    se = 0.5 / max(1, d.get("decided") or 0) ** 0.5
 
-    if order is None:
-        order_note = "Only measured when each pair is judged in both orders."
-    else:
+    checks = []
+    if order is not None:  # only measured when each pair is judged in both orders
         order_note = "Across %d pairs. The rest flipped when the texts swapped places, and count as draws." % (
             d.get("pairs_both_orders") or 0)
         if first_both is not None and second_both is not None and order < 1:
             order_note += " In %s of pairs the first-shown text won both times; in %s the second-shown did." % (
                 _pct(first_both), _pct(second_both))
-    checks = [
-        {"key": "order", "label": "Same winner in both orders", "value": order, "shown": _pct(order),
-         "grade": None if order is None else _grade(order >= 0.85, order >= 0.7), "note": order_note,
-         "warning": "the judge often changed its mind when the two texts swapped places"},
+        checks.append({"key": "order", "label": "Same winner in both orders", "value": order, "shown": _pct(order),
+                       "grade": _grade(order >= 0.85, order >= 0.7), "note": order_note,
+                       "warning": "the judge often changed its mind when the two texts swapped places"})
+    checks += [
         {"key": "position", "label": "First-shown text wins", "value": first, "shown": _pct(first),
-         "grade": None if bias is None else _grade(bias <= 0.05, bias <= 0.12),
-         "note": "50% means no position bias. Judging both orders cancels the bias out of the ranking, but "
-                 "verdicts swayed by position carry less information.",
+         "grade": None if bias is None else _grade(bias <= 0.05 or bias < 1.96 * se, bias <= 0.12 or bias < 2.58 * se),
+         "note": "50% means no position bias. Each text is shown first about half the time, so the bias "
+                 "cancels out of the ranking, but verdicts swayed by position carry less information.",
          "warning": "the judge strongly favoured whichever text it read %s" % (
              "first" if (first or 0.5) >= 0.5 else "second")},
         {"key": "split", "label": "Split-half reliability", "value": split,
@@ -120,6 +123,54 @@ def tiers(leaderboard: list[dict[str, Any]]) -> list[list[dict[str, Any]]]:
     return out
 
 
+IN, OUT = 0.95, 0.05  # a top-N place is settled in at >= 95% and settled out at <= 5%
+
+
+def display_groups(leaderboard: list[dict[str, Any]], top_n: int | None = None) -> list[dict[str, Any]]:
+    """The leaderboard in display groups, best first: ``[{key, label, tier, close, item_ids}]``.
+
+    Top-N runs (``top_n`` below the item count, with ``p_top_n`` on every row) get at most three groups, in
+    rank order. **Close calls** is the contiguous span of ranks from the first to the last item whose chance
+    of a top-N place is between 5% and 95%. **Settled** is every item above that span (each has a chance of
+    at least 95%). Everything below the span is one **out** group. With no item in between, settled is the
+    leading run of items at 95% or more and the rest are out. Labels read "2 settled in the top 5",
+    "3 places left · 5 contenders" and "33 out".
+
+    Full rankings get one group per clear tier (``tiers``): a new group starts where every rank range above
+    ends before every rank range below begins. A set the judge cannot separate is honestly one group.
+
+    ``tier`` is a colour step from 1 (best) to 4; ``close`` marks the contested group.
+    """
+    n = len(leaderboard)
+    if not n:
+        return []
+    if top_n and top_n < n and all(r.get("p_top_n") is not None for r in leaderboard):
+        open_ = [i for i, r in enumerate(leaderboard) if OUT < r["p_top_n"] < IN]
+        if open_:
+            start, end = open_[0], open_[-1] + 1
+        else:
+            start = next((i for i, r in enumerate(leaderboard) if r["p_top_n"] < IN), n)
+            end = start
+        settled, close, out = leaderboard[:start], leaderboard[start:end], leaderboard[end:]
+        left = max(0, top_n - len(settled))
+        groups = [
+            ("settled", "%d settled in the top %d" % (len(settled), top_n), 1, False, settled),
+            ("close", "%d place%s left · %d contender%s" % (left, "" if left == 1 else "s", len(close),
+                                                         "" if len(close) == 1 else "s"), 2, True, close),
+            ("out", "%d out" % len(out), 3, False, out),
+        ]
+    else:
+        found = tiers(leaderboard)
+        k = len(found)
+        groups = []
+        for i, rows in enumerate(found):
+            lo, hi = rows[0]["rank"], rows[-1]["rank"]
+            groups.append(("tier-%d" % (i + 1), "Rank %d" % lo if lo == hi else "Ranks %d-%d" % (lo, hi),
+                           2 if k == 1 else 1 + round(3 * i / (k - 1)), False, rows))
+    return [{"key": key, "label": label, "tier": tier, "close": close, "item_ids": [r["item_id"] for r in rows]}
+            for key, label, tier, close, rows in groups if rows]
+
+
 def _name(row: dict[str, Any]) -> str:
     return str(row.get("title") or row["item_id"])
 
@@ -149,21 +200,26 @@ def summarize(leaderboard: list[dict[str, Any]], diagnostics: dict[str, Any], fi
     # Mostly tied: fewer than one pair in five is reliably ordered (their rank ranges do not overlap).
     los = sorted(r["rank_lo"] for r in leaderboard)
     ordered = sum(n - bisect.bisect_right(los, r["rank_hi"]) for r in leaderboard)
-    if n > 2 and ordered < 0.2 * n * (n - 1) / 2:
-        sentence = "The judge can't reliably separate most of these items. Add rounds or sharpen the rubric."
-    elif top_n and top_n < n and all(r.get("p_top_n") is not None for r in leaderboard):
-        n_top = top_n
-        settled = [r for r in leaderboard if r["p_top_n"] >= 0.95]
-        contested = [r for r in leaderboard if 0.05 < r["p_top_n"] < 0.95]
-        if len(settled) >= n_top:
-            shown = _names(settled[:n_top]) if n_top <= 5 else "see below"
-            sentence = "The top %d are settled: %s." % (n_top, shown)
+    shown_groups = display_groups(leaderboard, top_n)
+    by_key = {g["key"]: g for g in shown_groups}
+    top_n_run = top_n is not None and not shown_groups[0]["key"].startswith("tier-")
+    if top_n_run and top_n:  # say exactly what the groups say
+        settled = by_key.get("settled", {}).get("item_ids", [])
+        contenders = len(by_key.get("close", {}).get("item_ids", []))
+        rows = {r["item_id"]: r for r in leaderboard}
+        if not contenders and len(settled) >= top_n:
+            shown = _names([rows[i] for i in settled[:top_n]]) if top_n <= 5 else "see below"
+            sentence = "The top %d are settled: %s." % (top_n, shown)
         elif not settled:
             sentence = "None of the top %d places is settled yet; %d items are contesting them." % (
-                n_top, len(contested))
+                top_n, contenders)
         else:
-            sentence = "%d of the top %d are settled; %d items are contesting the last %d place%s." % (
-                len(settled), n_top, len(contested), n_top - len(settled), "" if n_top - len(settled) == 1 else "s")
+            left = top_n - len(settled)
+            sentence = "%d of the top %d %s settled; %d item%s contesting the last %d place%s." % (
+                len(settled), top_n, "is" if len(settled) == 1 else "are", contenders,
+                " is" if contenders == 1 else "s are", left, "" if left == 1 else "s")
+    elif n > 2 and ordered < 0.2 * n * (n - 1) / 2:
+        sentence = "The judge can't reliably separate most of these items. Add rounds or sharpen the rubric."
     elif top["rank_hi"] == 1:
         phrase = False
         sentence = "%s is first, clearly." % _name(top) if trusted else "%s ranks first." % _name(top)
@@ -171,7 +227,7 @@ def summarize(leaderboard: list[dict[str, Any]], diagnostics: dict[str, Any], fi
         phrase = False
         k = sum(r["rank_lo"] == 1 for r in leaderboard)
         sentence = "%s ranks first, but any of the top %d could be first." % (_name(top), max(k, 2))
-    if len(groups) > 1 and not sentence.startswith("The judge can't"):
+    if len(groups) > 1 and not sentence.startswith("The judge can't") and not top_n_run:
         sentence += " %d clear tiers." % len(groups)
     if not final:
         sentence = "So far, " + (sentence[0].lower() + sentence[1:] if phrase else sentence)

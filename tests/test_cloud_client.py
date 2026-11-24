@@ -39,13 +39,13 @@ def test_push_estimate_run_wait_results(docs):
     with make(api) as sp:
         ds = sp.datasets.push(docs)
         assert ds.name == "docs" and ds.n_items == 3
-        assert [i.title for i in ds.items or []] == ["a.md", "b.txt", "sub/c.html"]
+        assert [i.source_id for i in ds.items or []] == ["a.md", "b.txt", "c.html"]  # uploaded: file names
         assert {s["path"] for s in ds.skipped} == {"empty.md", "image.png"}
 
-        est = sp.runs.estimate(ds.id, "Which is best?", provider="mock", rounds=2)
+        est = sp.runs.estimate(ds.id, "Which is best?", judge="mock", rounds=2)
         assert est.max_calls == 12 and est.describe() == "3 items, 3 to 12 judge calls, free, about 12 seconds"
 
-        run = sp.runs.create(ds.id, "Which is best?", provider="mock", model="mock", rounds=2, max_cost_usd=1.0)
+        run = sp.runs.create(ds.id, "Which is best?", judge="mock", rounds=2, max_cost_usd=1.0)
         assert run.status == "queued" and run.type == "ranking" and run.config["rubric"] == "Which is best?"
         seen = []
         run = sp.runs.wait(run.id, on_progress=lambda r: seen.append(r.status), poll_interval=0)
@@ -53,16 +53,16 @@ def test_push_estimate_run_wait_results(docs):
         assert any(r.url.path.endswith("/events") for r in api.requests)
 
         res = sp.runs.results(run.id)
-        assert res.final and res.summary == "a.md ranks first."
-        assert [e.title for e in res.leaderboard] == ["a.md", "b.txt", "sub/c.html"]
+        assert res.final and res.summary == "%s ranks first." % res.leaderboard[0].title
+        assert [e.source_id for e in res.leaderboard] == ["a.md", "b.txt", "c.html"]
         assert res.leaderboard[0].rank_hi == 1 and res.interval == "90%"
         assert sp.datasets.list().data[0].id == ds.id
         assert [d.id for d in sp.datasets.iter()] == [ds.id]
 
 
 def test_run_body_shape():
-    body = run_body("ds1", "Clearer?", provider="mock", rounds=3, goal="top_n", top_n=2, seed=None)
-    assert body == {"type": "ranking", "dataset_id": "ds1", "judge": {"provider": "mock"},
+    body = run_body("ds1", "Clearer?", judge="mock", rounds=3, goal="top_n", top_n=2, seed=None)
+    assert body == {"type": "ranking", "dataset_id": "ds1", "judge": "mock",
                     "ranking": {"rubric": "Clearer?", "rounds": 3, "goal": "top_n", "top_n": 2}}
     with pytest.raises(TypeError):
         run_body("ds1", "x", round=3)
@@ -137,7 +137,7 @@ async def test_async_client(docs):
         run = await sp.runs.create(ds.id, "Which is best?")
         run = await sp.runs.wait(run.id, poll_interval=0)
         assert run.status == "done"
-        assert (await sp.runs.results(run.id)).leaderboard[0].title == "a.md"
+        assert (await sp.runs.results(run.id)).leaderboard[0].source_id == "a.md"
         assert [d.id async for d in sp.datasets.iter()] == [ds.id]
         canceled = await sp.runs.cancel((await sp.runs.create(ds.id, "x")).id)
         assert canceled.status == "canceled"
@@ -179,7 +179,7 @@ def test_billing_and_pricing_client():
         assert p.provisional and p.unit_chars == 24000 and p.tiers[0].name == "economy"
     with make(api) as sp:
         ds = sp.datasets.create("d", [{"title": "a", "text": "a"}, {"title": "b", "text": "b"}])
-        est = sp.runs.estimate(ds.id, "x", provider="openrouter")
+        est = sp.runs.estimate(ds.id, "x", judge="quick")
         assert est.billed and est.price_tier == "economy" and est.price_per_call_usd == 0.004
         assert est.describe() == "2 items, 2 to 8 judge calls, up to $0.03 of credit at $0.004 a call (economy tier), about 12 seconds"
         api.refuse_runs_for_credit = True

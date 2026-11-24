@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import asyncio
 from collections.abc import Callable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from . import judge, report
@@ -29,7 +29,7 @@ class Ranking:
     judge call with its verdict and reasoning. ``note`` says why the run stopped early, if it did. ``cost_usd``
     is the recorded spend (zero for providers that do not report a price). ``summary`` is the verdict in plain
     words (``supposing.summarize``). ``interval`` is the confidence level of every interval and ``n_bootstrap``
-    the number of resamples behind them. ``calls_saved`` is how many calls fewer than the fixed plan
+    the number of resamples behind them. ``groups`` is the leaderboard split for display (``supposing.display_groups``). ``calls_saved`` is how many calls fewer than the fixed plan
     (``planned_calls``) the run made, when a top-N run stopped early or the spend cap was reached.
     """
 
@@ -42,6 +42,7 @@ class Ranking:
     interval: str = "90%"
     n_bootstrap: int = 0
     calls_saved: int = 0
+    groups: list[dict[str, Any]] = field(default_factory=list)
 
     def top(self, n: int) -> list[dict[str, Any]]:
         """The best ``n`` leaderboard rows."""
@@ -134,7 +135,7 @@ async def run_ranking(
     summary = report.summarize(res["leaderboard"], res["diagnostics"], top_n=top_n)
     saved = max(0, planned_calls(len(item_list), cfg) - len(comparisons))
     return Ranking(res["leaderboard"], res["diagnostics"], comparisons, note, spent(comparisons), summary,
-                   res["interval"], res["n_bootstrap"], saved)
+                   res["interval"], res["n_bootstrap"], saved, res["groups"])
 
 
 def _as_items(docs: Mapping[str, str] | Sequence[str] | Sequence[Item]) -> list[Item]:

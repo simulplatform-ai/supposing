@@ -31,7 +31,8 @@ async def test_ranking_recovers_latent_order():
     assert top[0] in {"doc15", "doc14"}
     assert set(top) <= {"doc15", "doc14", "doc13", "doc12"}
     assert len([c for c in ranking.comparisons if c.status == "done"]) == planned_calls(16, RankConfig(rounds=10))
-    assert ranking.diagnostics["order_consistency"] is not None
+    assert ranking.diagnostics["order_consistency"] is None  # one order: no order check
+    assert "order" not in {c["key"] for c in ranking.diagnostics["reliability"]["checks"]}
 
 
 def test_rank_sync_entry_point():
@@ -46,7 +47,9 @@ def test_plan_round_is_deterministic():
     a, _ = plan_round(items, [], cfg, 1)
     b, _ = plan_round(items, [], cfg, 1)
     assert [(c.id, c.item_a, c.item_b) for c in a] == [(c.id, c.item_a, c.item_b) for c in b]
-    assert len(a) == 10  # 5 pairs, both orders
+    assert len(a) == 5  # 5 pairs, one order each
+    both, _ = plan_round(items, [], RankConfig(rounds=3, seed=7, both_orders=True), 1)
+    assert len(both) == 10
 
 
 def test_next_action_stops_at_round_limit():
@@ -93,7 +96,7 @@ def test_kill_and_resume(tmp_path):
     for item in corpus(30):
         (folder / ("%s.md" % item.id)).write_text(item.text)
     state = tmp_path / "state.db"
-    cmd = [sys.executable, "-m", "supposing.cli", "rank", str(folder), "--rubric", "Better?", "--provider",
+    cmd = [sys.executable, "-m", "supposing.cli", "rank", str(folder), "--rubric", "Better?", "--judge",
            "mock", "--rounds", "10", "--concurrency", "4", "--state", str(state), "--json"]
     env = {**os.environ, "PYTHONUNBUFFERED": "1"}
 

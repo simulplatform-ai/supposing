@@ -33,8 +33,8 @@ class RankConfig:
     read raises ``ConfigError``. ``from_dict`` and ``to_dict`` round-trip the settings as plain JSON.
 
     - ``rounds``: opponents per item. Each round pairs every item once.
-    - ``both_orders``: judge every pair twice, swapping which text the judge reads first. This cancels the
-      judge's preference for one position, at twice the calls.
+    - ``both_orders``: judge every pair twice, once in each order. Twice the calls; adds the order check. Off,
+      each pair is judged once with a random text first, which cancels position bias across the ranking.
     - ``pairing``: ``"swiss"`` meets items of similar current rating; ``"random"`` pairs uniformly;
       ``"round_robin"`` plans every pair in each round, so all calls can run at once. For small sets:
       n items make n(n-1)/2 pairs per round, so ``rounds=1`` is usually enough.
@@ -49,7 +49,7 @@ class RankConfig:
     """
 
     rounds: int = 8  # opponents per item
-    both_orders: bool = True  # judge every pair twice, swapping which text comes first
+    both_orders: bool = False  # judge every pair twice, once in each order
     pairing: Literal["swiss", "random", "round_robin"] = "swiss"
     goal: Literal["full", "top_n"] = "full"
     top_n: int = 10
@@ -319,14 +319,15 @@ def _band_and_anchors(status: dict[str, str], ratings: dict[str, float]) -> list
 
 def results(items: list[Item], comparisons: list[Comparison], top_n: int | None = None, seed: int = 0
             ) -> dict[str, Any]:
-    """The ranking so far: ``{"leaderboard", "diagnostics", "n_bootstrap", "interval"}``.
+    """The ranking so far: ``{"leaderboard", "diagnostics", "n_bootstrap", "interval", "groups"}``.
 
     Each leaderboard row has ``item_id``, ``title``, ``n_words``, ``rating`` (Elo scale: mean 1500, and a
     400-point gap means 10:1 odds), ``rating_lo``/``rating_hi`` (90% interval), ``rank`` and
     ``rank_lo``/``rank_hi`` (90% range), ``wins``, ``losses``, and ``p_top_n`` when ``top_n`` is given.
     Rows are sorted best first. Undecided and failed comparisons are ignored.
 
-    ``diagnostics`` holds the judge checks as numbers, and ``diagnostics["reliability"]`` grades them in words
+    ``groups`` splits the leaderboard for display (``supposing.display_groups``): settled, close calls and out
+    for a top-N run, clear tiers otherwise. ``diagnostics`` holds the judge checks as numbers, and ``diagnostics["reliability"]`` grades them in words
     (see ``supposing.report.judge_checks``).
 
     Intervals come from resampling pairs, so they reflect how much the verdicts would move with a different
@@ -336,6 +337,7 @@ def results(items: list[Item], comparisons: list[Comparison], top_n: int | None 
     out = rating.compute_results([it.meta() for it in items], [c.as_rating_row() for c in decided(comparisons)],
                                  top_n=top_n, seed=seed)
     out["diagnostics"]["reliability"] = report.judge_checks(out["diagnostics"])
+    out["groups"] = report.display_groups(out["leaderboard"], top_n)
     return out
 
 

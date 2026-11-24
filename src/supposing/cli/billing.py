@@ -112,10 +112,14 @@ def pricing(args: argparse.Namespace) -> int:
     print(table([[t.name, "$%.4f" % t.price_per_call_usd if t.price_per_call_usd < 0.01 else "$%.3f" % t.price_per_call_usd,
                   ", ".join(t.examples)] for t in p.tiers], ["tier", "per call", "for example"], right={1}))
     print()
-    print("One call reads up to %s characters of the two items together; a longer pair counts as more calls." %
-          f"{p.unit_chars:,}")
-    print("Runs on your own OpenRouter key, the mock judge and claude_cli are free. New workspaces get %s of credit."
-          % _usd(p.free_grant_usd))
+    print("One call is up to %s characters of everything the judge reads: both items, the rubric and our "
+          "instructions. A longer call counts as more than one." % f"{p.unit_chars:,}")
+    line = "Runs on your own OpenRouter key are never billed."
+    if p.min_topup_usd:
+        line += " Credit is added in whole dollars, from %s." % _usd(p.min_topup_usd)
+    if p.free_grant_usd > 0:
+        line += " New workspaces get %s of credit." % _usd(p.free_grant_usd)
+    print(line)
     return OK
 
 

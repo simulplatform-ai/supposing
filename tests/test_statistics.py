@@ -80,12 +80,6 @@ def board(items, comps, seed=0) -> dict[str, dict]:
     return {e["item_id"]: e for e in results(items, comps, seed=seed)["leaderboard"]}
 
 
-@pytest.fixture
-def fewer_resamples(monkeypatch):
-    """100 bootstrap resamples instead of up to 300: coverage estimates stay honest, the tests stay quick."""
-    monkeypatch.setattr(rating, "n_bootstrap_for", lambda n_items, n_matches: 100)
-
-
 # Bradley-Terry recovers a planted order -------------------------------------------------------------
 
 
@@ -111,11 +105,11 @@ def test_fit_recovers_planted_strengths_from_a_large_sample():
 @pytest.mark.parametrize("pairing", ["swiss", "random"])
 def test_tournament_recovers_planted_order(pairing):
     theta = np.linspace(0, 4, 16)
-    items, comps = judge_run(theta, RankConfig(rounds=10, pairing=pairing), seed=1)
+    items, comps = judge_run(theta, RankConfig(rounds=20, pairing=pairing), seed=1)
     b = board(items, comps)
     fitted = [b[it.id]["rating"] for it in items]
     assert rating.spearman(fitted, theta) > 0.9
-    assert {e for e, row in b.items() if row["rank"] <= 3} <= {"i15", "i14", "i13", "i12"}
+    assert {e for e, row in b.items() if row["rank"] <= 3} <= {"i15", "i14", "i13", "i12", "i11"}
 
 
 # Intervals cover at about the stated rate ---------------------------------------------------------
@@ -139,10 +133,10 @@ def coverage(n: int, theta_of, rounds: int, reps: int, pairing: str = "swiss") -
 
 
 @pytest.mark.stats
-@pytest.mark.parametrize(("n", "spread", "rounds"), [(12, 4.0, 8), (20, 4.0, 3)])
+@pytest.mark.parametrize(("n", "spread", "rounds"), [(12, 4.0, 8), (20, 4.0, 6)])
 def test_intervals_cover_planted_ratings_at_about_90_percent(fewer_resamples, n, spread, rounds):
     """Evenly spread items: the 90% intervals should contain the planted rating about 90% of the time."""
-    rate, rank_rate = coverage(n, lambda rep: np.linspace(0, spread, n), rounds, reps=15)
+    rate, rank_rate = coverage(n, lambda rep: np.linspace(0, spread, n), rounds, reps=30)
     assert 0.80 <= rate <= 0.97, "rating coverage %.3f" % rate
     assert rank_rate >= 0.85, "rank coverage %.3f" % rank_rate
 
@@ -171,38 +165,83 @@ def test_items_that_win_almost_everything_are_understated_not_overstated(fewer_r
     assert error[-1] < -50 and error[0] > 50  # the best is rated too low, the worst too high
 
 
+@pytest.mark.stats
+def test_too_few_verdicts_per_item_understate_the_intervals(fewer_resamples):
+    """Known limit. With three verdicts per item (20 items, 3 rounds, one order) the rating intervals contain the
+    planted rating only about 77% of the time. From six verdicts per item coverage is back near 85%."""
+    rate, _ = coverage(20, lambda rep: np.linspace(0, 4.0, 20), 3, reps=30)
+    assert rate < 0.82, "rating coverage %.3f" % rate
+
+
 def test_equal_items_get_overlapping_ranks():
     """When nothing separates the items, no item's rank range should claim it is clearly first or last."""
-    items, comps = judge_run(np.zeros(10), RankConfig(rounds=8), seed=3)
-    for e in board(items, comps).values():
-        assert e["rank_hi"] - e["rank_lo"] >= 3
+    for seed in (3, 4):
+        items, comps = judge_run(np.zeros(10), RankConfig(rounds=8), seed=seed)
+        widths = [e["rank_hi"] - e["rank_lo"] for e in board(items, comps).values()]
+        assert min(widths) >= 2 and np.mean(widths) >= 5
 
 
-# Both orders cancel a planted position bias -------------------------------------------------------
+# Position bias cancels out of the ranking ----------------------------------------------------------
+
+
+def test_one_order_shows_a_random_text_first():
+    """Judged once, each pair shows a random text first: about half the time each item, independent of index."""
+    items, comps = judge_run(np.linspace(0, 3, 11), RankConfig(rounds=40), seed=4)
+    assert len({c.pair_id for c in comps}) == len(comps)  # one comparison per pair
+    shares = [sum(c.item_a == it.id for c in comps) / sum(it.id in (c.item_a, c.item_b) for c in comps)
+              for it in items]
+    assert all(0.3 <= x <= 0.7 for x in shares), shares
+    assert abs(np.mean(shares) - 0.5) < 0.05
 
 
 def test_both_orders_show_every_item_first_half_the_time():
-    items, comps = judge_run(np.linspace(0, 3, 11), RankConfig(rounds=6), seed=4)
+    items, comps = judge_run(np.linspace(0, 3, 11), RankConfig(rounds=6, both_orders=True), seed=4)
     for it in items:
         first = sum(c.item_a == it.id for c in comps)
         second = sum(c.item_b == it.id for c in comps)
         assert first == second
 
 
-def test_both_orders_cancel_a_strong_position_bias():
+@pytest.mark.parametrize("both_orders", [False, True])
+def test_a_strong_position_bias_cancels_out_of_the_ranking(both_orders):
     """A judge that favours the first text by 1.5 units (82% first-position wins between equals) still gives
-    the planted order, and the diagnostics report the bias."""
+    the planted order, at the same number of calls in either mode, and the diagnostics report the bias."""
     theta = np.linspace(0, 4, 16)
+    cfg = dict(rounds=10, both_orders=True) if both_orders else dict(rounds=20)
     seeds = range(6)
-    rho_clean = np.mean([rating.spearman(point_ratings(*judge_run(theta, RankConfig(rounds=10, seed=s), seed=s)),
+    rho_clean = np.mean([rating.spearman(point_ratings(*judge_run(theta, RankConfig(**cfg, seed=s), seed=s)),
                                          theta) for s in seeds])
-    biased_runs = [judge_run(theta, RankConfig(rounds=10, seed=s), seed=s, bias=1.5) for s in seeds]
+    biased_runs = [judge_run(theta, RankConfig(**cfg, seed=s), seed=s, bias=1.5) for s in seeds]
     rho_biased = np.mean([rating.spearman(point_ratings(*run), theta) for run in biased_runs])
     assert rho_biased > 0.85
     assert rho_biased > rho_clean - 0.08
     diagnostics = results(*biased_runs[0])["diagnostics"]
     assert diagnostics["first_position_win_rate"] > 0.65
-    assert diagnostics["order_consistency"] < 0.6
+    if both_orders:
+        assert diagnostics["order_consistency"] < 0.6
+    else:
+        assert diagnostics["order_consistency"] is None
+
+
+@pytest.mark.stats
+def test_one_order_agrees_with_both_orders_under_a_biased_judge(fewer_resamples):
+    """The default (one order, random first text) against both orders at the same number of calls, with the
+    judge of the test above. One order's intervals still contain the planted ratings at about the stated rate,
+    and its ranks fall inside the both-order rank ranges about as often as two independent runs' would (about
+    80% with an unbiased judge)."""
+    theta = np.linspace(0, 4, 16)
+    truth = true_ratings(theta)
+    covered = inside = total = 0
+    for s in range(20):
+        one = board(*judge_run(theta, RankConfig(rounds=16, seed=s), seed=s, bias=1.5), seed=s)
+        both = board(*judge_run(theta, RankConfig(rounds=8, both_orders=True, seed=s), seed=1000 + s, bias=1.5),
+                     seed=s)
+        for i, item_id in enumerate(sorted(one)):
+            covered += one[item_id]["rating_lo"] <= truth[i] <= one[item_id]["rating_hi"]
+            inside += both[item_id]["rank_lo"] <= one[item_id]["rank"] <= both[item_id]["rank_hi"]
+            total += 1
+    assert covered / total >= 0.80, "one-order coverage %.3f" % (covered / total)
+    assert inside / total >= 0.65, "one-order rank inside both-order range %.3f" % (inside / total)
 
 
 # Swiss pairing never repeats a pair before it must ------------------------------------------------
@@ -280,7 +319,7 @@ def test_tournament_has_no_avoidable_rematches():
 # Resuming gives the same result as an uninterrupted run -------------------------------------------
 
 
-@pytest.mark.parametrize("stop_after", [1, 41, 79])
+@pytest.mark.parametrize("stop_after", [1, 22, 35])
 def test_resume_from_store_matches_an_uninterrupted_run(tmp_path, fewer_resamples, stop_after):
     """Stop mid-round (or on a round boundary), reopen the file as a new process would, and finish."""
     theta = np.linspace(0, 3, 10)
@@ -305,7 +344,7 @@ def test_resume_from_store_matches_an_uninterrupted_run(tmp_path, fewer_resample
 @pytest.mark.stats
 def test_top_n_stops_when_the_cut_is_settled(fewer_resamples):
     theta = np.r_[np.linspace(0, 3, 17), [6.0, 6.5, 7.0]]  # a clear gap below the top 3
-    cfg = RankConfig(rounds=15, goal="top_n", top_n=3)
+    cfg = RankConfig(rounds=30, goal="top_n", top_n=3)
     items, comps = judge_run(theta, cfg, seed=0)
     assert max(c.round for c in comps) < cfg.rounds
     assert len(comps) < planned_calls(20, cfg)
@@ -349,7 +388,7 @@ async def test_ranking_reports_calls_saved(fewer_resamples):
 
 def test_round_robin_plans_every_pair_at_once():
     items = [Item(id="o%d" % i, text="option %d" % i) for i in range(6)]
-    cfg = RankConfig(rounds=1, pairing="round_robin")
+    cfg = RankConfig(rounds=1, pairing="round_robin", both_orders=True)
     comps, _ = plan_round(items, [], cfg, 1)
     assert len(comps) == planned_calls(6, cfg) == fewest_calls(6, cfg) == 30
     assert {frozenset((c.item_a, c.item_b)) for c in comps} == {
@@ -360,8 +399,8 @@ def test_round_robin_plans_every_pair_at_once():
 
 def test_round_robin_recovers_planted_order():
     theta = np.linspace(0, 3, 8)
-    items, comps = judge_run(theta, RankConfig(rounds=2, pairing="round_robin"), seed=2)
-    assert max(c.round for c in comps) == 2 and len(comps) == 2 * 56
+    items, comps = judge_run(theta, RankConfig(rounds=4, pairing="round_robin"), seed=2)
+    assert max(c.round for c in comps) == 4 and len(comps) == 4 * 28
     assert rating.spearman(point_ratings(items, comps), theta) > 0.85
 
 

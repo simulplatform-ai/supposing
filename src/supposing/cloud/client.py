@@ -31,6 +31,7 @@ from .models import (
     Comparison,
     Dataset,
     Estimate,
+    ImportPreview,
     Item,
     LedgerEntry,
     Me,
@@ -54,6 +55,8 @@ class _Call[T]:
     json: Any = None
     params: dict[str, Any] = field(default_factory=dict)
     auth: bool = True  # False for the few public routes, which work without an API key
+    files: list[tuple[str, tuple[str, bytes]]] | None = None  # multipart uploads: (field, (filename, content))
+    data: dict[str, str] | None = None  # multipart form fields
 
     @property
     def idempotent(self) -> bool:
@@ -75,9 +78,11 @@ def _params(**kw: Any) -> dict[str, Any]:
 
 
 def run_body(dataset_id: str, rubric: str, *, type: str = "ranking", name: str | None = None,
-             provider: str | None = None, model: str | None = None, max_cost_usd: float | None = None,
+             judge: str | dict[str, Any] | None = None, max_cost_usd: float | None = None,
              ephemeral: bool = False, **options: Any) -> dict[str, Any]:
-    """The JSON body of a run request. ``options`` are the run type's own (for a ranking: rounds, goal, ...)."""
+    """The JSON body of a run request. ``judge`` is quick (the default), balanced, thorough, an OpenRouter model
+    id, mock or claude_cli, or a ``{provider, model}`` object. ``options`` are the run type's own (for a ranking:
+    rounds, goal, ...)."""
     unknown = set(options) - set(RANKING_OPTIONS)
     if unknown:
         raise TypeError("Unknown ranking options: %s" % ", ".join(sorted(unknown)))
@@ -85,8 +90,7 @@ def run_body(dataset_id: str, rubric: str, *, type: str = "ranking", name: str |
                             type: {"rubric": rubric, **{k: v for k, v in options.items() if v is not None}}}
     if name:
         body["name"] = name
-    judge = _params(provider=provider, model=model)
-    if judge:
+    if judge is not None:
         body["judge"] = judge
     if max_cost_usd is not None:
         body["max_cost_usd"] = max_cost_usd
@@ -109,6 +113,15 @@ class _Requests:
     @staticmethod
     def usage() -> _Call[dict[str, Any]]:
         return _Call("GET", "/v1/usage", dict)
+
+    @staticmethod
+    def models(params: dict[str, Any]) -> _Call[dict[str, Any]]:
+        return _Call("GET", "/v1/models", dict, params=_params(**params))
+
+    @staticmethod
+    def samples_run(sample_id: str, judge: str | dict[str, Any] | None) -> _Call[Run]:
+        body = {"judge": judge} if judge is not None else None
+        return _Call("POST", "/v1/samples/%s/run" % sample_id, Run.parse, json=body)
 
     @staticmethod
     def pricing() -> _Call[Pricing]:
@@ -145,6 +158,24 @@ class _Requests:
         if ephemeral:
             body["ephemeral"] = True
         return _Call("POST", "/v1/datasets", Dataset.parse, json=body)
+
+    @staticmethod
+    def datasets_upload(name: str, files: list[tuple[str, bytes]], redact: bool, ephemeral: bool) -> _Call[Dataset]:
+        data = {"name": name, **({"redact": "true"} if redact else {}), **({"ephemeral": "true"} if ephemeral else {})}
+        return _Call("POST", "/v1/datasets/upload", Dataset.parse, files=[("files", f) for f in files], data=data)
+
+    @staticmethod
+    def imports_create(filename: str, content: bytes, sheet: str | None) -> _Call[ImportPreview]:
+        return _Call("POST", "/v1/imports", ImportPreview.parse, files=[("file", (filename, content))],
+                     data={"sheet": sheet} if sheet else None)
+
+    @staticmethod
+    def imports_commit(import_id: str, name: str, mapping: dict[str, Any], sheet: str | None,
+                       ephemeral: bool) -> _Call[Dataset]:
+        body: dict[str, Any] = {"name": name, "mapping": mapping, **_params(sheet=sheet)}
+        if ephemeral:
+            body["ephemeral"] = True
+        return _Call("POST", "/v1/imports/%s/commit" % import_id, Dataset.parse, json=body)
 
     @staticmethod
     def datasets_add_items(dataset_id: str, items: list[dict[str, str]]) -> _Call[Dataset]:
@@ -197,41 +228,108 @@ class _Requests:
 R = _Requests
 
 
-def _folder_items(source: str | Path, text_fields: list[str] | None = None, id_field: str | None = None,
-                  title_field: str | None = None, metadata_fields: list[str] | None = None
-                  ) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
-    """Items from a folder (one file each) or a JSONL, JSON or CSV file (one row each)."""
-    if is_table(source):
+SPREADSHEETS = (".csv", ".tsv", ".xlsx", ".xls")  # parsed by the server's import, with its column mapping
+DOCUMENTS = (".pdf", ".docx")  # converted to text by the server's upload
+
+
+@dataclass
+class _Push:
+    """How a source becomes a dataset: items sent as JSON, files uploaded, or a spreadsheet imported."""
+    kind: str  # "items" | "upload" | "import"
+    name: str
+    items: list[dict[str, Any]] = field(default_factory=list)
+    files: list[tuple[str, bytes]] = field(default_factory=list)
+    skipped: list[dict[str, str]] = field(default_factory=list)
+    path: Path | None = None
+    mapping: dict[str, Any] = field(default_factory=dict)  # the caller's fields; the server's guess fills the rest
+
+
+def _plan_push(source: str | Path, name: str | None, redact: bool, text_fields: list[str] | None,
+               id_field: str | None, title_field: str | None, metadata_fields: list[str] | None) -> _Push:
+    path = Path(source)
+    fields = {"text_fields": text_fields, "id_field": id_field, "title_field": title_field,
+              "metadata_fields": metadata_fields}
+    given = {k: v for k, v in fields.items() if v}
+    name = name or path.resolve().name
+    if path.is_file() and path.suffix.lower() in SPREADSHEETS:
+        return _Push("import", name, path=path, mapping=given)
+    if is_table(path):  # JSONL and JSON: read here, sent as items with their source ids
         try:
-            recs = read_records(source, text_fields, id_field, title_field, metadata_fields)
+            recs = read_records(path, text_fields, id_field, title_field, metadata_fields)
         except RecordsError as exc:
             raise CloudError(str(exc), code="invalid_file", hint=exc.hint) from exc
-        name = Path(source).name
-        items: list[dict[str, Any]] = []
+        items = []
         for r in recs.items:
-            item: dict[str, Any] = {"title": r.title, "text": r.text, "filename": "%s#%s" % (name, r.source_id),
-                                    "source_id": r.source_id}
+            item: dict[str, Any] = {"title": r.title, "text": r.text, "source_id": r.source_id}
             if r.metadata:
                 item["metadata"] = r.metadata
             items.append(item)
-        skipped = [{"path": "%s#%s" % (name, sid), "reason": why} for sid, why in recs.skipped]
         if not items:
-            raise CloudError("No rows of %s have text." % name, code="no_items",
+            raise CloudError("No rows of %s have text." % path.name, code="no_items",
                              hint="Check --text-field names the field with the text.")
-        return items, skipped
-    if text_fields or id_field or title_field or metadata_fields:
-        raise CloudError("text_fields, id_field, title_field and metadata_fields are for a JSONL, JSON or CSV file, "
-                         "and %s is not one." % source, code="usage",
-                         hint="Pass a .jsonl, .json or .csv file, or leave the fields out for a folder.")
-    found = read_folder(source)
-    if not found.items:
-        raise CloudError("No .md, .txt or .html files with text in %s." % source, code="no_items",
-                         hint="Point at a folder of documents, one document per file, or at a JSONL or CSV file.")
-    folder_items: list[dict[str, Any]] = [{"title": t, "text": x} for t, x in found.items]
-    return folder_items, [{"path": p, "reason": why} for p, why in found.skipped]
+        return _Push("items", name, items=items,
+                     skipped=[{"path": "%s#%s" % (path.name, sid), "reason": why} for sid, why in recs.skipped])
+    if given:
+        raise CloudError("text_fields, id_field, title_field and metadata_fields are for a JSONL, JSON, CSV or XLSX "
+                         "file, and %s is not one." % source, code="usage",
+                         hint="Pass a table file, or leave the fields out for a folder.")
+    if not path.is_dir():
+        raise FileNotFoundError("%s is not a folder or a .jsonl, .json, .csv or .xlsx file" % source)
+    # A folder is uploaded as files, as the web app does: the server turns PDF and DOCX into text, titles each item
+    # from its first heading (source_id from the file name), redacts on request and reports duplicates.
+    found = read_folder(path)
+    docs = sorted(p for p in path.rglob("*") if p.is_file() and p.suffix.lower() in DOCUMENTS
+                  and not any(part.startswith(".") for part in p.relative_to(path).parts))
+    files = [(t, (path / t).read_bytes()) for t, _ in found.items]
+    files += [(str(p.relative_to(path)), p.read_bytes()) for p in docs]
+    if not files:
+        raise CloudError("No .md, .txt, .html, .pdf or .docx files with text in %s." % source, code="no_items",
+                         hint="Point at a folder of documents, one per file, or at a JSONL, CSV or XLSX file.")
+    skipped = [{"path": p, "reason": "not .md, .txt, .html, .pdf or .docx"} for p, _ in found.skipped
+               if not p.lower().endswith(DOCUMENTS) and _ != "empty"]
+    skipped += [{"path": p, "reason": why} for p, why in found.skipped if why == "empty"]
+    # What the server will hold, to spot an identical earlier upload: each file's name, and its length for plain
+    # text, which the server keeps as it is.
+    compare = [{"filename": t.rsplit("/", 1)[-1], "n_chars": len(x) if t.lower().endswith((".md", ".txt")) else None}
+               for t, x in found.items]
+    compare += [{"filename": p.name, "n_chars": None} for p in docs]
+    return _Push("upload", name, files=files, skipped=skipped, items=compare)
 
 
+def _import_mapping(preview: ImportPreview, given: dict[str, Any]) -> dict[str, Any]:
+    """The server's guess, with whatever the caller named taking its place."""
+    mapping = {k: preview.mapping.get(k) for k in ("id_field", "title_field", "text_fields", "metadata_fields")}
+    mapping.update(given)
+    if "id_field" in given and "title_field" not in given:
+        mapping["title_field"] = None  # the title defaults to the id the caller chose, not the server's guess
+    mapping["metadata_fields"] = [f for f in mapping.get("metadata_fields") or []
+                                  if f not in (mapping.get("text_fields") or [])]
+    return mapping
 
+
+def _local_import_items(push: _Push, mapping: dict[str, Any]) -> list[dict[str, Any]] | None:
+    """For a CSV or TSV, the items the import will make, to spot an identical earlier upload. None for XLSX."""
+    if push.path is None or push.path.suffix.lower() not in (".csv", ".tsv"):
+        return None
+    try:
+        recs = read_records(push.path, mapping.get("text_fields"), mapping.get("id_field"),
+                            mapping.get("title_field"), mapping.get("metadata_fields"))
+    except RecordsError:
+        return None
+    return [{"title": r.title, "text": r.text} for r in recs.items]
+
+
+def _finish(ds: Dataset, push: _Push) -> Dataset:
+    """The skipped list in one shape, {path, reason}, whichever route made the dataset."""
+    skipped = list(push.skipped)
+    for s in ds.raw.get("skipped") or []:
+        if "row" in s:
+            skipped.append({"path": "%s#row %s" % (push.path.name if push.path else "", s["row"]),
+                            "reason": s.get("reason", "")})
+        else:
+            skipped.append({"path": s.get("filename") or s.get("path") or "", "reason": s.get("reason", "")})
+    ds.skipped = skipped
+    return ds
 
 
 def _event(line: str) -> RunEvent | None:
@@ -247,9 +345,15 @@ def _stream_error(exc: Exception) -> CloudError:
 
 
 def _same_items(ds: Dataset, items: list[dict[str, Any]]) -> bool:
-    """Whether a dataset already holds exactly these items (same titles, in order, with the same lengths)."""
-    held = [(i.title, i.n_chars) for i in ds.items or []]
-    return held == [(it["title"], len(it["text"])) for it in items]
+    """Whether a dataset already holds exactly these items: for uploaded files, the same file names (and lengths
+    where known); otherwise the same titles, in order, with the same lengths."""
+    if items and "filename" in items[0]:
+        held = sorted((i.raw.get("filename") or "", i.n_chars) for i in ds.items or [])
+        want = sorted((it["filename"], it["n_chars"]) for it in items)
+        return len(held) == len(want) and all(h[0] == w[0] and (w[1] is None or h[1] == w[1])
+                                              for h, w in zip(held, want, strict=True))
+    held_titles = [(i.title, i.n_chars) for i in ds.items or []]
+    return held_titles == [(it["title"], len(it["text"])) for it in items]
 
 
 def _parse_response[T](call: _Call[T], resp: httpx.Response) -> T:
@@ -306,7 +410,8 @@ class Client(_Base):
         attempt = 0
         while True:
             try:
-                resp = self._http.request(call.method, call.path, json=call.json, params=call.params or None)
+                resp = self._http.request(call.method, call.path, json=call.json, params=call.params or None,
+                                                   files=call.files, data=call.data)
             except httpx.TransportError as exc:
                 if call.idempotent and attempt < self.retries:
                     time.sleep(self._backoff(attempt))
@@ -333,6 +438,19 @@ class Client(_Base):
     def pricing(self) -> Pricing:
         """The price of a judge call on our model key, by tier. Needs no API key."""
         return self.send(R.pricing())
+
+    def models(self, dataset_id: str | None = None, *, filter: str | None = None, q: str | None = None,
+               **run: Any) -> dict[str, Any]:
+        """The judges this workspace can pick: ``levels`` (quick, balanced, thorough), then ``data`` (OpenRouter
+        models) and ``local`` (mock, claude_cli; empty when hosted). With a ``dataset_id`` each is priced for that
+        run; ``run`` takes its goal, top_n, rounds, both_orders and max_cost_usd. ``filter``: suggested, zdr or
+        cheapest. Pass an option's ``id`` as a run's judge."""
+        return self.send(R.models({"dataset_id": dataset_id, "filter": filter, "q": q, **run}))
+
+    def open_sample(self, sample_id: str, judge: str | dict[str, Any] | None = None) -> Run:
+        """A built-in sample copied into the workspace. Without a judge, its stored ranking as a finished run,
+        free and instant; with one, a new run, paid like any run."""
+        return self.send(R.samples_run(sample_id, judge))
 
     def close(self) -> None:
         self._http.close()
@@ -363,7 +481,8 @@ class AsyncClient(_Base):
         attempt = 0
         while True:
             try:
-                resp = await self._http.request(call.method, call.path, json=call.json, params=call.params or None)
+                resp = await self._http.request(call.method, call.path, json=call.json, params=call.params or None,
+                                                   files=call.files, data=call.data)
             except httpx.TransportError as exc:
                 if call.idempotent and attempt < self.retries:
                     await asyncio.sleep(self._backoff(attempt))
@@ -387,6 +506,13 @@ class AsyncClient(_Base):
 
     async def pricing(self) -> Pricing:
         return await self.send(R.pricing())
+
+    async def models(self, dataset_id: str | None = None, *, filter: str | None = None, q: str | None = None,
+                     **run: Any) -> dict[str, Any]:
+        return await self.send(R.models({"dataset_id": dataset_id, "filter": filter, "q": q, **run}))
+
+    async def open_sample(self, sample_id: str, judge: str | dict[str, Any] | None = None) -> Run:
+        return await self.send(R.samples_run(sample_id, judge))
 
     async def close(self) -> None:
         await self._http.aclose()
@@ -424,30 +550,44 @@ class Datasets:
         after 30 days: use it for one-off comparisons."""
         return self._c.send(R.datasets_create(name, items or [], ephemeral))
 
-    def push(self, folder: str | Path, name: str | None = None, reuse: bool = False, *,
-             text_fields: list[str] | None = None, id_field: str | None = None,
-             title_field: str | None = None,
-             metadata_fields: list[str] | None = None) -> Dataset:
-        """Create a dataset from a folder (every .md, .txt and .html file is one item, titled by its path) or from a
-        JSONL, JSON or CSV file (every row is one item). For a file, ``text_fields`` name the field(s) with the
-        text (joined under a heading each when several), ``id_field`` the row's id (kept as ``source_id``),
-        ``title_field`` the title (default: the id) and ``metadata_fields`` fields kept but never shown to the
-        judge. ``Dataset.skipped`` lists what was left out and why. With
-        ``reuse``, return an existing dataset of the same name that already holds the same items instead of
-        uploading again (``Dataset.reused`` is True)."""
-        items, skipped = _folder_items(folder, text_fields, id_field, title_field, metadata_fields)
-        name = name or Path(folder).resolve().name
-        ds = None
-        if reuse:
+    def push(self, source: str | Path, name: str | None = None, reuse: bool = False, *,
+             text_fields: list[str] | None = None, id_field: str | None = None, title_field: str | None = None,
+             metadata_fields: list[str] | None = None, sheet: str | None = None, redact: bool = False,
+             ephemeral: bool = False) -> Dataset:
+        """Create a dataset from a folder or a table file.
+
+        - A folder: every .md, .txt, .html, .pdf and .docx file is one item, titled by its path.
+        - A JSONL or JSON file: every row is one item, read here.
+        - A CSV, TSV or XLSX file: imported by the server, which guesses the columns; ``sheet`` picks a sheet.
+
+        For a table file, ``text_fields`` name the field(s) the judge reads (joined under a heading each when
+        several), ``id_field`` the row's id (kept as ``source_id`` in every output), ``title_field`` the title
+        (default: the id) and ``metadata_fields`` fields kept but never shown to the judge. ``redact`` removes
+        names, emails and phone numbers from what the judge reads (folders only). ``Dataset.skipped`` lists what
+        was left out and ``Dataset.duplicates`` likely duplicates. With ``reuse``, an existing dataset of the same
+        name holding the same items is returned instead (``Dataset.reused`` is True)."""
+        push = _plan_push(source, name, redact, text_fields, id_field, title_field, metadata_fields)
+        compare = push.items if push.kind in ("items", "upload") else None
+        preview = None
+        if push.kind == "import":
+            assert push.path is not None
+            preview = self._c.send(R.imports_create(push.path.name, push.path.read_bytes(), sheet))
+            push.mapping = _import_mapping(preview, push.mapping)
+            compare = _local_import_items(push, push.mapping)
+        if reuse and compare is not None:
             for d in self.iter():
-                if d.name == name and d.n_items == len(items):
+                if d.name == push.name and d.n_items == len(compare):
                     full = self.get(d.id)
-                    if _same_items(full, items):
-                        ds, ds.reused = full, True
-                        break
-        ds = ds or self.create(name, items)
-        ds.skipped = skipped
-        return ds
+                    if _same_items(full, compare):
+                        full.reused = True
+                        return _finish(full, push)
+        if preview is not None:
+            ds = self._c.send(R.imports_commit(preview.id, push.name, push.mapping, sheet, ephemeral))
+        elif push.kind == "upload":
+            ds = self._c.send(R.datasets_upload(push.name, push.files, redact, ephemeral))
+        else:
+            ds = self._c.send(R.datasets_create(push.name, push.items, ephemeral))
+        return _finish(ds, push)
 
     def add_items(self, dataset_id: str, items: list[dict[str, str]]) -> Dataset:
         return self._c.send(R.datasets_add_items(dataset_id, items))
@@ -496,13 +636,13 @@ class Runs:
         return self._c.send(R.runs_estimate(run_body(dataset_id, rubric, **kw)))
 
     def create(self, dataset_id: str, rubric: str, *, type: str = "ranking", name: str | None = None,
-               provider: str | None = None, model: str | None = None, max_cost_usd: float | None = None,
+               judge: str | dict[str, Any] | None = None, max_cost_usd: float | None = None,
                ephemeral: bool = False, **options: Any) -> Run:
-        """Start a run. ``options`` are the type's own: for a ranking, rounds, both_orders, pairing, goal,
-        top_n, max_chars, seed."""
-        return self._c.send(R.runs_create(run_body(dataset_id, rubric, type=type, name=name, provider=provider,
-                                                   model=model, max_cost_usd=max_cost_usd, ephemeral=ephemeral,
-                                                   **options)))
+        """Start a run. ``judge`` is quick (the default), balanced, thorough, an OpenRouter model id or mock.
+        ``options`` are the type's own: for a ranking, rounds, both_orders, pairing, goal, top_n, max_chars,
+        seed."""
+        return self._c.send(R.runs_create(run_body(dataset_id, rubric, type=type, name=name, judge=judge,
+                                                   max_cost_usd=max_cost_usd, ephemeral=ephemeral, **options)))
 
     def list(self, dataset_id: str | None = None, limit: int | None = None, cursor: str | None = None
              ) -> Page[Run]:
@@ -599,23 +739,32 @@ class AsyncDatasets:
                      ) -> Dataset:
         return await self._c.send(R.datasets_create(name, items or [], ephemeral))
 
-    async def push(self, folder: str | Path, name: str | None = None, reuse: bool = False, *,
+    async def push(self, source: str | Path, name: str | None = None, reuse: bool = False, *,
                    text_fields: list[str] | None = None, id_field: str | None = None,
-                   title_field: str | None = None,
-             metadata_fields: list[str] | None = None) -> Dataset:
-        items, skipped = _folder_items(folder, text_fields, id_field, title_field, metadata_fields)
-        name = name or Path(folder).resolve().name
-        ds = None
-        if reuse:
+                   title_field: str | None = None, metadata_fields: list[str] | None = None,
+                   sheet: str | None = None, redact: bool = False, ephemeral: bool = False) -> Dataset:
+        push = _plan_push(source, name, redact, text_fields, id_field, title_field, metadata_fields)
+        compare = push.items if push.kind in ("items", "upload") else None
+        preview = None
+        if push.kind == "import":
+            assert push.path is not None
+            preview = await self._c.send(R.imports_create(push.path.name, push.path.read_bytes(), sheet))
+            push.mapping = _import_mapping(preview, push.mapping)
+            compare = _local_import_items(push, push.mapping)
+        if reuse and compare is not None:
             async for d in self.iter():
-                if d.name == name and d.n_items == len(items):
+                if d.name == push.name and d.n_items == len(compare):
                     full = await self.get(d.id)
-                    if _same_items(full, items):
-                        ds, ds.reused = full, True
-                        break
-        ds = ds or await self.create(name, items)
-        ds.skipped = skipped
-        return ds
+                    if _same_items(full, compare):
+                        full.reused = True
+                        return _finish(full, push)
+        if preview is not None:
+            ds = await self._c.send(R.imports_commit(preview.id, push.name, push.mapping, sheet, ephemeral))
+        elif push.kind == "upload":
+            ds = await self._c.send(R.datasets_upload(push.name, push.files, redact, ephemeral))
+        else:
+            ds = await self._c.send(R.datasets_create(push.name, push.items, ephemeral))
+        return _finish(ds, push)
 
     async def add_items(self, dataset_id: str, items: list[dict[str, str]]) -> Dataset:
         return await self._c.send(R.datasets_add_items(dataset_id, items))
@@ -658,11 +807,10 @@ class AsyncRuns:
         return await self._c.send(R.runs_estimate(run_body(dataset_id, rubric, **kw)))
 
     async def create(self, dataset_id: str, rubric: str, *, type: str = "ranking", name: str | None = None,
-                     provider: str | None = None, model: str | None = None, max_cost_usd: float | None = None,
+                     judge: str | dict[str, Any] | None = None, max_cost_usd: float | None = None,
                      ephemeral: bool = False, **options: Any) -> Run:
-        return await self._c.send(R.runs_create(run_body(dataset_id, rubric, type=type, name=name,
-                                                         provider=provider, model=model, max_cost_usd=max_cost_usd,
-                                                         ephemeral=ephemeral, **options)))
+        return await self._c.send(R.runs_create(run_body(dataset_id, rubric, type=type, name=name, judge=judge,
+                                                         max_cost_usd=max_cost_usd, ephemeral=ephemeral, **options)))
 
     async def list(self, dataset_id: str | None = None, limit: int | None = None, cursor: str | None = None
                    ) -> Page[Run]:

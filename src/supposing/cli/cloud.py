@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from ..cloud import Client, CloudError, Run, config_path, remove_config, resolve, write_config
+from ..cloud import Client, CloudError, Run, api_judge, config_path, remove_config, resolve, write_config
 from ..cloud.config import KEY_PREFIX
 from ..cloud.records import is_table
 from . import billing
@@ -27,7 +27,7 @@ from .output import (
     print_results,
     table,
 )
-from .shared import confirm, ranking_options, result_document, rubric_text
+from .shared import cli_judge, confirm, judge_label, ranking_options, result_document, rubric_text
 
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", re.I)
 
@@ -99,9 +99,13 @@ def whoami(args: argparse.Namespace) -> int:
 
 def _push(sp: Client, folder: Path, name: str | None, quiet: bool, reuse: bool = False,
           args: argparse.Namespace | None = None) -> Any:
-    fields = {k: getattr(args, k, None) for k in ("text_fields", "id_field", "title_field", "metadata_fields")}
+    def flag(key: str) -> Any:
+        return getattr(args, key, None)
+
     try:
-        ds = sp.datasets.push(folder, name, reuse=reuse, **fields)
+        ds = sp.datasets.push(folder, name, reuse=reuse, text_fields=flag("text_fields"), id_field=flag("id_field"),
+                              title_field=flag("title_field"), metadata_fields=flag("metadata_fields"),
+                              sheet=flag("sheet"), redact=bool(flag("redact")))
     except FileNotFoundError as exc:
         raise CliError(str(exc), code="not_a_folder", exit_code=USAGE,
                        hint="Pass a folder of .md, .txt or .html files.") from exc
@@ -111,6 +115,10 @@ def _push(sp: Client, folder: Path, name: str | None, quiet: bool, reuse: bool =
                 ds.name, ds.id, plural(ds.n_items, "file")))
         else:
             info("Uploaded %s from %s as dataset \"%s\" (%s)." % (plural(ds.n_items, "item"), folder, ds.name, ds.id))
+        for group in ds.duplicates[:5]:
+            names = ", ".join(i.get("source_id") or i.get("title") or "" for i in group.get("items") or [])
+            info("Likely duplicates (%s, %.0f%% alike): %s" % (group.get("kind"), 100 * (group.get("similarity") or 0),
+                                                               names))
         if ds.skipped:
             info("Skipped %d: %s" % (len(ds.skipped), ", ".join(s["path"] for s in ds.skipped[:5])
                                             + (" ..." if len(ds.skipped) > 5 else "")))
@@ -121,7 +129,7 @@ def datasets_push(args: argparse.Namespace) -> int:
     with _client(args) as sp:
         ds = _push(sp, args.folder, args.name, args.json, args=args)
     if args.json:
-        emit_json({**ds.to_dict(), "skipped": ds.skipped})
+        emit_json({**ds.to_dict(), "skipped": ds.skipped, "duplicates": ds.duplicates, "reused": ds.reused})
     else:
         print(ds.id)
     return OK
@@ -193,29 +201,46 @@ def _follow(sp: Client, args: argparse.Namespace, run: Run, estimate: dict[str, 
     return OK if run.status == "done" else RUN_FAILED
 
 
+def _unavailable_hint(sp: Client, provider: str, available: list[str]) -> str:
+    """What is missing before this judge can run here, and the one thing to do about it."""
+    if provider == "claude_cli":
+        return ("Your Claude subscription works only on your own machine: supposing rank ... --judge claude_cli "
+                "(uv tool install supposing).")
+    if provider == "openrouter":
+        try:
+            payments = sp.billing.get().enabled
+        except CloudError:
+            payments = False
+        if payments:
+            return "Add credit (supposing billing topup <dollars>), or your own OpenRouter key in Settings."
+        return ("Payments open soon. Until then, add your own OpenRouter key in Settings to run on your own texts; "
+                "`--dry-run` shows the estimate meanwhile.")
+    return "Available here: %s." % ", ".join(available or ["none"])
+
+
 def run(args: argparse.Namespace) -> int:
     with _client(args) as sp:
         source = Path(args.source)
-        upload = source.is_dir() or is_table(source)
+        upload = source.is_dir() or is_table(source) or source.suffix.lower() in (".xlsx", ".xls")
         if not upload and not UUID_RE.match(args.source):
             raise CliError("%s is neither a folder, a JSONL/JSON/CSV file, nor a dataset id." % args.source,
                            code="not_a_folder", exit_code=USAGE,
                            hint="Pass a folder of documents, a .jsonl or .csv file, or an id from "
                            "`supposing datasets list`.")
-        provider = args.provider or "openrouter"  # the API's default judge
+        judge = cli_judge(args, local=False)
+        provider = judge["provider"]
         available = sp.settings().get("providers") or []  # before uploading: a refused run leaves no dataset
-        if provider not in available:
-            raise CliError("Provider %s is not available in this workspace." % provider,
-                           code="provider_unavailable", exit_code=REFUSED,
-                           hint="Available: %s. Add an OpenRouter key in Settings to use openrouter, or pass "
-                           "--provider mock to try it free." % ", ".join(available))
+        missing = None if provider in available else CliError(
+            "The %s judge is not available in this workspace yet." % (judge["level"] or provider),
+            code="provider_unavailable", exit_code=REFUSED, hint=_unavailable_hint(sp, provider, available))
+        if missing and not args.dry_run:  # a dry run still prices it: the cost comes first
+            raise missing
         # A folder reuses an identical earlier upload, so retrying (e.g. with --yes after exit 7) adds no copy.
         pushed = _push(sp, source, None, args.json, reuse=True, args=args) if upload else None
         dataset_id = pushed.id if pushed else args.source
         skipped = pushed.skipped if pushed else []
         rubric = rubric_text(args.rubric)
-        model = args.model or ("mock" if args.provider == "mock" else None)
-        kw: dict[str, Any] = dict(provider=args.provider, model=model, max_cost_usd=args.max_cost,
+        kw: dict[str, Any] = dict(judge=api_judge(args.judge, args.model), max_cost_usd=args.max_cost,
                                   **ranking_options(args))
         est = sp.runs.estimate(dataset_id, rubric, **kw)
         line = est.describe()
@@ -223,11 +248,16 @@ def run(args: argparse.Namespace) -> int:
         if credit:
             line += "; " + credit
         if args.dry_run:
+            blocked = {"code": missing.code, "message": missing.message, "hint": missing.hint} if missing else None
             if args.json:
-                emit_json({"estimate": est.to_dict(), "dataset_id": dataset_id, "skipped": skipped})
+                emit_json({"estimate": est.to_dict(), "dataset_id": dataset_id, "skipped": skipped,
+                           "can_start": blocked is None, "blocked_by": blocked})
             else:
                 info("Estimate: %s" % line)
-                info("Start it: supposing run %s --rubric ... (same flags)" % dataset_id)
+                if missing:
+                    info("Can't start yet: %s %s" % (missing.message, missing.hint or ""))
+                else:
+                    info("Start it: supposing run %s --rubric ... (same flags)" % dataset_id)
             return OK
         if credit and "short by" in credit:  # the API would refuse it: say so before asking to spend
             raise CliError("This run needs up to $%.2f of credit; %s." % (est.est_cost_usd or 0, credit),
@@ -246,6 +276,54 @@ def run(args: argparse.Namespace) -> int:
                 info("Follow it: supposing runs watch %s" % created.id)
             return OK
         return _follow(sp, args, created, est.to_dict(), skipped)
+
+
+REASONS = {"needs_credit": "needs credit", "tier_not_covered": "not on our key: use your own",
+           "payments_off": "payments open soon", "not_zero_retention": "keeps data", "no_key": "needs a key"}
+
+
+def _price(o: dict[str, Any]) -> str:
+    lo, hi = o.get("est_run_usd_min"), o.get("est_run_usd_max")
+    if hi is None:
+        return ""
+    return "$%.2f" % hi if lo in (None, hi) else "$%.2f-%.2f" % (lo, hi)
+
+
+def models(args: argparse.Namespace) -> int:
+    """The judges to pick from: the three levels first, then any OpenRouter model, priced for a dataset."""
+    run: dict[str, Any] = {"rounds": args.rounds, "both_orders": args.both_orders or None}
+    if args.top_n:
+        run.update(goal="top_n", top_n=args.top_n)
+    flt = "zdr" if args.zdr else "cheapest" if args.cheapest else None
+    with _client(args) as sp:
+        body = sp.models(args.dataset_id, filter=flt, q=args.search, limit=args.limit, **run)
+    if args.json:
+        emit_json(body)
+        return OK
+    seen = {o["id"] for o in body.get("levels") or []}
+    rows = [*(body.get("levels") or []), *(o for o in body.get("data") or [] if o["id"] not in seen),
+            *(body.get("local") or [])]
+
+    def notes(o: dict[str, Any]) -> str:
+        out = ["no retention"] if o.get("zdr") else []
+        if not o.get("available", True):
+            out.append(REASONS.get(o.get("unavailable_reason") or "", "unavailable"))
+        return ", ".join(out)
+
+    def per_call(o: dict[str, Any]) -> str:
+        usd = o.get("price_per_call_usd")
+        return "" if usd is None else ("$%.4f" % usd).rstrip("0") if usd < 0.01 else "$%.3f" % usd
+
+    print(table([[o.get("level") or o["id"], o.get("name") or "", o.get("tier") or "", per_call(o),
+                  *([_price(o)] if args.dataset_id else []), notes(o)] for o in rows],
+                ["judge", "model", "tier", "per call", *(["this run"] if args.dataset_id else []), "notes"],
+                right={3, 4} if args.dataset_id else {3}))
+    print()
+    print("Pass the first column as --judge (default %s)." % body.get("default", "quick")
+          + ("" if args.dataset_id else " Add --dataset ID to price each for a run."))
+    if body.get("next_cursor"):
+        info("More models: narrow with --search, or use --json.")
+    return OK
 
 
 def runs_list(args: argparse.Namespace) -> int:
@@ -270,8 +348,7 @@ def runs_get(args: argparse.Namespace) -> int:
         return OK
     print("%s  %s" % (r.name, r.id))
     print(_progress_text(r))
-    print("dataset %s (%s) · judge %s %s" % (r.dataset_name, r.dataset_id, r.judge.get("provider"),
-                                             r.judge.get("model")))
+    print("dataset %s (%s) · judge %s" % (r.dataset_name, r.dataset_id, judge_label(r.judge)))
     print("rubric: %s" % r.config.get("rubric"))
     if r.error:
         print("error: %s" % r.error)

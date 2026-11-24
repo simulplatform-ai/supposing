@@ -50,10 +50,12 @@ class ItemSummary(_Model):
     title: str
     n_words: int
     n_chars: int
+    source_id: str | None = None  # your id for the item: the import's id column, else from the file name
 
     @classmethod
     def parse(cls, d: dict[str, Any]) -> ItemSummary:
-        return cls(d, str(d["id"]), d.get("title") or "", int(d.get("n_words") or 0), int(d.get("n_chars") or 0))
+        return cls(d, str(d["id"]), d.get("title") or "", int(d.get("n_words") or 0), int(d.get("n_chars") or 0),
+                   d.get("source_id"))
 
 
 @dataclass
@@ -63,7 +65,7 @@ class Item(ItemSummary):
     @classmethod
     def parse(cls, d: dict[str, Any]) -> Item:
         s = ItemSummary.parse(d)
-        return cls(d, s.id, s.title, s.n_words, s.n_chars, d.get("text") or "")
+        return cls(d, s.id, s.title, s.n_words, s.n_chars, s.source_id, d.get("text") or "")
 
 
 @dataclass
@@ -73,14 +75,15 @@ class Dataset(_Model):
     n_items: int
     created_at: datetime | None
     items: list[ItemSummary] | None = None  # present on a single dataset, not in lists
-    skipped: list[dict[str, Any]] = field(default_factory=list)  # files a push left out, and why
-    reused: bool = False  # push(reuse=True) found the same files already uploaded
+    skipped: list[dict[str, Any]] = field(default_factory=list)  # what a push left out, as {path, reason}
+    reused: bool = False  # push(reuse=True) found the same items already uploaded
+    duplicates: list[dict[str, Any]] = field(default_factory=list)  # likely duplicates the server found
 
     @classmethod
     def parse(cls, d: dict[str, Any]) -> Dataset:
         items = [ItemSummary.parse(i) for i in d["items"]] if isinstance(d.get("items"), list) else None
         return cls(d, str(d["id"]), d.get("name") or "", int(d.get("n_items") or 0), _dt(d.get("created_at")),
-                   items, list(d.get("skipped") or []))
+                   items, list(d.get("skipped") or []), False, list(d.get("duplicates") or []))
 
 
 @dataclass
@@ -143,6 +146,26 @@ def _duration(seconds: float) -> str:
 
 
 @dataclass
+class ImportPreview(_Model):
+    """A spreadsheet the server has parsed, waiting for its column mapping. ``mapping`` is the server's guess."""
+    id: str
+    filename: str
+    format: str
+    sheets: list[str]
+    sheet: str | None
+    n_rows: int
+    columns: list[dict[str, Any]]  # name, filled, avg_chars, max_chars, unique, distinct, samples
+    mapping: dict[str, Any]  # id_field, title_field, text_fields, metadata_fields
+    warnings: list[str]
+
+    @classmethod
+    def parse(cls, d: dict[str, Any]) -> ImportPreview:
+        return cls(d, str(d["id"]), d.get("filename") or "", d.get("format") or "", list(d.get("sheets") or []),
+                   d.get("sheet"), int(d.get("n_rows") or 0), list(d.get("columns") or []),
+                   dict(d.get("mapping") or {}), list(d.get("warnings") or []))
+
+
+@dataclass
 class Billing(_Model):
     """The workspace's prepaid credit. Runs on our model key are paid from it; runs on your own key are not."""
     enabled: bool  # False when the server has no payment provider: no top-ups, no billed runs
@@ -176,7 +199,7 @@ class PriceTier(_Model):
 class Pricing(_Model):
     """What a judge call costs on our model key, by tier. ``provisional``: prices may still change."""
     provisional: bool
-    unit_chars: int  # one call reads up to this many characters of the two items together
+    unit_chars: int  # one call is up to this many characters of all the judge reads: both items, rubric, instructions
     free_grant_usd: float
     min_topup_usd: int
     max_topup_usd: int
@@ -281,13 +304,14 @@ class LeaderboardEntry(_Model):
     wins: int
     losses: int
     p_top_n: float | None
+    source_id: str | None = None
 
     @classmethod
     def parse(cls, d: dict[str, Any]) -> LeaderboardEntry:
         return cls(d, str(d["item_id"]), d.get("title") or str(d["item_id"]), int(d["rank"]),
                    int(d.get("rank_lo", d["rank"])), int(d.get("rank_hi", d["rank"])), float(d["rating"]),
                    float(d.get("rating_lo", d["rating"])), float(d.get("rating_hi", d["rating"])),
-                   int(d.get("wins") or 0), int(d.get("losses") or 0), d.get("p_top_n"))
+                   int(d.get("wins") or 0), int(d.get("losses") or 0), d.get("p_top_n"), d.get("source_id"))
 
 
 @dataclass
@@ -336,10 +360,12 @@ class Comparison(_Model):
     reasoning: str | None
     error: str | None
     cost_usd: float | None
+    source_id_a: str | None = None
+    source_id_b: str | None = None
 
     @classmethod
     def parse(cls, d: dict[str, Any]) -> Comparison:
         return cls(d, str(d["id"]), int(d.get("round") or 0), str(d.get("item_a")), str(d.get("item_b")),
                    d.get("title_a") or "", d.get("title_b") or "", d.get("status") or "",
                    str(d["winner_item"]) if d.get("winner_item") else None, d.get("reasoning"), d.get("error"),
-                   d.get("cost_usd"))
+                   d.get("cost_usd"), d.get("source_id_a"), d.get("source_id_b"))

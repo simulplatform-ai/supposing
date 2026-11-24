@@ -10,12 +10,15 @@ Three layers, each usable on its own:
 - ``next_action``, ``plan_round`` and ``results`` are the run as a pure state machine over ``Comparison``
   rows, for running it from a job queue or across workers. ``judge_pair``, ``apply_verdict`` and
   ``apply_error`` make and record one judge call.
+- ``backtest`` and ``tune`` check a judge against past decisions, and pick the rubric that predicts them
+  best, measured on held-out decisions.
 - ``supposing.samples`` holds sample datasets for a first ranking with no files of your own.
 - ``supposing.present`` words runs, results, estimates and errors for agents and terminals.
 - ``Provider`` (built with ``make_provider``) is the judge; ``RunStore`` (``MemoryStore``, ``SQLiteStore``)
   is where a run's comparisons are kept.
 """
 from . import present, samples
+from .backtest import Split, TuneCall, Tuning, backtest, decided_pairs, planned_tune_calls, train_test_split, tune
 from .judge import SYSTEM_PROMPT, apply_error, apply_verdict, judge_pair
 from .providers import Completion, Provider, ProviderError, make_provider
 from .ranking import (
@@ -32,21 +35,23 @@ from .ranking import (
     results,
     timeline,
 )
-from .report import judge_checks, summarize, tiers
-from .rubric import Criterion, Rubric
+from .report import display_groups, judge_checks, summarize, tiers
+from .rubric import Rubric
 from .runner import Ranking, RunError, rank, run_ranking
 from .store import MemoryStore, RunStore, SQLiteStore
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     # Run a ranking
-    "rank", "run_ranking", "Ranking", "RunError", "Item", "Rubric", "Criterion", "RankConfig", "ConfigError", "planned_calls",
+    "rank", "run_ranking", "Ranking", "RunError", "Item", "Rubric", "RankConfig", "ConfigError", "planned_calls",
     "fewest_calls",
     # The state machine
     "Comparison", "Action", "next_action", "affordable", "plan_round", "results", "timeline",
     # Results in words
-    "summarize", "tiers", "judge_checks", "present", "samples",
+    "summarize", "tiers", "display_groups", "judge_checks", "present", "samples",
+    # Check and tune a judge against past decisions
+    "backtest", "train_test_split", "Split", "tune", "Tuning", "TuneCall", "decided_pairs", "planned_tune_calls",
     # One judge call
     "judge_pair", "apply_verdict", "apply_error", "SYSTEM_PROMPT",
     # Judges and stores

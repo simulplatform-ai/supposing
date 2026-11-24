@@ -28,6 +28,8 @@ def make_provider(spec: dict[str, Any]) -> Provider:
             api_key=spec.get("api_key") or os.environ.get("OPENROUTER_API_KEY", ""),
             zero_data_retention=bool(spec.get("zero_data_retention")),
             temperature=spec.get("temperature"),
+            headers=spec.get("headers"),
+            **({"max_tokens": int(spec["max_tokens"])} if spec.get("max_tokens") else {}),
         )
     if kind == "openai_compat":
         return OpenAICompatProvider(

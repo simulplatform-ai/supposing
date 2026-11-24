@@ -94,6 +94,13 @@ def table(rows: list[list[str]], header: list[str], right: set[int] | None = Non
     return "\n".join([line(header), *(line(r) for r in rows)])
 
 
+def _item_label(e: dict[str, Any]) -> str:
+    """The title, and your id for the item when it says something the title doesn't."""
+    title = str(e.get("title") or e["item_id"])
+    sid = e.get("source_id")
+    return "%s [%s]" % (title, sid) if sid and sid != title and sid not in title else title
+
+
 def print_results(res: dict[str, Any]) -> None:
     """The human view of a Results body: the verdict sentence, then the leaderboard, then what intervals mean."""
     body = res.get(res.get("type") or "ranking") or {}
@@ -108,8 +115,19 @@ def print_results(res: dict[str, Any]) -> None:
         lo, hi = e.get("rank_lo", e["rank"]), e.get("rank_hi", e["rank"])
         rows.append([str(e["rank"]), str(lo) if lo == hi else "%d-%d" % (lo, hi), "%.0f" % e["rating"],
                      "%.0f to %.0f" % (e["rating_lo"], e["rating_hi"]),
-                     "%d-%d" % (e.get("wins", 0), e.get("losses", 0)), str(e.get("title") or e["item_id"])])
-    print(table(rows, ["rank", "could be", "rating", interval + " interval", "won-lost", "item"], right={0, 2}))
+                     "%d-%d" % (e.get("wins", 0), e.get("losses", 0)), _item_label(e)])
+    text = table(rows, ["rank", "could be", "rating", interval + " interval", "won-lost", "item"], right={0, 2})
+    groups = body.get("groups") or []
+    if len(groups) > 1:  # the engine's display groups (settled / close calls / out, or clear tiers)
+        lines = text.split("\n")
+        starts = {}
+        index = {e["item_id"]: i for i, e in enumerate(board)}
+        for g in groups:
+            if g["item_ids"] and g["item_ids"][0] in index:
+                starts[index[g["item_ids"][0]]] = g["label"]
+        text = "\n".join([lines[0]] + [part for i, line in enumerate(lines[1:])
+                                         for part in ((["", "-- %s" % starts[i]] if i else ["-- %s" % starts[i]]) if i in starts else []) + [line]])
+    print(text)
     print()
     print("\"could be\" is the range of ranks each item holds with %s confidence. Items whose ranges overlap "
           "are not reliably different." % interval)

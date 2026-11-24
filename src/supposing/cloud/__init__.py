@@ -11,6 +11,7 @@ from .client import AsyncClient, Client, run_body
 from .config import DEFAULT_API_URL, config_path, read_config, remove_config, resolve, write_config
 from .errors import CloudError
 from .folder import read_folder
+from .judges import DEFAULT_JUDGE, JUDGE_HELP, LEVELS, JudgeError, api_judge, parse_judge
 from .models import (
     Billing,
     Checkout,
@@ -33,7 +34,8 @@ from .models import (
 from .records import RecordsError, read_records
 
 __all__ = [
-    "DEFAULT_API_URL", "AsyncClient", "Billing", "Checkout", "LedgerEntry", "PriceTier", "Pricing", "Client", "CloudError", "Comparison", "Dataset", "Estimate", "Item",
+    "DEFAULT_API_URL", "DEFAULT_JUDGE", "JUDGE_HELP", "LEVELS", "JudgeError", "api_judge", "parse_judge",
+    "AsyncClient", "Billing", "Checkout", "LedgerEntry", "PriceTier", "Pricing", "Client", "CloudError", "Comparison", "Dataset", "Estimate", "Item",
     "ItemSummary", "LeaderboardEntry", "Me", "Page", "Progress", "Results", "Run", "RunEvent", "config_path", "read_config",
     "RecordsError", "read_folder", "read_records", "remove_config", "resolve", "run_body", "write_config",
 ]

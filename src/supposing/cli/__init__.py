@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import NoReturn
 
 from .. import __version__
-from ..cloud import CloudError
+from ..cloud import JUDGE_HELP, CloudError
 from ..rubric import Rubric
 from . import billing, cloud, local
 from .output import (
@@ -41,22 +41,23 @@ class Parser(argparse.ArgumentParser):
 
 
 def _rubric(value: str) -> str | Rubric:
-    """A rubric in plain words, or @file: Markdown, text or JSON read by ``Rubric.load`` (criteria and weights)."""
-    if value.startswith("@"):
+    """A rubric in plain words, or the path of a .md or .txt file that holds one."""
+    path = Path(value)
+    if path.suffix.lower() in (".md", ".txt") and "\n" not in value:
         try:
-            return Rubric.load(value[1:])
+            return Rubric.load(path)
         except OSError as exc:
             raise argparse.ArgumentTypeError(
                 "can't read the rubric file %s (%s). Create it, or pass the rubric in quotes: --rubric \"Which is "
-                "clearer?\"" % (value[1:], exc.strerror)) from exc
+                "clearer?\"" % (value, exc.strerror)) from exc
         except ValueError as exc:
-            raise argparse.ArgumentTypeError("%s is not a valid rubric: %s" % (value[1:], exc)) from exc
+            raise argparse.ArgumentTypeError("%s is not a valid rubric: %s" % (value, exc)) from exc
     return value
 
 
 def _source_flags(p: argparse.ArgumentParser) -> None:
     """For a JSONL, JSON or CSV file: which fields make each item. Names match the API's import."""
-    g = p.add_argument_group("reading a JSONL, JSON or CSV file (one item per row)")
+    g = p.add_argument_group("reading a JSONL, JSON, CSV or XLSX file (one item per row)")
     g.add_argument("--text-field", dest="text_fields", action="append", metavar="FIELD",
                    help="the field with the text; repeat to join several, each under a heading (default: a field "
                    "named text, output, response, answer or content)")
@@ -65,18 +66,19 @@ def _source_flags(p: argparse.ArgumentParser) -> None:
     g.add_argument("--title-field", metavar="FIELD", help="the title to show (default: the id)")
     g.add_argument("--metadata-field", dest="metadata_fields", action="append", metavar="FIELD",
                    help="keep this field on the item but never show it to the judge; repeatable")
+    g.add_argument("--sheet", help="for an .xlsx workbook: the sheet to read (default: the first with data)")
 
 
-def _run_flags(p: argparse.ArgumentParser) -> None:
+def _run_flags(p: argparse.ArgumentParser, sample_ok: bool = False) -> None:
     """Flags shared by `rank` (local) and `run` (cloud)."""
-    p.add_argument("--rubric", type=_rubric, required=True,
-                   help="what the judge should prefer, in plain words, or @file to read it from a file")
-    p.add_argument("--provider", help="judge provider: openrouter (default), mock (free, fake), claude_cli; "
-                   "locally also anthropic and openai_compat")
-    p.add_argument("--model", help="judge model, e.g. anthropic/claude-haiku-5.5")
+    p.add_argument("--rubric", type=_rubric, required=not sample_ok,
+                   help="what the judge should prefer, in plain words, or the path of a .md or .txt file")
+    p.add_argument("--judge", help=JUDGE_HELP[:-2] + "), and for `rank` anthropic and openai_compat (with --model)")
+    p.add_argument("--model", help="the model of a claude_cli, anthropic or openai_compat judge, e.g. sonnet")
     p.add_argument("--rounds", type=int, help="opponents per item (default 8); more rounds, tighter intervals")
     p.add_argument("--top-n", type=int, help="only settle the top N, spending fewer calls on the rest")
-    p.add_argument("--one-order", action="store_true", help="judge each pair once instead of in both orders")
+    p.add_argument("--both-orders", action="store_true", help="judge every pair twice, once in each order. Twice "
+                   "the cost; adds the order check")
     p.add_argument("--pairing", choices=["swiss", "random"])
     p.add_argument("--max-chars", type=int, help="cut items longer than this before judging")
     p.add_argument("--max-cost", type=float, metavar="USD", help="hard spend cap: no judge call starts that could take the cost past USD")
@@ -94,7 +96,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = Parser(
         prog="supposing", formatter_class=argparse.RawDescriptionHelpFormatter,
         description="Rank documents with LLM judges: pairwise tournaments with confidence intervals.",
-        epilog="quick start:\n  supposing rank ./docs --rubric \"Which is clearest?\" --provider mock\n"
+        epilog="quick start:\n  supposing rank ./docs --rubric \"Which is clearest?\" --judge mock\n"
                "  supposing login\n  supposing run ./docs --rubric \"Which is clearest?\"\n\n" + EXIT_CODES_HELP)
     parser.add_argument("--version", action="version", version="supposing %s" % __version__)
     sub = parser.add_subparsers(dest="command", required=True, metavar="command")
@@ -105,10 +107,12 @@ def build_parser() -> argparse.ArgumentParser:
         return p
 
     r = add("rank", local.rank, "rank a folder of documents, or the rows of a JSONL or CSV file, on this machine")
-    r.add_argument("folder", type=Path, metavar="source",
+    r.add_argument("folder", type=Path, metavar="source", nargs="?",
                    help="a folder of .md, .txt and .html files (one document each), or a .jsonl, .json or .csv file "
                    "(one item per row)")
-    _run_flags(r)
+    r.add_argument("--sample", metavar="ID", help="rank a built-in sample instead (see `supposing samples`); its own "
+                   "rubric is used unless you pass --rubric")
+    _run_flags(r, sample_ok=True)
     _source_flags(r)
     r.add_argument("--base-url", help="for openai_compat, e.g. http://localhost:11434/v1")
     r.add_argument("--concurrency", type=int, default=8, help="judge calls at once (default 8)")
@@ -120,6 +124,8 @@ def build_parser() -> argparse.ArgumentParser:
     _run_flags(r)
     _source_flags(r)
     r.add_argument("--name", help="name for the run")
+    r.add_argument("--redact", action="store_true", help="remove names, emails and phone numbers from what the judge "
+                   "reads (a folder of documents; for a spreadsheet, put those columns in --metadata-field)")
     r.add_argument("--detach", action="store_true", help="start the run and print it, without waiting")
 
     r = add("login", cloud.login, "save an API key for this machine (create one in the web app under Developers)")
@@ -133,6 +139,8 @@ def build_parser() -> argparse.ArgumentParser:
             "per row) as a new dataset", ds)
     r.add_argument("folder", type=Path, metavar="source")
     r.add_argument("--name", help="dataset name (default: the folder's or file's name)")
+    r.add_argument("--redact", action="store_true", help="remove names, emails and phone numbers from what the judge "
+                   "reads (a folder of documents; for a spreadsheet, put those columns in --metadata-field)")
     _source_flags(r)
     r = add("list", cloud.datasets_list, "list datasets, newest first", ds)
     r.add_argument("--limit", type=int, default=50)
@@ -163,7 +171,18 @@ def build_parser() -> argparse.ArgumentParser:
     r = add("topup", billing.topup, "print a payment page for adding credit (nothing is charged until you pay)", bl)
     r.add_argument("amount", type=billing.check_amount, help="whole US dollars, e.g. 10")
     add("portal", billing.portal, "print a link to receipts and payment details", bl)
+    r = add("models", cloud.models, "the judges to pick from: quick, balanced, thorough, then any OpenRouter model")
+    r.add_argument("--dataset", dest="dataset_id", help="price each judge for a run on this dataset")
+    r.add_argument("--search", metavar="WORDS", help="only models whose id or name has these words")
+    g = r.add_mutually_exclusive_group()
+    g.add_argument("--zdr", action="store_true", help="only models whose provider keeps no data")
+    g.add_argument("--cheapest", action="store_true", help="cheapest first")
+    r.add_argument("--rounds", type=int, help="price for this many rounds (default 8)")
+    r.add_argument("--top-n", type=int, help="price for a top-N run")
+    r.add_argument("--both-orders", action="store_true", help="price for judging every pair twice")
+    r.add_argument("--limit", type=int, default=50)
     add("pricing", billing.pricing, "the price of a judge call by model tier (no login needed)")
+    add("samples", local.samples, "the built-in sample datasets, for trying a ranking with no files of your own")
     add("usage", billing.usage, "this month's runs, judge calls and spend, and the credit balance")
 
     r = add("comparisons", cloud.comparisons, "list a run's judge calls, with each verdict's reasoning")
@@ -184,7 +203,7 @@ def _mcp(args: argparse.Namespace) -> int:
         from ..mcp_server import main as mcp_main  # type: ignore[import-not-found]
     except ImportError as exc:
         raise CliError("The MCP server needs the mcp package (%s)." % exc, code="mcp_not_installed",
-                       exit_code=USAGE, hint="pip install 'supposing[mcp]'") from exc
+                       exit_code=USAGE, hint="uv tool install 'supposing[mcp]' (in a project: uv add 'supposing[mcp]')") from exc
     rest = list(args.mcp_args)
     if args.local:
         rest.insert(0, "--local")

@@ -76,3 +76,33 @@ def test_groups_on_simulated_runs(fewer_resamples, n, top_n):
 def test_groups_on_many_simulated_runs(n, top_n, sd):
     for seed in range(5):
         check_run(n, top_n, sd, seed)
+
+
+def test_live_labels_for_a_run_still_going():
+    """While a run is live the groups read '1st so far', 'Close behind', 'Still sorting'; below the second
+    tier, everything is one 'Still sorting' group. Keys, tiers and item order stay those of the finished groups."""
+    board = [row("a", 1, 1, 1), row("b", 2, 2, 3), row("c", 3, 2, 3), row("d", 4, 4, 4), row("e", 5, 5, 6),
+             row("f", 6, 5, 6)]
+    final = display_groups(board)
+    live = display_groups(board, live=True)
+    assert [g["label"] for g in final] == ["Rank 1", "Ranks 2-3", "Rank 4", "Ranks 5-6"]
+    assert [g["label"] for g in live] == ["1st so far", "Close behind", "Still sorting"]
+    assert [g["item_ids"] for g in live] == [["a"], ["b", "c"], ["d", "e", "f"]]
+    assert [g["key"] for g in live] == ["tier-1", "tier-2", "tier-3"]
+    tied = display_groups([row("a", 1, 1, 2), row("b", 2, 1, 2), row("c", 3, 3, 3)], live=True)
+    assert [g["label"] for g in tied] == ["Top 2 so far", "Close behind"]
+
+
+def test_live_labels_for_a_top_n_run():
+    board = [row("a", 1, 1, 1, 1.0), row("b", 2, 1, 3, 0.97), row("c", 3, 2, 5, 0.7), row("d", 4, 3, 6, 0.96),
+             row("e", 5, 3, 7, 0.2), row("f", 6, 5, 8, 0.03)]
+    live = display_groups(board, top_n=3, live=True)
+    assert [(g["key"], g["label"]) for g in live] == [
+        ("settled", "2 in the top 3 so far"), ("close", "Close behind"), ("out", "Still sorting")]
+    assert live == [{**g, "label": lg["label"]} for g, lg in zip(display_groups(board, top_n=3), live, strict=True)]
+
+
+def test_results_passes_live_through():
+    items, comps = judge_run(np.linspace(0, 4, 10), RankConfig(rounds=4), seed=1)
+    assert results(items, comps, live=True)["groups"][0]["label"].endswith("so far")
+    assert not results(items, comps)["groups"][0]["label"].endswith("so far")

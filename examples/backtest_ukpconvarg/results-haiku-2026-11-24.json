@@ -1,0 +1,31 @@
+{
+ "dataset": "UKPConvArg1, debates ['human-growth-and-development-should-parents-use-spanking-as-an-option-to-discipline-', 'is-the-school-uniform-a-good-or-bad-idea-'], 140 arguments, 1584 gold pairs",
+ "pairwise_calls": 544,
+ "results": {
+  "pairwise (engine)": {
+   "gold_pairs": 0.819,
+   "gold_pairs_lo": 0.782,
+   "gold_pairs_hi": 0.855,
+   "spearman": 0.7,
+   "spearman_lo": 0.603,
+   "spearman_hi": 0.758
+  },
+  "score each alone, 1 to 10": {
+   "gold_pairs": 0.761,
+   "gold_pairs_lo": 0.713,
+   "gold_pairs_hi": 0.802,
+   "spearman": 0.593,
+   "spearman_lo": 0.465,
+   "spearman_hi": 0.689
+  },
+  "word count": {
+   "gold_pairs": 0.786,
+   "gold_pairs_lo": 0.739,
+   "gold_pairs_hi": 0.827,
+   "spearman": 0.667,
+   "spearman_lo": 0.561,
+   "spearman_hi": 0.737
+  }
+ },
+ "positive_by_preregistered_rule": false
+}

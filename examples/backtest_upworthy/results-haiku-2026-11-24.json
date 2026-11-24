@@ -1,0 +1,86 @@
+{
+ "tests": 60,
+ "headlines": 304,
+ "significant_pairs": 213,
+ "calls": {
+  "pairwise": 1176,
+  "score_alone": 304,
+  "list": 60
+ },
+ "chance": {
+  "top_pick": 0.206,
+  "spearman": 0.0,
+  "pairwise": 0.5
+ },
+ "results": {
+  "engine (pairwise)": {
+   "top_pick": 0.267,
+   "top_pick_90": [
+    0.175,
+    0.358
+   ],
+   "spearman": 0.267,
+   "spearman_90": [
+    0.162,
+    0.365
+   ],
+   "pairwise": 0.636,
+   "pairwise_90": [
+    0.568,
+    0.714
+   ]
+  },
+  "longer first": {
+   "top_pick": 0.225,
+   "top_pick_90": [
+    0.142,
+    0.317
+   ],
+   "spearman": 0.042,
+   "spearman_90": [
+    -0.069,
+    0.156
+   ],
+   "pairwise": 0.512,
+   "pairwise_90": [
+    0.445,
+    0.59
+   ]
+  },
+  "score each alone 1-10": {
+   "top_pick": 0.32,
+   "top_pick_90": [
+    0.242,
+    0.397
+   ],
+   "spearman": 0.165,
+   "spearman_90": [
+    0.059,
+    0.277
+   ],
+   "pairwise": 0.596,
+   "pairwise_90": [
+    0.542,
+    0.655
+   ]
+  },
+  "whole list in one prompt": {
+   "top_pick": 0.25,
+   "top_pick_90": [
+    0.167,
+    0.333
+   ],
+   "spearman": 0.201,
+   "spearman_90": [
+    0.096,
+    0.309
+   ],
+   "pairwise": 0.62,
+   "pairwise_90": [
+    0.552,
+    0.691
+   ]
+  }
+ },
+ "positive_by_preregistered_rule": false
+}

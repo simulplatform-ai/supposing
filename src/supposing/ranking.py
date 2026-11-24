@@ -317,8 +317,8 @@ def _band_and_anchors(status: dict[str, str], ratings: dict[str, float]) -> list
     return band + anchors
 
 
-def results(items: list[Item], comparisons: list[Comparison], top_n: int | None = None, seed: int = 0
-            ) -> dict[str, Any]:
+def results(items: list[Item], comparisons: list[Comparison], top_n: int | None = None, seed: int = 0,
+            live: bool = False) -> dict[str, Any]:
     """The ranking so far: ``{"leaderboard", "diagnostics", "n_bootstrap", "interval", "groups"}``.
 
     Each leaderboard row has ``item_id``, ``title``, ``n_words``, ``rating`` (Elo scale: mean 1500, and a
@@ -327,7 +327,8 @@ def results(items: list[Item], comparisons: list[Comparison], top_n: int | None 
     Rows are sorted best first. Undecided and failed comparisons are ignored.
 
     ``groups`` splits the leaderboard for display (``supposing.display_groups``): settled, close calls and out
-    for a top-N run, clear tiers otherwise. ``diagnostics`` holds the judge checks as numbers, and ``diagnostics["reliability"]`` grades them in words
+    for a top-N run, clear tiers otherwise; ``live=True`` labels them for a run still going ("1st so far").
+    ``diagnostics`` holds the judge checks as numbers, and ``diagnostics["reliability"]`` grades them in words
     (see ``supposing.report.judge_checks``).
 
     Intervals come from resampling pairs, so they reflect how much the verdicts would move with a different
@@ -337,7 +338,7 @@ def results(items: list[Item], comparisons: list[Comparison], top_n: int | None 
     out = rating.compute_results([it.meta() for it in items], [c.as_rating_row() for c in decided(comparisons)],
                                  top_n=top_n, seed=seed)
     out["diagnostics"]["reliability"] = report.judge_checks(out["diagnostics"])
-    out["groups"] = report.display_groups(out["leaderboard"], top_n)
+    out["groups"] = report.display_groups(out["leaderboard"], top_n, live=live)
     return out
 
 

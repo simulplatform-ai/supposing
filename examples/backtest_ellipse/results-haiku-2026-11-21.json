@@ -1,0 +1,41 @@
+{
+ "dataset": "ELLIPSE test split, prompt 'Distance learning', 100 essays, seed 20261121",
+ "verdicts": "verdicts-haiku-2026-11-21.json",
+ "pairwise_calls": 800,
+ "human": "mean of two raters ('Overall'), pairs with different scores only",
+ "rater_vs_rater_spearman": 0.611,
+ "results": {
+  "pairwise (engine fit to the verdicts)": {
+   "same_order": 0.856,
+   "same_order_lo": 0.805,
+   "same_order_hi": 0.902,
+   "spearman": 0.752,
+   "spearman_lo": 0.651,
+   "spearman_hi": 0.826
+  },
+  "score each alone, 1 to 10": {
+   "same_order": 0.668,
+   "same_order_lo": 0.618,
+   "same_order_hi": 0.721,
+   "spearman": 0.442,
+   "spearman_lo": 0.292,
+   "spearman_hi": 0.569
+  },
+  "score each alone, 1 to 5": {
+   "same_order": 0.671,
+   "same_order_lo": 0.626,
+   "same_order_hi": 0.72,
+   "spearman": 0.549,
+   "spearman_lo": 0.428,
+   "spearman_hi": 0.654
+  },
+  "word count": {
+   "same_order": 0.57,
+   "same_order_lo": 0.497,
+   "same_order_hi": 0.638,
+   "spearman": 0.172,
+   "spearman_lo": 0.002,
+   "spearman_hi": 0.338
+  }
+ }
+}

@@ -1,0 +1,3977 @@
+{
+"source": "claude_cli/haiku, engine defaults, seed 20261124",
+"sides": {
+"human-growth-and-development-should-parents-use-spanking-as-an-option-to-discipline-_no": {
+"pairwise": [
+{
+"round": 1,
+"pair_id": 1,
+"a": "arg335132",
+"b": "arg336204",
+"winner": "arg336204"
+},
+{
+"round": 1,
+"pair_id": 2,
+"a": "arg334890",
+"b": "arg334907",
+"winner": "arg334907"
+},
+{
+"round": 1,
+"pair_id": 3,
+"a": "arg334975",
+"b": "arg335086",
+"winner": "arg334975"
+},
+{
+"round": 1,
+"pair_id": 4,
+"a": "arg335129",
+"b": "arg334891",
+"winner": "arg334891"
+},
+{
+"round": 1,
+"pair_id": 5,
+"a": "arg334926",
+"b": "arg335112",
+"winner": "arg335112"
+},
+{
+"round": 1,
+"pair_id": 6,
+"a": "arg334943",
+"b": "arg336048",
+"winner": "arg334943"
+},
+{
+"round": 1,
+"pair_id": 7,
+"a": "arg335564",
+"b": "arg336179",
+"winner": "arg335564"
+},
+{
+"round": 1,
+"pair_id": 8,
+"a": "arg335104",
+"b": "arg334927",
+"winner": "arg335104"
+},
+{
+"round": 1,
+"pair_id": 9,
+"a": "arg334929",
+"b": "arg335032",
+"winner": "arg334929"
+},
+{
+"round": 1,
+"pair_id": 10,
+"a": "arg334958",
+"b": "arg336029",
+"winner": "arg336029"
+},
+{
+"round": 1,
+"pair_id": 11,
+"a": "arg335030",
+"b": "arg336894",
+"winner": "arg336894"
+},
+{
+"round": 1,
+"pair_id": 12,
+"a": "arg334978",
+"b": "arg335095",
+"winner": "arg335095"
+},
+{
+"round": 1,
+"pair_id": 13,
+"a": "arg335091",
+"b": "arg335096",
+"winner": "arg335091"
+},
+{
+"round": 1,
+"pair_id": 14,
+"a": "arg335114",
+"b": "arg336172",
+"winner": "arg336172"
+},
+{
+"round": 1,
+"pair_id": 15,
+"a": "arg334918",
+"b": "arg334968",
+"winner": "arg334968"
+},
+{
+"round": 1,
+"pair_id": 16,
+"a": "arg335084",
+"b": "arg334960",
+"winner": "arg334960"
+},
+{
+"round": 1,
+"pair_id": 17,
+"a": "arg336209",
+"b": "arg334961",
+"winner": "arg334961"
+},
+{
+"round": 2,
+"pair_id": 18,
+"a": "arg335112",
+"b": "arg334907",
+"winner": "arg334907"
+},
+{
+"round": 2,
+"pair_id": 19,
+"a": "arg334958",
+"b": "arg336209",
+"winner": "arg336209"
+},
+{
+"round": 2,
+"pair_id": 20,
+"a": "arg334961",
+"b": "arg335091",
+"winner": "arg334961"
+},
+{
+"round": 2,
+"pair_id": 21,
+"a": "arg335564",
+"b": "arg334968",
+"winner": "arg335564"
+},
+{
+"round": 2,
+"pair_id": 22,
+"a": "arg334891",
+"b": "arg336204",
+"winner": "arg336204"
+},
+{
+"round": 2,
+"pair_id": 23,
+"a": "arg336172",
+"b": "arg336894",
+"winner": "arg336894"
+},
+{
+"round": 2,
+"pair_id": 24,
+"a": "arg335104",
+"b": "arg335032",
+"winner": "arg335104"
+},
+{
+"round": 2,
+"pair_id": 25,
+"a": "arg334975",
+"b": "arg334943",
+"winner": "arg334943"
+},
+{
+"round": 2,
+"pair_id": 26,
+"a": "arg335095",
+"b": "arg335086",
+"winner": "arg335095"
+},
+{
+"round": 2,
+"pair_id": 27,
+"a": "arg334926",
+"b": "arg335084",
+"winner": "arg334926"
+},
+{
+"round": 2,
+"pair_id": 28,
+"a": "arg336048",
+"b": "arg334960",
+"winner": "arg334960"
+},
+{
+"round": 2,
+"pair_id": 29,
+"a": "arg334934",
+"b": "arg334929",
+"winner": "arg334934"
+},
+{
+"round": 2,
+"pair_id": 30,
+"a": "arg336029",
+"b": "arg334890",
+"winner": "arg336029"
+},
+{
+"round": 2,
+"pair_id": 31,
+"a": "arg336179",
+"b": "arg335096",
+"winner": "arg336179"
+},
+{
+"round": 2,
+"pair_id": 32,
+"a": "arg335030",
+"b": "arg335114",
+"winner": "arg335114"
+},
+{
+"round": 2,
+"pair_id": 33,
+"a": "arg334978",
+"b": "arg335129",
+"winner": "arg334978"
+},
+{
+"round": 2,
+"pair_id": 34,
+"a": "arg334918",
+"b": "arg334927",
+"winner": "arg334918"
+},
+{
+"round": 3,
+"pair_id": 35,
+"a": "arg334943",
+"b": "arg335564",
+"winner": "arg335564"
+},
+{
+"round": 3,
+"pair_id": 36,
+"a": "arg335104",
+"b": "arg334961",
+"winner": "arg334961"
+},
+{
+"round": 3,
+"pair_id": 37,
+"a": "arg334968",
+"b": "arg334891",
+"winner": "arg334968"
+},
+{
+"round": 3,
+"pair_id": 38,
+"a": "arg334929",
+"b": "arg334907",
+"winner": "arg334929"
+},
+{
+"round": 3,
+"pair_id": 39,
+"a": "arg335032",
+"b": "arg334934",
+"winner": "arg334934"
+},
+{
+"round": 3,
+"pair_id": 40,
+"a": "arg334890",
+"b": "arg335091",
+"winner": "arg334890"
+},
+{
+"round": 3,
+"pair_id": 41,
+"a": "arg336029",
+"b": "arg334975",
+"winner": "arg336029"
+},
+{
+"round": 3,
+"pair_id": 42,
+"a": "arg336204",
+"b": "arg334927",
+"winner": "arg336204"
+},
+{
+"round": 3,
+"pair_id": 43,
+"a": "arg335132",
+"b": "arg335095",
+"winner": "arg335095"
+},
+{
+"round": 3,
+"pair_id": 44,
+"a": "arg335084",
+"b": "arg334978",
+"winner": "arg334978"
+},
+{
+"round": 3,
+"pair_id": 45,
+"a": "arg334918",
+"b": "arg334960",
+"winner": "arg334960"
+},
+{
+"round": 3,
+"pair_id": 46,
+"a": "arg334958",
+"b": "arg336179",
+"winner": "arg336179"
+},
+{
+"round": 3,
+"pair_id": 47,
+"a": "arg335112",
+"b": "arg336172",
+"winner": "arg335112"
+},
+{
+"round": 3,
+"pair_id": 48,
+"a": "arg335030",
+"b": "arg336209",
+"winner": "arg336209"
+},
+{
+"round": 3,
+"pair_id": 49,
+"a": "arg335096",
+"b": "arg335129",
+"winner": "arg335096"
+},
+{
+"round": 3,
+"pair_id": 50,
+"a": "arg335114",
+"b": "arg334926",
+"winner": "arg334926"
+},
+{
+"round": 3,
+"pair_id": 51,
+"a": "arg335086",
+"b": "arg336048",
+"winner": "arg336048"
+},
+{
+"round": 4,
+"pair_id": 52,
+"a": "arg334961",
+"b": "arg335112",
+"winner": "arg334961"
+},
+{
+"round": 4,
+"pair_id": 53,
+"a": "arg335095",
+"b": "arg334934",
+"winner": "arg334934"
+},
+{
+"round": 4,
+"pair_id": 54,
+"a": "arg334929",
+"b": "arg336029",
+"winner": "arg334929"
+},
+{
+"round": 4,
+"pair_id": 55,
+"a": "arg334926",
+"b": "arg334960",
+"winner": "arg334960"
+},
+{
+"round": 4,
+"pair_id": 56,
+"a": "arg336894",
+"b": "arg334943",
+"winner": "arg336894"
+},
+{
+"round": 4,
+"pair_id": 57,
+"a": "arg334968",
+"b": "arg336179",
+"winner": "arg336179"
+},
+{
+"round": 4,
+"pair_id": 58,
+"a": "arg334918",
+"b": "arg334890",
+"winner": "arg334918"
+},
+{
+"round": 4,
+"pair_id": 59,
+"a": "arg336209",
+"b": "arg335096",
+"winner": "arg335096"
+},
+{
+"round": 4,
+"pair_id": 60,
+"a": "arg335132",
+"b": "arg335104",
+"winner": "arg335132"
+},
+{
+"round": 4,
+"pair_id": 61,
+"a": "arg335032",
+"b": "arg334907",
+"winner": "arg334907"
+},
+{
+"round": 4,
+"pair_id": 62,
+"a": "arg334978",
+"b": "arg336204",
+"winner": "arg336204"
+},
+{
+"round": 4,
+"pair_id": 63,
+"a": "arg335084",
+"b": "arg336048",
+"winner": "arg336048"
+},
+{
+"round": 4,
+"pair_id": 64,
+"a": "arg336172",
+"b": "arg335091",
+"winner": "arg336172"
+},
+{
+"round": 4,
+"pair_id": 65,
+"a": "arg335114",
+"b": "arg334975",
+"winner": "arg334975"
+},
+{
+"round": 4,
+"pair_id": 66,
+"a": "arg335129",
+"b": "arg335030",
+"winner": "arg335129"
+},
+{
+"round": 4,
+"pair_id": 67,
+"a": "arg334958",
+"b": "arg334927",
+"winner": "arg334958"
+},
+{
+"round": 4,
+"pair_id": 68,
+"a": "arg335086",
+"b": "arg334891",
+"winner": "arg334891"
+},
+{
+"round": 5,
+"pair_id": 69,
+"a": "arg336894",
+"b": "arg334961",
+"winner": "arg336894"
+},
+{
+"round": 5,
+"pair_id": 70,
+"a": "arg334907",
+"b": "arg334934",
+"winner": "arg334934"
+},
+{
+"round": 5,
+"pair_id": 71,
+"a": "arg335132",
+"b": "arg335112",
+"winner": "arg335132"
+},
+{
+"round": 5,
+"pair_id": 72,
+"a": "arg336029",
+"b": "arg334968",
+"winner": "arg336029"
+},
+{
+"round": 5,
+"pair_id": 73,
+"a": "arg335095",
+"b": "arg336179",
+"winner": "arg336179"
+},
+{
+"round": 5,
+"pair_id": 74,
+"a": "arg334929",
+"b": "arg334926",
+"winner": "arg334929"
+},
+{
+"round": 5,
+"pair_id": 75,
+"a": "arg334890",
+"b": "arg334958",
+"winner": "arg334890"
+},
+{
+"round": 5,
+"pair_id": 76,
+"a": "arg334975",
+"b": "arg336204",
+"winner": "arg336204"
+},
+{
+"round": 5,
+"pair_id": 77,
+"a": "arg335084",
+"b": "arg334943",
+"winner": "arg334943"
+},
+{
+"round": 5,
+"pair_id": 78,
+"a": "arg335564",
+"b": "arg336172",
+"winner": "arg335564"
+},
+{
+"round": 5,
+"pair_id": 79,
+"a": "arg336209",
+"b": "arg335091",
+"winner": "arg335091"
+},
+{
+"round": 5,
+"pair_id": 80,
+"a": "arg334978",
+"b": "arg335096",
+"winner": "arg334978"
+},
+{
+"round": 5,
+"pair_id": 81,
+"a": "arg335104",
+"b": "arg336048",
+"winner": "arg336048"
+},
+{
+"round": 5,
+"pair_id": 82,
+"a": "arg334918",
+"b": "arg335114",
+"winner": "arg334918"
+},
+{
+"round": 5,
+"pair_id": 83,
+"a": "arg334927",
+"b": "arg335032",
+"winner": "arg335032"
+},
+{
+"round": 5,
+"pair_id": 84,
+"a": "arg334891",
+"b": "arg335030",
+"winner": "arg334891"
+},
+{
+"round": 5,
+"pair_id": 85,
+"a": "arg335129",
+"b": "arg335086",
+"winner": "arg335129"
+},
+{
+"round": 6,
+"pair_id": 86,
+"a": "arg336179",
+"b": "arg334934",
+"winner": "arg334934"
+},
+{
+"round": 6,
+"pair_id": 87,
+"a": "arg334943",
+"b": "arg336204",
+"winner": "arg336204"
+},
+{
+"round": 6,
+"pair_id": 88,
+"a": "arg335564",
+"b": "arg334929",
+"winner": "arg335564"
+},
+{
+"round": 6,
+"pair_id": 89,
+"a": "arg336894",
+"b": "arg335132",
+"winner": "arg336894"
+},
+{
+"round": 6,
+"pair_id": 90,
+"a": "arg335095",
+"b": "arg336048",
+"winner": "arg335095"
+},
+{
+"round": 6,
+"pair_id": 91,
+"a": "arg334960",
+"b": "arg335096",
+"winner": "arg334960"
+},
+{
+"round": 6,
+"pair_id": 92,
+"a": "arg336029",
+"b": "arg335114",
+"winner": "arg336029"
+},
+{
+"round": 6,
+"pair_id": 93,
+"a": "arg335104",
+"b": "arg335091",
+"winner": "arg335104"
+},
+{
+"round": 6,
+"pair_id": 94,
+"a": "arg334891",
+"b": "arg334918",
+"winner": "arg334891"
+},
+{
+"round": 6,
+"pair_id": 95,
+"a": "arg335084",
+"b": "arg335112",
+"winner": "arg335112"
+},
+{
+"round": 6,
+"pair_id": 96,
+"a": "arg336172",
+"b": "arg334926",
+"winner": "arg334926"
+},
+{
+"round": 6,
+"pair_id": 97,
+"a": "arg334958",
+"b": "arg334968",
+"winner": "arg334968"
+},
+{
+"round": 6,
+"pair_id": 98,
+"a": "arg334907",
+"b": "arg335030",
+"winner": "arg334907"
+},
+{
+"round": 6,
+"pair_id": 99,
+"a": "arg334890",
+"b": "arg336209",
+"winner": "arg336209"
+},
+{
+"round": 6,
+"pair_id": 100,
+"a": "arg335129",
+"b": "arg335032",
+"winner": "arg335032"
+},
+{
+"round": 6,
+"pair_id": 101,
+"a": "arg334978",
+"b": "arg335086",
+"winner": "arg334978"
+},
+{
+"round": 6,
+"pair_id": 102,
+"a": "arg334975",
+"b": "arg334927",
+"winner": "arg334975"
+},
+{
+"round": 7,
+"pair_id": 103,
+"a": "arg336894",
+"b": "arg335564",
+"winner": "arg335564"
+},
+{
+"round": 7,
+"pair_id": 104,
+"a": "arg334943",
+"b": "arg336179",
+"winner": "arg334943"
+},
+{
+"round": 7,
+"pair_id": 105,
+"a": "arg336204",
+"b": "arg334934",
+"winner": "arg334934"
+},
+{
+"round": 7,
+"pair_id": 106,
+"a": "arg334960",
+"b": "arg334961",
+"winner": "arg334960"
+},
+{
+"round": 7,
+"pair_id": 107,
+"a": "arg334907",
+"b": "arg335095",
+"winner": "arg335095"
+},
+{
+"round": 7,
+"pair_id": 108,
+"a": "arg335104",
+"b": "arg335096",
+"winner": "arg335096"
+},
+{
+"round": 7,
+"pair_id": 109,
+"a": "arg334978",
+"b": "arg336172",
+"winner": "arg334978"
+},
+{
+"round": 7,
+"pair_id": 110,
+"a": "arg335091",
+"b": "arg336029",
+"winner": "arg336029"
+},
+{
+"round": 7,
+"pair_id": 111,
+"a": "arg334891",
+"b": "arg335032",
+"winner": "arg335032"
+},
+{
+"round": 7,
+"pair_id": 112,
+"a": "arg334968",
+"b": "arg335112",
+"winner": "arg334968"
+},
+{
+"round": 7,
+"pair_id": 113,
+"a": "arg334926",
+"b": "arg334918",
+"winner": "arg334918"
+},
+{
+"round": 7,
+"pair_id": 114,
+"a": "arg334975",
+"b": "arg335132",
+"winner": "arg334975"
+},
+{
+"round": 7,
+"pair_id": 115,
+"a": "arg334890",
+"b": "arg335129",
+"winner": "arg334890"
+},
+{
+"round": 7,
+"pair_id": 116,
+"a": "arg335114",
+"b": "arg336048",
+"winner": "arg336048"
+},
+{
+"round": 7,
+"pair_id": 117,
+"a": "arg336209",
+"b": "arg335086",
+"winner": "arg336209"
+},
+{
+"round": 7,
+"pair_id": 118,
+"a": "arg335030",
+"b": "arg334958",
+"winner": "arg335030"
+},
+{
+"round": 7,
+"pair_id": 119,
+"a": "arg334927",
+"b": "arg335084",
+"winner": "arg335084"
+},
+{
+"round": 8,
+"pair_id": 120,
+"a": "arg334975",
+"b": "arg335564",
+"winner": "arg335564"
+},
+{
+"round": 8,
+"pair_id": 121,
+"a": "arg336894",
+"b": "arg335112",
+"winner": "arg336894"
+},
+{
+"round": 8,
+"pair_id": 122,
+"a": "arg334943",
+"b": "arg334929",
+"winner": "arg334929"
+},
+{
+"round": 8,
+"pair_id": 123,
+"a": "arg334960",
+"b": "arg334934",
+"winner": "arg334934"
+},
+{
+"round": 8,
+"pair_id": 124,
+"a": "arg336204",
+"b": "arg334907",
+"winner": "arg336204"
+},
+{
+"round": 8,
+"pair_id": 125,
+"a": "arg334961",
+"b": "arg335132",
+"winner": "arg334961"
+},
+{
+"round": 8,
+"pair_id": 126,
+"a": "arg334968",
+"b": "arg335095",
+"winner": "arg335095"
+},
+{
+"round": 8,
+"pair_id": 127,
+"a": "arg336209",
+"b": "arg334978",
+"winner": "arg336209"
+},
+{
+"round": 8,
+"pair_id": 128,
+"a": "arg336048",
+"b": "arg334926",
+"winner": "arg336048"
+},
+{
+"round": 8,
+"pair_id": 129,
+"a": "arg335091",
+"b": "arg335032",
+"winner": "arg335032"
+},
+{
+"round": 8,
+"pair_id": 130,
+"a": "arg335129",
+"b": "arg336029",
+"winner": "arg336029"
+},
+{
+"round": 8,
+"pair_id": 131,
+"a": "arg335104",
+"b": "arg334891",
+"winner": "arg335104"
+},
+{
+"round": 8,
+"pair_id": 132,
+"a": "arg335096",
+"b": "arg335084",
+"winner": "arg335096"
+},
+{
+"round": 8,
+"pair_id": 133,
+"a": "arg335030",
+"b": "arg334918",
+"winner": "arg334918"
+},
+{
+"round": 8,
+"pair_id": 134,
+"a": "arg336172",
+"b": "arg334890",
+"winner": "arg336172"
+},
+{
+"round": 8,
+"pair_id": 135,
+"a": "arg334927",
+"b": "arg335114",
+"winner": "arg335114"
+},
+{
+"round": 8,
+"pair_id": 136,
+"a": "arg335086",
+"b": "arg334958",
+"winner": "arg334958"
+}
+],
+"score_alone_1to10": {
+"arg334926": 3,
+"arg334918": 4,
+"arg334890": 3,
+"arg334907": 4,
+"arg334927": 2,
+"arg334891": 2,
+"arg334934": 5,
+"arg334929": 4,
+"arg334943": 4,
+"arg334960": 3,
+"arg334958": 3,
+"arg334961": 4,
+"arg334968": 3,
+"arg334975": 4,
+"arg335030": 3,
+"arg335032": 3,
+"arg334978": 3,
+"arg335084": 2,
+"arg335086": 3,
+"arg335095": 4,
+"arg335091": 3,
+"arg335104": 3,
+"arg335112": 3,
+"arg335114": 2,
+"arg335132": 2,
+"arg335129": 2,
+"arg335096": 3,
+"arg335564": 6,
+"arg336029": 4,
+"arg336179": 5,
+"arg336048": 4,
+"arg336209": 3,
+"arg336204": 5,
+"arg336172": 3,
+"arg336894": 5
+}
+},
+"human-growth-and-development-should-parents-use-spanking-as-an-option-to-discipline-_yes": {
+"pairwise": [
+{
+"round": 1,
+"pair_id": 1,
+"a": "arg335124",
+"b": "arg336199",
+"winner": "arg335124"
+},
+{
+"round": 1,
+"pair_id": 2,
+"a": "arg334884",
+"b": "arg334893",
+"winner": "arg334884"
+},
+{
+"round": 1,
+"pair_id": 3,
+"a": "arg334964",
+"b": "arg335047",
+"winner": "arg335047"
+},
+{
+"round": 1,
+"pair_id": 4,
+"a": "arg335098",
+"b": "arg334886",
+"winner": "arg334886"
+},
+{
+"round": 1,
+"pair_id": 5,
+"a": "arg334919",
+"b": "arg335094",
+"winner": "arg334919"
+},
+{
+"round": 1,
+"pair_id": 6,
+"a": "arg334923",
+"b": "arg336043",
+"winner": "arg336043"
+},
+{
+"round": 1,
+"pair_id": 7,
+"a": "arg335134",
+"b": "arg336176",
+"winner": "arg335134"
+},
+{
+"round": 1,
+"pair_id": 8,
+"a": "arg335092",
+"b": "arg334920",
+"winner": "arg335092"
+},
+{
+"round": 1,
+"pair_id": 9,
+"a": "arg334921",
+"b": "arg334973",
+"winner": "arg334973"
+},
+{
+"round": 1,
+"pair_id": 10,
+"a": "arg334924",
+"b": "arg335285",
+"winner": "arg334924"
+},
+{
+"round": 1,
+"pair_id": 11,
+"a": "arg334972",
+"b": "arg336563",
+"winner": "arg334972"
+},
+{
+"round": 1,
+"pair_id": 12,
+"a": "arg334967",
+"b": "arg335089",
+"winner": "arg334967"
+},
+{
+"round": 1,
+"pair_id": 13,
+"a": "arg335054",
+"b": "arg335090",
+"winner": "arg335090"
+},
+{
+"round": 1,
+"pair_id": 14,
+"a": "arg335097",
+"b": "arg336171",
+"winner": "arg335097"
+},
+{
+"round": 1,
+"pair_id": 15,
+"a": "arg334898",
+"b": "arg334959",
+"winner": "arg334959"
+},
+{
+"round": 1,
+"pair_id": 16,
+"a": "arg335034",
+"b": "arg334932",
+"winner": "arg335034"
+},
+{
+"round": 1,
+"pair_id": 17,
+"a": "arg336222",
+"b": "arg334938",
+"winner": "arg336222"
+},
+{
+"round": 2,
+"pair_id": 18,
+"a": "arg334924",
+"b": "arg336222",
+"winner": "arg334924"
+},
+{
+"round": 2,
+"pair_id": 19,
+"a": "arg335047",
+"b": "arg334973",
+"winner": "arg335047"
+},
+{
+"round": 2,
+"pair_id": 20,
+"a": "arg335134",
+"b": "arg335034",
+"winner": "arg335134"
+},
+{
+"round": 2,
+"pair_id": 21,
+"a": "arg334919",
+"b": "arg336043",
+"winner": "arg334919"
+},
+{
+"round": 2,
+"pair_id": 22,
+"a": "arg334893",
+"b": "arg334959",
+"winner": "arg334959"
+},
+{
+"round": 2,
+"pair_id": 23,
+"a": "arg334886",
+"b": "arg334884",
+"winner": "arg334886"
+},
+{
+"round": 2,
+"pair_id": 24,
+"a": "arg335092",
+"b": "arg335094",
+"winner": "arg335094"
+},
+{
+"round": 2,
+"pair_id": 25,
+"a": "arg335097",
+"b": "arg335090",
+"winner": "arg335090"
+},
+{
+"round": 2,
+"pair_id": 26,
+"a": "arg335054",
+"b": "arg334938",
+"winner": "arg335054"
+},
+{
+"round": 2,
+"pair_id": 27,
+"a": "arg334922",
+"b": "arg334972",
+"winner": "arg334972"
+},
+{
+"round": 2,
+"pair_id": 28,
+"a": "arg336199",
+"b": "arg334967",
+"winner": "arg336199"
+},
+{
+"round": 2,
+"pair_id": 29,
+"a": "arg336171",
+"b": "arg336563",
+"winner": "arg336171"
+},
+{
+"round": 2,
+"pair_id": 30,
+"a": "arg336176",
+"b": "arg334923",
+"winner": "arg334923"
+},
+{
+"round": 2,
+"pair_id": 31,
+"a": "arg334964",
+"b": "arg335089",
+"winner": "arg334964"
+},
+{
+"round": 2,
+"pair_id": 32,
+"a": "arg334932",
+"b": "arg335098",
+"winner": "arg335098"
+},
+{
+"round": 2,
+"pair_id": 33,
+"a": "arg335285",
+"b": "arg334921",
+"winner": "arg335285"
+},
+{
+"round": 2,
+"pair_id": 34,
+"a": "arg334898",
+"b": "arg334920",
+"winner": "arg334898"
+},
+{
+"round": 3,
+"pair_id": 35,
+"a": "arg334959",
+"b": "arg334973",
+"winner": "arg334959"
+},
+{
+"round": 3,
+"pair_id": 36,
+"a": "arg334924",
+"b": "arg335134",
+"winner": "arg334924"
+},
+{
+"round": 3,
+"pair_id": 37,
+"a": "arg335092",
+"b": "arg334884",
+"winner": "arg334884"
+},
+{
+"round": 3,
+"pair_id": 38,
+"a": "arg335090",
+"b": "arg335124",
+"winner": "arg335090"
+},
+{
+"round": 3,
+"pair_id": 39,
+"a": "arg334972",
+"b": "arg334923",
+"winner": "arg334972"
+},
+{
+"round": 3,
+"pair_id": 40,
+"a": "arg336563",
+"b": "arg335034",
+"winner": "arg336563"
+},
+{
+"round": 3,
+"pair_id": 41,
+"a": "arg334964",
+"b": "arg335054",
+"winner": "arg334964"
+},
+{
+"round": 3,
+"pair_id": 42,
+"a": "arg334919",
+"b": "arg334920",
+"winner": "arg334919"
+},
+{
+"round": 3,
+"pair_id": 43,
+"a": "arg334898",
+"b": "arg334921",
+"winner": "arg334898"
+},
+{
+"round": 3,
+"pair_id": 44,
+"a": "arg335285",
+"b": "arg335047",
+"winner": "arg335047"
+},
+{
+"round": 3,
+"pair_id": 45,
+"a": "arg334922",
+"b": "arg335098",
+"winner": "arg334922"
+},
+{
+"round": 3,
+"pair_id": 46,
+"a": "arg334967",
+"b": "arg335094",
+"winner": "arg334967"
+},
+{
+"round": 3,
+"pair_id": 47,
+"a": "arg336199",
+"b": "arg334893",
+"winner": "arg336199"
+},
+{
+"round": 3,
+"pair_id": 48,
+"a": "arg334938",
+"b": "arg336043",
+"winner": "arg336043"
+},
+{
+"round": 3,
+"pair_id": 49,
+"a": "arg336222",
+"b": "arg336171",
+"winner": "arg336222"
+},
+{
+"round": 3,
+"pair_id": 50,
+"a": "arg336176",
+"b": "arg335097",
+"winner": "arg335097"
+},
+{
+"round": 3,
+"pair_id": 51,
+"a": "arg335089",
+"b": "arg334932",
+"winner": "arg334932"
+},
+{
+"round": 4,
+"pair_id": 52,
+"a": "arg335134",
+"b": "arg334919",
+"winner": "arg334919"
+},
+{
+"round": 4,
+"pair_id": 53,
+"a": "arg334972",
+"b": "arg335094",
+"winner": "arg334972"
+},
+{
+"round": 4,
+"pair_id": 54,
+"a": "arg334922",
+"b": "arg334959",
+"winner": "arg334959"
+},
+{
+"round": 4,
+"pair_id": 55,
+"a": "arg334924",
+"b": "arg335124",
+"winner": "arg335124"
+},
+{
+"round": 4,
+"pair_id": 56,
+"a": "arg334884",
+"b": "arg334898",
+"winner": "arg334884"
+},
+{
+"round": 4,
+"pair_id": 57,
+"a": "arg335097",
+"b": "arg334973",
+"winner": "arg334973"
+},
+{
+"round": 4,
+"pair_id": 58,
+"a": "arg335047",
+"b": "arg336222",
+"winner": "arg335047"
+},
+{
+"round": 4,
+"pair_id": 59,
+"a": "arg336043",
+"b": "arg335285",
+"winner": "arg336043"
+},
+{
+"round": 4,
+"pair_id": 60,
+"a": "arg335098",
+"b": "arg335034",
+"winner": "arg335098"
+},
+{
+"round": 4,
+"pair_id": 61,
+"a": "arg334923",
+"b": "arg334921",
+"winner": "arg334923"
+},
+{
+"round": 4,
+"pair_id": 62,
+"a": "arg336563",
+"b": "arg334938",
+"winner": "arg336563"
+},
+{
+"round": 4,
+"pair_id": 63,
+"a": "arg334967",
+"b": "arg334886",
+"winner": "arg334886"
+},
+{
+"round": 4,
+"pair_id": 64,
+"a": "arg334964",
+"b": "arg336171",
+"winner": "arg336171"
+},
+{
+"round": 4,
+"pair_id": 65,
+"a": "arg335089",
+"b": "arg336199",
+"winner": "arg335089"
+},
+{
+"round": 4,
+"pair_id": 66,
+"a": "arg336176",
+"b": "arg334932",
+"winner": "arg336176"
+},
+{
+"round": 4,
+"pair_id": 67,
+"a": "arg335054",
+"b": "arg335092",
+"winner": "arg335054"
+},
+{
+"round": 4,
+"pair_id": 68,
+"a": "arg334920",
+"b": "arg334893",
+"winner": "arg334920"
+},
+{
+"round": 5,
+"pair_id": 69,
+"a": "arg335124",
+"b": "arg334919",
+"winner": "arg334919"
+},
+{
+"round": 5,
+"pair_id": 70,
+"a": "arg334924",
+"b": "arg335090",
+"winner": "arg335090"
+},
+{
+"round": 5,
+"pair_id": 71,
+"a": "arg334884",
+"b": "arg336563",
+"winner": "arg334884"
+},
+{
+"round": 5,
+"pair_id": 72,
+"a": "arg334964",
+"b": "arg335094",
+"winner": "arg334964"
+},
+{
+"round": 5,
+"pair_id": 73,
+"a": "arg335034",
+"b": "arg334972",
+"winner": "arg334972"
+},
+{
+"round": 5,
+"pair_id": 74,
+"a": "arg334922",
+"b": "arg335047",
+"winner": "arg335047"
+},
+{
+"round": 5,
+"pair_id": 75,
+"a": "arg335097",
+"b": "arg335285",
+"winner": "arg335097"
+},
+{
+"round": 5,
+"pair_id": 76,
+"a": "arg335054",
+"b": "arg336222",
+"winner": "arg335054"
+},
+{
+"round": 5,
+"pair_id": 77,
+"a": "arg334932",
+"b": "arg334886",
+"winner": "arg334886"
+},
+{
+"round": 5,
+"pair_id": 78,
+"a": "arg334973",
+"b": "arg336171",
+"winner": "arg334973"
+},
+{
+"round": 5,
+"pair_id": 79,
+"a": "arg334893",
+"b": "arg336043",
+"winner": "arg336043"
+},
+{
+"round": 5,
+"pair_id": 80,
+"a": "arg334938",
+"b": "arg334923",
+"winner": "arg334938"
+},
+{
+"round": 5,
+"pair_id": 81,
+"a": "arg334967",
+"b": "arg334920",
+"winner": "arg334967"
+},
+{
+"round": 5,
+"pair_id": 82,
+"a": "arg335098",
+"b": "arg336176",
+"winner": "arg335098"
+},
+{
+"round": 5,
+"pair_id": 83,
+"a": "arg335089",
+"b": "arg335092",
+"winner": "arg335092"
+},
+{
+"round": 5,
+"pair_id": 84,
+"a": "arg334898",
+"b": "arg336199",
+"winner": "arg334898"
+},
+{
+"round": 5,
+"pair_id": 85,
+"a": "arg335134",
+"b": "arg334921",
+"winner": "arg334921"
+},
+{
+"round": 6,
+"pair_id": 86,
+"a": "arg335047",
+"b": "arg335090",
+"winner": "arg335047"
+},
+{
+"round": 6,
+"pair_id": 87,
+"a": "arg334886",
+"b": "arg335097",
+"winner": "arg334886"
+},
+{
+"round": 6,
+"pair_id": 88,
+"a": "arg334922",
+"b": "arg334919",
+"winner": "arg334919"
+},
+{
+"round": 6,
+"pair_id": 89,
+"a": "arg335124",
+"b": "arg334938",
+"winner": "arg335124"
+},
+{
+"round": 6,
+"pair_id": 90,
+"a": "arg334924",
+"b": "arg336043",
+"winner": "arg336043"
+},
+{
+"round": 6,
+"pair_id": 91,
+"a": "arg334959",
+"b": "arg335054",
+"winner": "arg335054"
+},
+{
+"round": 6,
+"pair_id": 92,
+"a": "arg334898",
+"b": "arg334923",
+"winner": "arg334898"
+},
+{
+"round": 6,
+"pair_id": 93,
+"a": "arg335034",
+"b": "arg335092",
+"winner": "arg335092"
+},
+{
+"round": 6,
+"pair_id": 94,
+"a": "arg336176",
+"b": "arg334973",
+"winner": "arg334973"
+},
+{
+"round": 6,
+"pair_id": 95,
+"a": "arg334884",
+"b": "arg336222",
+"winner": "arg334884"
+},
+{
+"round": 6,
+"pair_id": 96,
+"a": "arg336171",
+"b": "arg335098",
+"winner": "arg336171"
+},
+{
+"round": 6,
+"pair_id": 97,
+"a": "arg334921",
+"b": "arg336199",
+"winner": "arg336199"
+},
+{
+"round": 6,
+"pair_id": 98,
+"a": "arg335094",
+"b": "arg336563",
+"winner": "arg335094"
+},
+{
+"round": 6,
+"pair_id": 99,
+"a": "arg335285",
+"b": "arg335089",
+"winner": "arg335285"
+},
+{
+"round": 6,
+"pair_id": 100,
+"a": "arg334964",
+"b": "arg334920",
+"winner": "arg334964"
+},
+{
+"round": 6,
+"pair_id": 101,
+"a": "arg335134",
+"b": "arg334967",
+"winner": "arg334967"
+},
+{
+"round": 6,
+"pair_id": 102,
+"a": "arg334932",
+"b": "arg334893",
+"winner": "arg334893"
+},
+{
+"round": 7,
+"pair_id": 103,
+"a": "arg335090",
+"b": "arg334886",
+"winner": "arg335090"
+},
+{
+"round": 7,
+"pair_id": 104,
+"a": "arg334972",
+"b": "arg335054",
+"winner": "arg334972"
+},
+{
+"round": 7,
+"pair_id": 105,
+"a": "arg336171",
+"b": "arg334919",
+"winner": "arg334919"
+},
+{
+"round": 7,
+"pair_id": 106,
+"a": "arg336563",
+"b": "arg334973",
+"winner": "arg334973"
+},
+{
+"round": 7,
+"pair_id": 107,
+"a": "arg335092",
+"b": "arg334923",
+"winner": "arg334923"
+},
+{
+"round": 7,
+"pair_id": 108,
+"a": "arg334884",
+"b": "arg335097",
+"winner": "arg334884"
+},
+{
+"round": 7,
+"pair_id": 109,
+"a": "arg334898",
+"b": "arg334964",
+"winner": "arg334898"
+},
+{
+"round": 7,
+"pair_id": 110,
+"a": "arg334959",
+"b": "arg334938",
+"winner": "arg334959"
+},
+{
+"round": 7,
+"pair_id": 111,
+"a": "arg336043",
+"b": "arg334967",
+"winner": "arg336043"
+},
+{
+"round": 7,
+"pair_id": 112,
+"a": "arg334924",
+"b": "arg334921",
+"winner": "arg334924"
+},
+{
+"round": 7,
+"pair_id": 113,
+"a": "arg335098",
+"b": "arg336199",
+"winner": "arg335098"
+},
+{
+"round": 7,
+"pair_id": 114,
+"a": "arg334922",
+"b": "arg334893",
+"winner": "arg334893"
+},
+{
+"round": 7,
+"pair_id": 115,
+"a": "arg336176",
+"b": "arg335124",
+"winner": "arg335124"
+},
+{
+"round": 7,
+"pair_id": 116,
+"a": "arg335094",
+"b": "arg335134",
+"winner": "arg335094"
+},
+{
+"round": 7,
+"pair_id": 117,
+"a": "arg335089",
+"b": "arg336222",
+"winner": "arg336222"
+},
+{
+"round": 7,
+"pair_id": 118,
+"a": "arg335285",
+"b": "arg334932",
+"winner": "arg335285"
+},
+{
+"round": 7,
+"pair_id": 119,
+"a": "arg334920",
+"b": "arg335034",
+"winner": "arg334920"
+},
+{
+"round": 8,
+"pair_id": 120,
+"a": "arg334964",
+"b": "arg334972",
+"winner": "arg334972"
+},
+{
+"round": 8,
+"pair_id": 121,
+"a": "arg335124",
+"b": "arg335094",
+"winner": "arg335094"
+},
+{
+"round": 8,
+"pair_id": 122,
+"a": "arg335090",
+"b": "arg336043",
+"winner": "arg336043"
+},
+{
+"round": 8,
+"pair_id": 123,
+"a": "arg335047",
+"b": "arg335054",
+"winner": "arg335047"
+},
+{
+"round": 8,
+"pair_id": 124,
+"a": "arg334886",
+"b": "arg336222",
+"winner": "arg334886"
+},
+{
+"round": 8,
+"pair_id": 125,
+"a": "arg335098",
+"b": "arg334959",
+"winner": "arg334959"
+},
+{
+"round": 8,
+"pair_id": 126,
+"a": "arg334923",
+"b": "arg334973",
+"winner": "arg334973"
+},
+{
+"round": 8,
+"pair_id": 127,
+"a": "arg336563",
+"b": "arg334967",
+"winner": "arg336563"
+},
+{
+"round": 8,
+"pair_id": 128,
+"a": "arg334893",
+"b": "arg334898",
+"winner": "arg334898"
+},
+{
+"round": 8,
+"pair_id": 129,
+"a": "arg334884",
+"b": "arg334920",
+"winner": "arg334884"
+},
+{
+"round": 8,
+"pair_id": 130,
+"a": "arg335092",
+"b": "arg334938",
+"winner": "arg335092"
+},
+{
+"round": 8,
+"pair_id": 131,
+"a": "arg336171",
+"b": "arg336176",
+"winner": "arg336171"
+},
+{
+"round": 8,
+"pair_id": 132,
+"a": "arg334924",
+"b": "arg336199",
+"winner": "arg334924"
+},
+{
+"round": 8,
+"pair_id": 133,
+"a": "arg335134",
+"b": "arg335097",
+"winner": "arg335097"
+},
+{
+"round": 8,
+"pair_id": 134,
+"a": "arg335034",
+"b": "arg335285",
+"winner": "arg335285"
+},
+{
+"round": 8,
+"pair_id": 135,
+"a": "arg334921",
+"b": "arg335089",
+"winner": "arg334921"
+},
+{
+"round": 8,
+"pair_id": 136,
+"a": "arg334932",
+"b": "arg334922",
+"winner": "arg334932"
+}
+],
+"score_alone_1to10": {
+"arg334920": 3,
+"arg334898": 3,
+"arg334919": 3,
+"arg334893": 3,
+"arg334886": 3,
+"arg334884": 3,
+"arg334922": 2,
+"arg334924": 2,
+"arg334921": 2,
+"arg334923": 2,
+"arg334932": 2,
+"arg334938": 3,
+"arg334959": 3,
+"arg334973": 2,
+"arg334964": 3,
+"arg334972": 3,
+"arg335034": 2,
+"arg334967": 2,
+"arg335089": 2,
+"arg335054": 3,
+"arg335047": 3,
+"arg335090": 3,
+"arg335092": 2,
+"arg335094": 3,
+"arg335134": 2,
+"arg335097": 3,
+"arg335124": 3,
+"arg335098": 3,
+"arg335285": 2,
+"arg336043": 4,
+"arg336171": 2,
+"arg336199": 3,
+"arg336176": 2,
+"arg336563": 2,
+"arg336222": 2
+}
+},
+"is-the-school-uniform-a-good-or-bad-idea-_bad": {
+"pairwise": [
+{
+"round": 1,
+"pair_id": 1,
+"a": "arg283557",
+"b": "arg386882",
+"winner": "arg283557"
+},
+{
+"round": 1,
+"pair_id": 2,
+"a": "arg198296",
+"b": "arg198926",
+"winner": "arg198926"
+},
+{
+"round": 1,
+"pair_id": 3,
+"a": "arg205531",
+"b": "arg237112",
+"winner": "arg205531"
+},
+{
+"round": 1,
+"pair_id": 4,
+"a": "arg252467",
+"b": "arg198306",
+"winner": "arg252467"
+},
+{
+"round": 1,
+"pair_id": 5,
+"a": "arg198954",
+"b": "arg251373",
+"winner": "arg198954"
+},
+{
+"round": 1,
+"pair_id": 6,
+"a": "arg200706",
+"b": "arg336277",
+"winner": "arg200706"
+},
+{
+"round": 1,
+"pair_id": 7,
+"a": "arg284049",
+"b": "arg352482",
+"winner": "arg352482"
+},
+{
+"round": 1,
+"pair_id": 8,
+"a": "arg251309",
+"b": "arg199159",
+"winner": "arg251309"
+},
+{
+"round": 1,
+"pair_id": 9,
+"a": "arg199549",
+"b": "arg233332",
+"winner": "arg199549"
+},
+{
+"round": 1,
+"pair_id": 10,
+"a": "arg202290",
+"b": "arg287477",
+"winner": "arg202290"
+},
+{
+"round": 1,
+"pair_id": 11,
+"a": "arg231770",
+"b": "arg580099",
+"winner": "arg231770"
+},
+{
+"round": 1,
+"pair_id": 12,
+"a": "arg207279",
+"b": "arg238471",
+"winner": "arg207279"
+},
+{
+"round": 1,
+"pair_id": 13,
+"a": "arg238468",
+"b": "arg238473",
+"winner": "arg238473"
+},
+{
+"round": 1,
+"pair_id": 14,
+"a": "arg251644",
+"b": "arg339127",
+"winner": "arg339127"
+},
+{
+"round": 1,
+"pair_id": 15,
+"a": "arg198939",
+"b": "arg203931",
+"winner": "arg198939"
+},
+{
+"round": 1,
+"pair_id": 16,
+"a": "arg236737",
+"b": "arg202425",
+"winner": "arg236737"
+},
+{
+"round": 1,
+"pair_id": 17,
+"a": "arg554188",
+"b": "arg203444",
+"winner": "arg554188"
+},
+{
+"round": 2,
+"pair_id": 18,
+"a": "arg202290",
+"b": "arg554188",
+"winner": "arg202290"
+},
+{
+"round": 2,
+"pair_id": 19,
+"a": "arg236737",
+"b": "arg198926",
+"winner": "arg236737"
+},
+{
+"round": 2,
+"pair_id": 20,
+"a": "arg339127",
+"b": "arg198954",
+"winner": "arg198954"
+},
+{
+"round": 2,
+"pair_id": 21,
+"a": "arg251373",
+"b": "arg233332",
+"winner": "arg233332"
+},
+{
+"round": 2,
+"pair_id": 22,
+"a": "arg251309",
+"b": "arg352482",
+"winner": "arg251309"
+},
+{
+"round": 2,
+"pair_id": 23,
+"a": "arg200706",
+"b": "arg238473",
+"winner": "arg200706"
+},
+{
+"round": 2,
+"pair_id": 24,
+"a": "arg205531",
+"b": "arg238468",
+"winner": "arg205531"
+},
+{
+"round": 2,
+"pair_id": 25,
+"a": "arg237112",
+"b": "arg203444",
+"winner": "arg237112"
+},
+{
+"round": 2,
+"pair_id": 26,
+"a": "arg231770",
+"b": "arg284049",
+"winner": "arg284049"
+},
+{
+"round": 2,
+"pair_id": 27,
+"a": "arg336277",
+"b": "arg252467",
+"winner": "arg252467"
+},
+{
+"round": 2,
+"pair_id": 28,
+"a": "arg199550",
+"b": "arg203931",
+"winner": "arg199550"
+},
+{
+"round": 2,
+"pair_id": 29,
+"a": "arg207279",
+"b": "arg199549",
+"winner": "arg199549"
+},
+{
+"round": 2,
+"pair_id": 30,
+"a": "arg386882",
+"b": "arg198306",
+"winner": "arg198306"
+},
+{
+"round": 2,
+"pair_id": 31,
+"a": "arg198296",
+"b": "arg580099",
+"winner": "arg198296"
+},
+{
+"round": 2,
+"pair_id": 32,
+"a": "arg198939",
+"b": "arg251644",
+"winner": "arg198939"
+},
+{
+"round": 2,
+"pair_id": 33,
+"a": "arg202425",
+"b": "arg238471",
+"winner": "arg238471"
+},
+{
+"round": 2,
+"pair_id": 34,
+"a": "arg287477",
+"b": "arg199159",
+"winner": "arg199159"
+},
+{
+"round": 3,
+"pair_id": 35,
+"a": "arg199549",
+"b": "arg200706",
+"winner": "arg199549"
+},
+{
+"round": 3,
+"pair_id": 36,
+"a": "arg233332",
+"b": "arg236737",
+"winner": "arg233332"
+},
+{
+"round": 3,
+"pair_id": 37,
+"a": "arg198306",
+"b": "arg202290",
+"winner": "arg202290"
+},
+{
+"round": 3,
+"pair_id": 38,
+"a": "arg205531",
+"b": "arg199159",
+"winner": "arg199159"
+},
+{
+"round": 3,
+"pair_id": 39,
+"a": "arg198296",
+"b": "arg284049",
+"winner": "arg284049"
+},
+{
+"round": 3,
+"pair_id": 40,
+"a": "arg252467",
+"b": "arg283557",
+"winner": "arg252467"
+},
+{
+"round": 3,
+"pair_id": 41,
+"a": "arg198939",
+"b": "arg199550",
+"winner": "arg198939"
+},
+{
+"round": 3,
+"pair_id": 42,
+"a": "arg580099",
+"b": "arg198926",
+"winner": "arg198926"
+},
+{
+"round": 3,
+"pair_id": 43,
+"a": "arg203931",
+"b": "arg207279",
+"winner": "arg203931"
+},
+{
+"round": 3,
+"pair_id": 44,
+"a": "arg352482",
+"b": "arg238473",
+"winner": "arg352482"
+},
+{
+"round": 3,
+"pair_id": 45,
+"a": "arg238468",
+"b": "arg231770",
+"winner": "arg231770"
+},
+{
+"round": 3,
+"pair_id": 46,
+"a": "arg198954",
+"b": "arg203444",
+"winner": "arg198954"
+},
+{
+"round": 3,
+"pair_id": 47,
+"a": "arg339127",
+"b": "arg238471",
+"winner": "arg339127"
+},
+{
+"round": 3,
+"pair_id": 48,
+"a": "arg287477",
+"b": "arg554188",
+"winner": "arg554188"
+},
+{
+"round": 3,
+"pair_id": 49,
+"a": "arg237112",
+"b": "arg386882",
+"winner": "arg386882"
+},
+{
+"round": 3,
+"pair_id": 50,
+"a": "arg202425",
+"b": "arg251373",
+"winner": "arg251373"
+},
+{
+"round": 3,
+"pair_id": 51,
+"a": "arg251644",
+"b": "arg336277",
+"winner": "arg336277"
+},
+{
+"round": 4,
+"pair_id": 52,
+"a": "arg198939",
+"b": "arg198954",
+"winner": "arg198939"
+},
+{
+"round": 4,
+"pair_id": 53,
+"a": "arg251373",
+"b": "arg284049",
+"winner": "arg251373"
+},
+{
+"round": 4,
+"pair_id": 54,
+"a": "arg252467",
+"b": "arg199550",
+"winner": "arg252467"
+},
+{
+"round": 4,
+"pair_id": 55,
+"a": "arg251309",
+"b": "arg233332",
+"winner": "arg251309"
+},
+{
+"round": 4,
+"pair_id": 56,
+"a": "arg236737",
+"b": "arg352482",
+"winner": "arg352482"
+},
+{
+"round": 4,
+"pair_id": 57,
+"a": "arg202290",
+"b": "arg200706",
+"winner": "arg200706"
+},
+{
+"round": 4,
+"pair_id": 58,
+"a": "arg238473",
+"b": "arg283557",
+"winner": "arg283557"
+},
+{
+"round": 4,
+"pair_id": 59,
+"a": "arg231770",
+"b": "arg238471",
+"winner": "arg231770"
+},
+{
+"round": 4,
+"pair_id": 60,
+"a": "arg554188",
+"b": "arg199159",
+"winner": "arg199159"
+},
+{
+"round": 4,
+"pair_id": 61,
+"a": "arg339127",
+"b": "arg203931",
+"winner": "arg339127"
+},
+{
+"round": 4,
+"pair_id": 62,
+"a": "arg336277",
+"b": "arg198296",
+"winner": "arg336277"
+},
+{
+"round": 4,
+"pair_id": 63,
+"a": "arg203444",
+"b": "arg287477",
+"winner": "arg287477"
+},
+{
+"round": 4,
+"pair_id": 64,
+"a": "arg207279",
+"b": "arg205531",
+"winner": "arg205531"
+},
+{
+"round": 4,
+"pair_id": 65,
+"a": "arg198926",
+"b": "arg251644",
+"winner": "arg251644"
+},
+{
+"round": 4,
+"pair_id": 66,
+"a": "arg198306",
+"b": "arg202425",
+"winner": "arg202425"
+},
+{
+"round": 4,
+"pair_id": 67,
+"a": "arg580099",
+"b": "arg386882",
+"winner": "arg580099"
+},
+{
+"round": 4,
+"pair_id": 68,
+"a": "arg238468",
+"b": "arg237112",
+"winner": "arg237112"
+},
+{
+"round": 5,
+"pair_id": 69,
+"a": "arg283557",
+"b": "arg202290",
+"winner": "arg202290"
+},
+{
+"round": 5,
+"pair_id": 70,
+"a": "arg251309",
+"b": "arg251373",
+"winner": "arg251309"
+},
+{
+"round": 5,
+"pair_id": 71,
+"a": "arg236737",
+"b": "arg199549",
+"winner": "arg199549"
+},
+{
+"round": 5,
+"pair_id": 72,
+"a": "arg198926",
+"b": "arg199159",
+"winner": "arg199159"
+},
+{
+"round": 5,
+"pair_id": 73,
+"a": "arg200706",
+"b": "arg352482",
+"winner": "arg200706"
+},
+{
+"round": 5,
+"pair_id": 74,
+"a": "arg205531",
+"b": "arg252467",
+"winner": "arg252467"
+},
+{
+"round": 5,
+"pair_id": 75,
+"a": "arg339127",
+"b": "arg198939",
+"winner": "arg198939"
+},
+{
+"round": 5,
+"pair_id": 76,
+"a": "arg233332",
+"b": "arg203931",
+"winner": "arg233332"
+},
+{
+"round": 5,
+"pair_id": 77,
+"a": "arg202425",
+"b": "arg199550",
+"winner": "arg199550"
+},
+{
+"round": 5,
+"pair_id": 78,
+"a": "arg580099",
+"b": "arg287477",
+"winner": "arg580099"
+},
+{
+"round": 5,
+"pair_id": 79,
+"a": "arg554188",
+"b": "arg198296",
+"winner": "arg198296"
+},
+{
+"round": 5,
+"pair_id": 80,
+"a": "arg238473",
+"b": "arg251644",
+"winner": "arg251644"
+},
+{
+"round": 5,
+"pair_id": 81,
+"a": "arg336277",
+"b": "arg203444",
+"winner": "arg336277"
+},
+{
+"round": 5,
+"pair_id": 82,
+"a": "arg231770",
+"b": "arg207279",
+"winner": "arg231770"
+},
+{
+"round": 5,
+"pair_id": 83,
+"a": "arg238471",
+"b": "arg238468",
+"winner": "arg238471"
+},
+{
+"round": 5,
+"pair_id": 84,
+"a": "arg284049",
+"b": "arg386882",
+"winner": "arg284049"
+},
+{
+"round": 5,
+"pair_id": 85,
+"a": "arg237112",
+"b": "arg198306",
+"winner": "arg198306"
+},
+{
+"round": 6,
+"pair_id": 86,
+"a": "arg199549",
+"b": "arg251309",
+"winner": "arg251309"
+},
+{
+"round": 6,
+"pair_id": 87,
+"a": "arg352482",
+"b": "arg198939",
+"winner": "arg198939"
+},
+{
+"round": 6,
+"pair_id": 88,
+"a": "arg251644",
+"b": "arg199550",
+"winner": "arg199550"
+},
+{
+"round": 6,
+"pair_id": 89,
+"a": "arg231770",
+"b": "arg252467",
+"winner": "arg252467"
+},
+{
+"round": 6,
+"pair_id": 90,
+"a": "arg236737",
+"b": "arg336277",
+"winner": "arg336277"
+},
+{
+"round": 6,
+"pair_id": 91,
+"a": "arg198954",
+"b": "arg202290",
+"winner": "arg198954"
+},
+{
+"round": 6,
+"pair_id": 92,
+"a": "arg283557",
+"b": "arg199159",
+"winner": "arg199159"
+},
+{
+"round": 6,
+"pair_id": 93,
+"a": "arg233332",
+"b": "arg339127",
+"winner": "arg233332"
+},
+{
+"round": 6,
+"pair_id": 94,
+"a": "arg203444",
+"b": "arg238473",
+"winner": "arg238473"
+},
+{
+"round": 6,
+"pair_id": 95,
+"a": "arg251373",
+"b": "arg198306",
+"winner": "arg251373"
+},
+{
+"round": 6,
+"pair_id": 96,
+"a": "arg284049",
+"b": "arg238471",
+"winner": "arg238471"
+},
+{
+"round": 6,
+"pair_id": 97,
+"a": "arg237112",
+"b": "arg554188",
+"winner": "arg554188"
+},
+{
+"round": 6,
+"pair_id": 98,
+"a": "arg386882",
+"b": "arg198296",
+"winner": "arg198296"
+},
+{
+"round": 6,
+"pair_id": 99,
+"a": "arg580099",
+"b": "arg205531",
+"winner": "arg205531"
+},
+{
+"round": 6,
+"pair_id": 100,
+"a": "arg203931",
+"b": "arg202425",
+"winner": "arg202425"
+},
+{
+"round": 6,
+"pair_id": 101,
+"a": "arg238468",
+"b": "arg198926",
+"winner": "arg198926"
+},
+{
+"round": 6,
+"pair_id": 102,
+"a": "arg287477",
+"b": "arg207279",
+"winner": "arg207279"
+},
+{
+"round": 7,
+"pair_id": 103,
+"a": "arg251309",
+"b": "arg200706",
+"winner": "arg251309"
+},
+{
+"round": 7,
+"pair_id": 104,
+"a": "arg198939",
+"b": "arg199549",
+"winner": "arg199549"
+},
+{
+"round": 7,
+"pair_id": 105,
+"a": "arg352482",
+"b": "arg339127",
+"winner": "arg352482"
+},
+{
+"round": 7,
+"pair_id": 106,
+"a": "arg233332",
+"b": "arg198954",
+"winner": "arg233332"
+},
+{
+"round": 7,
+"pair_id": 107,
+"a": "arg580099",
+"b": "arg199550",
+"winner": "arg199550"
+},
+{
+"round": 7,
+"pair_id": 108,
+"a": "arg198926",
+"b": "arg238473",
+"winner": "arg238473"
+},
+{
+"round": 7,
+"pair_id": 109,
+"a": "arg199159",
+"b": "arg231770",
+"winner": "arg199159"
+},
+{
+"round": 7,
+"pair_id": 110,
+"a": "arg284049",
+"b": "arg202290",
+"winner": "arg202290"
+},
+{
+"round": 7,
+"pair_id": 111,
+"a": "arg238471",
+"b": "arg205531",
+"winner": "arg238471"
+},
+{
+"round": 7,
+"pair_id": 112,
+"a": "arg251644",
+"b": "arg202425",
+"winner": "arg251644"
+},
+{
+"round": 7,
+"pair_id": 113,
+"a": "arg251373",
+"b": "arg336277",
+"winner": "arg336277"
+},
+{
+"round": 7,
+"pair_id": 114,
+"a": "arg198296",
+"b": "arg207279",
+"winner": "arg207279"
+},
+{
+"round": 7,
+"pair_id": 115,
+"a": "arg238468",
+"b": "arg198306",
+"winner": "arg198306"
+},
+{
+"round": 7,
+"pair_id": 116,
+"a": "arg203931",
+"b": "arg283557",
+"winner": "arg283557"
+},
+{
+"round": 7,
+"pair_id": 117,
+"a": "arg386882",
+"b": "arg554188",
+"winner": "arg554188"
+},
+{
+"round": 7,
+"pair_id": 118,
+"a": "arg287477",
+"b": "arg237112",
+"winner": "arg287477"
+},
+{
+"round": 7,
+"pair_id": 119,
+"a": "arg203444",
+"b": "arg236737",
+"winner": "arg236737"
+},
+{
+"round": 8,
+"pair_id": 120,
+"a": "arg252467",
+"b": "arg251309",
+"winner": "arg251309"
+},
+{
+"round": 8,
+"pair_id": 121,
+"a": "arg200706",
+"b": "arg233332",
+"winner": "arg200706"
+},
+{
+"round": 8,
+"pair_id": 122,
+"a": "arg199549",
+"b": "arg352482",
+"winner": "arg199549"
+},
+{
+"round": 8,
+"pair_id": 123,
+"a": "arg199159",
+"b": "arg198954",
+"winner": "arg199159"
+},
+{
+"round": 8,
+"pair_id": 124,
+"a": "arg205531",
+"b": "arg231770",
+"winner": "arg205531"
+},
+{
+"round": 8,
+"pair_id": 125,
+"a": "arg283557",
+"b": "arg336277",
+"winner": "arg336277"
+},
+{
+"round": 8,
+"pair_id": 126,
+"a": "arg198939",
+"b": "arg236737",
+"winner": "arg198939"
+},
+{
+"round": 8,
+"pair_id": 127,
+"a": "arg198926",
+"b": "arg554188",
+"winner": "arg198926"
+},
+{
+"round": 8,
+"pair_id": 128,
+"a": "arg284049",
+"b": "arg207279",
+"winner": "arg284049"
+},
+{
+"round": 8,
+"pair_id": 129,
+"a": "arg339127",
+"b": "arg202290",
+"winner": "arg202290"
+},
+{
+"round": 8,
+"pair_id": 130,
+"a": "arg580099",
+"b": "arg238471",
+"winner": "arg238471"
+},
+{
+"round": 8,
+"pair_id": 131,
+"a": "arg203931",
+"b": "arg238473",
+"winner": "arg238473"
+},
+{
+"round": 8,
+"pair_id": 132,
+"a": "arg199550",
+"b": "arg198306",
+"winner": "arg199550"
+},
+{
+"round": 8,
+"pair_id": 133,
+"a": "arg202425",
+"b": "arg238468",
+"winner": "arg202425"
+},
+{
+"round": 8,
+"pair_id": 134,
+"a": "arg251644",
+"b": "arg203444",
+"winner": "arg251644"
+},
+{
+"round": 8,
+"pair_id": 135,
+"a": "arg198296",
+"b": "arg237112",
+"winner": "arg198296"
+},
+{
+"round": 8,
+"pair_id": 136,
+"a": "arg287477",
+"b": "arg386882",
+"winner": "arg386882"
+}
+],
+"score_alone_1to10": {
+"arg199159": 4,
+"arg198926": 2,
+"arg198296": 1,
+"arg198306": 3,
+"arg198954": 4,
+"arg198939": 4,
+"arg199549": 4,
+"arg199550": 3,
+"arg202290": 3,
+"arg202425": 3,
+"arg203444": 1,
+"arg200706": 4,
+"arg205531": 3,
+"arg231770": 3,
+"arg207279": 1,
+"arg203931": 2,
+"arg236737": 2,
+"arg233332": 3,
+"arg237112": 2,
+"arg238468": 2,
+"arg251309": 4,
+"arg251373": 2,
+"arg238471": 2,
+"arg238473": 2,
+"arg251644": 2,
+"arg283557": 4,
+"arg287477": 2,
+"arg284049": 2,
+"arg252467": 3,
+"arg336277": 3,
+"arg339127": 3,
+"arg386882": 1,
+"arg554188": 3,
+"arg580099": 2,
+"arg352482": 3
+}
+},
+"is-the-school-uniform-a-good-or-bad-idea-_good": {
+"pairwise": [
+{
+"round": 1,
+"pair_id": 1,
+"a": "arg251866",
+"b": "arg580100",
+"winner": "arg251866"
+},
+{
+"round": 1,
+"pair_id": 2,
+"a": "arg198256",
+"b": "arg198376",
+"winner": "arg198376"
+},
+{
+"round": 1,
+"pair_id": 3,
+"a": "arg203291",
+"b": "arg207727",
+"winner": "arg203291"
+},
+{
+"round": 1,
+"pair_id": 4,
+"a": "arg236393",
+"b": "arg198325",
+"winner": "arg198325"
+},
+{
+"round": 1,
+"pair_id": 5,
+"a": "arg198575",
+"b": "arg234631",
+"winner": "arg234631"
+},
+{
+"round": 1,
+"pair_id": 6,
+"a": "arg199079",
+"b": "arg299409",
+"winner": "arg199079"
+},
+{
+"round": 1,
+"pair_id": 7,
+"a": "arg251981",
+"b": "arg561672",
+"winner": "arg561672"
+},
+{
+"round": 1,
+"pair_id": 8,
+"a": "arg234411",
+"b": "arg198711",
+"winner": "arg234411"
+},
+{
+"round": 1,
+"pair_id": 9,
+"a": "arg198802",
+"b": "arg205569",
+"winner": "arg205569"
+},
+{
+"round": 1,
+"pair_id": 10,
+"a": "arg199548",
+"b": "arg252294",
+"winner": "arg199548"
+},
+{
+"round": 1,
+"pair_id": 11,
+"a": "arg203922",
+"b": "arg660921",
+"winner": "arg203922"
+},
+{
+"round": 1,
+"pair_id": 12,
+"a": "arg203869",
+"b": "arg208794",
+"winner": "arg203869"
+},
+{
+"round": 1,
+"pair_id": 13,
+"a": "arg208793",
+"b": "arg212151",
+"winner": "arg208793"
+},
+{
+"round": 1,
+"pair_id": 14,
+"a": "arg236207",
+"b": "arg542561",
+"winner": "arg236207"
+},
+{
+"round": 1,
+"pair_id": 15,
+"a": "arg198417",
+"b": "arg201071",
+"winner": "arg201071"
+},
+{
+"round": 1,
+"pair_id": 16,
+"a": "arg205860",
+"b": "arg200033",
+"winner": "arg200033"
+},
+{
+"round": 1,
+"pair_id": 17,
+"a": "arg580102",
+"b": "arg200133",
+"winner": "arg200133"
+},
+{
+"round": 2,
+"pair_id": 18,
+"a": "arg198376",
+"b": "arg199548",
+"winner": "arg198376"
+},
+{
+"round": 2,
+"pair_id": 19,
+"a": "arg205569",
+"b": "arg234631",
+"winner": "arg205569"
+},
+{
+"round": 2,
+"pair_id": 20,
+"a": "arg208793",
+"b": "arg580102",
+"winner": "arg208793"
+},
+{
+"round": 2,
+"pair_id": 21,
+"a": "arg200133",
+"b": "arg201071",
+"winner": "arg201071"
+},
+{
+"round": 2,
+"pair_id": 22,
+"a": "arg561672",
+"b": "arg198325",
+"winner": "arg561672"
+},
+{
+"round": 2,
+"pair_id": 23,
+"a": "arg234411",
+"b": "arg199079",
+"winner": "arg234411"
+},
+{
+"round": 2,
+"pair_id": 24,
+"a": "arg203291",
+"b": "arg236207",
+"winner": "arg203291"
+},
+{
+"round": 2,
+"pair_id": 25,
+"a": "arg205860",
+"b": "arg207727",
+"winner": "arg207727"
+},
+{
+"round": 2,
+"pair_id": 26,
+"a": "arg203922",
+"b": "arg251981",
+"winner": "arg203922"
+},
+{
+"round": 2,
+"pair_id": 27,
+"a": "arg200033",
+"b": "arg198575",
+"winner": "arg200033"
+},
+{
+"round": 2,
+"pair_id": 28,
+"a": "arg198890",
+"b": "arg299409",
+"winner": "arg198890"
+},
+{
+"round": 2,
+"pair_id": 29,
+"a": "arg203869",
+"b": "arg580100",
+"winner": "arg203869"
+},
+{
+"round": 2,
+"pair_id": 30,
+"a": "arg542561",
+"b": "arg198256",
+"winner": "arg198256"
+},
+{
+"round": 2,
+"pair_id": 31,
+"a": "arg660921",
+"b": "arg212151",
+"winner": "arg660921"
+},
+{
+"round": 2,
+"pair_id": 32,
+"a": "arg236393",
+"b": "arg208794",
+"winner": "arg236393"
+},
+{
+"round": 2,
+"pair_id": 33,
+"a": "arg252294",
+"b": "arg198802",
+"winner": "arg252294"
+},
+{
+"round": 2,
+"pair_id": 34,
+"a": "arg198417",
+"b": "arg198711",
+"winner": "arg198417"
+},
+{
+"round": 3,
+"pair_id": 35,
+"a": "arg234411",
+"b": "arg201071",
+"winner": "arg234411"
+},
+{
+"round": 3,
+"pair_id": 36,
+"a": "arg660921",
+"b": "arg198325",
+"winner": "arg660921"
+},
+{
+"round": 3,
+"pair_id": 37,
+"a": "arg198376",
+"b": "arg203291",
+"winner": "arg198376"
+},
+{
+"round": 3,
+"pair_id": 38,
+"a": "arg203922",
+"b": "arg198256",
+"winner": "arg198256"
+},
+{
+"round": 3,
+"pair_id": 39,
+"a": "arg208793",
+"b": "arg199079",
+"winner": "arg208793"
+},
+{
+"round": 3,
+"pair_id": 40,
+"a": "arg199548",
+"b": "arg251866",
+"winner": "arg251866"
+},
+{
+"round": 3,
+"pair_id": 41,
+"a": "arg561672",
+"b": "arg203869",
+"winner": "arg203869"
+},
+{
+"round": 3,
+"pair_id": 42,
+"a": "arg198890",
+"b": "arg200133",
+"winner": "arg198890"
+},
+{
+"round": 3,
+"pair_id": 43,
+"a": "arg251981",
+"b": "arg198711",
+"winner": "arg198711"
+},
+{
+"round": 3,
+"pair_id": 44,
+"a": "arg198417",
+"b": "arg198802",
+"winner": "arg198417"
+},
+{
+"round": 3,
+"pair_id": 45,
+"a": "arg252294",
+"b": "arg205860",
+"winner": "arg252294"
+},
+{
+"round": 3,
+"pair_id": 46,
+"a": "arg200033",
+"b": "arg236393",
+"winner": "arg200033"
+},
+{
+"round": 3,
+"pair_id": 47,
+"a": "arg234631",
+"b": "arg212151",
+"winner": "arg234631"
+},
+{
+"round": 3,
+"pair_id": 48,
+"a": "arg207727",
+"b": "arg580100",
+"winner": "arg207727"
+},
+{
+"round": 3,
+"pair_id": 49,
+"a": "arg236207",
+"b": "arg208794",
+"winner": "arg236207"
+},
+{
+"round": 3,
+"pair_id": 50,
+"a": "arg542561",
+"b": "arg580102",
+"winner": "arg542561"
+},
+{
+"round": 3,
+"pair_id": 51,
+"a": "arg299409",
+"b": "arg198575",
+"winner": "arg198575"
+},
+{
+"round": 4,
+"pair_id": 52,
+"a": "arg205569",
+"b": "arg198890",
+"winner": "arg198890"
+},
+{
+"round": 4,
+"pair_id": 53,
+"a": "arg198256",
+"b": "arg251866",
+"winner": "arg251866"
+},
+{
+"round": 4,
+"pair_id": 54,
+"a": "arg234411",
+"b": "arg200033",
+"winner": "arg234411"
+},
+{
+"round": 4,
+"pair_id": 55,
+"a": "arg198417",
+"b": "arg198376",
+"winner": "arg198376"
+},
+{
+"round": 4,
+"pair_id": 56,
+"a": "arg201071",
+"b": "arg203922",
+"winner": "arg201071"
+},
+{
+"round": 4,
+"pair_id": 57,
+"a": "arg200133",
+"b": "arg203869",
+"winner": "arg203869"
+},
+{
+"round": 4,
+"pair_id": 58,
+"a": "arg561672",
+"b": "arg198575",
+"winner": "arg561672"
+},
+{
+"round": 4,
+"pair_id": 59,
+"a": "arg251981",
+"b": "arg252294",
+"winner": "arg251981"
+},
+{
+"round": 4,
+"pair_id": 60,
+"a": "arg660921",
+"b": "arg236207",
+"winner": "arg660921"
+},
+{
+"round": 4,
+"pair_id": 61,
+"a": "arg208793",
+"b": "arg198802",
+"winner": "arg208793"
+},
+{
+"round": 4,
+"pair_id": 62,
+"a": "arg199079",
+"b": "arg203291",
+"winner": "arg203291"
+},
+{
+"round": 4,
+"pair_id": 63,
+"a": "arg212151",
+"b": "arg236393",
+"winner": "arg236393"
+},
+{
+"round": 4,
+"pair_id": 64,
+"a": "arg208794",
+"b": "arg199548",
+"winner": "arg208794"
+},
+{
+"round": 4,
+"pair_id": 65,
+"a": "arg205860",
+"b": "arg542561",
+"winner": "arg542561"
+},
+{
+"round": 4,
+"pair_id": 66,
+"a": "arg198711",
+"b": "arg207727",
+"winner": "arg198711"
+},
+{
+"round": 4,
+"pair_id": 67,
+"a": "arg299409",
+"b": "arg580102",
+"winner": "arg299409"
+},
+{
+"round": 4,
+"pair_id": 68,
+"a": "arg580100",
+"b": "arg198325",
+"winner": "arg198325"
+},
+{
+"round": 5,
+"pair_id": 69,
+"a": "arg251866",
+"b": "arg201071",
+"winner": "arg251866"
+},
+{
+"round": 5,
+"pair_id": 70,
+"a": "arg200033",
+"b": "arg660921",
+"winner": "arg200033"
+},
+{
+"round": 5,
+"pair_id": 71,
+"a": "arg234411",
+"b": "arg203291",
+"winner": "arg234411"
+},
+{
+"round": 5,
+"pair_id": 72,
+"a": "arg234631",
+"b": "arg198256",
+"winner": "arg234631"
+},
+{
+"round": 5,
+"pair_id": 73,
+"a": "arg208793",
+"b": "arg198890",
+"winner": "arg198890"
+},
+{
+"round": 5,
+"pair_id": 74,
+"a": "arg203869",
+"b": "arg199548",
+"winner": "arg203869"
+},
+{
+"round": 5,
+"pair_id": 75,
+"a": "arg561672",
+"b": "arg200133",
+"winner": "arg561672"
+},
+{
+"round": 5,
+"pair_id": 76,
+"a": "arg198575",
+"b": "arg198711",
+"winner": "arg198711"
+},
+{
+"round": 5,
+"pair_id": 77,
+"a": "arg236207",
+"b": "arg205569",
+"winner": "arg236207"
+},
+{
+"round": 5,
+"pair_id": 78,
+"a": "arg252294",
+"b": "arg203922",
+"winner": "arg203922"
+},
+{
+"round": 5,
+"pair_id": 79,
+"a": "arg199079",
+"b": "arg205860",
+"winner": "arg199079"
+},
+{
+"round": 5,
+"pair_id": 80,
+"a": "arg542561",
+"b": "arg198417",
+"winner": "arg542561"
+},
+{
+"round": 5,
+"pair_id": 81,
+"a": "arg208794",
+"b": "arg198325",
+"winner": "arg198325"
+},
+{
+"round": 5,
+"pair_id": 82,
+"a": "arg236393",
+"b": "arg207727",
+"winner": "arg236393"
+},
+{
+"round": 5,
+"pair_id": 83,
+"a": "arg212151",
+"b": "arg299409",
+"winner": "arg212151"
+},
+{
+"round": 5,
+"pair_id": 84,
+"a": "arg580102",
+"b": "arg198802",
+"winner": "arg198802"
+},
+{
+"round": 5,
+"pair_id": 85,
+"a": "arg580100",
+"b": "arg251981",
+"winner": "arg580100"
+},
+{
+"round": 6,
+"pair_id": 86,
+"a": "arg251866",
+"b": "arg198890",
+"winner": "arg251866"
+},
+{
+"round": 6,
+"pair_id": 87,
+"a": "arg561672",
+"b": "arg236207",
+"winner": "arg561672"
+},
+{
+"round": 6,
+"pair_id": 88,
+"a": "arg203922",
+"b": "arg200133",
+"winner": "arg203922"
+},
+{
+"round": 6,
+"pair_id": 89,
+"a": "arg198325",
+"b": "arg208793",
+"winner": "arg198325"
+},
+{
+"round": 6,
+"pair_id": 90,
+"a": "arg200033",
+"b": "arg199079",
+"winner": "arg200033"
+},
+{
+"round": 6,
+"pair_id": 91,
+"a": "arg203869",
+"b": "arg212151",
+"winner": "arg203869"
+},
+{
+"round": 6,
+"pair_id": 92,
+"a": "arg198376",
+"b": "arg234631",
+"winner": "arg198376"
+},
+{
+"round": 6,
+"pair_id": 93,
+"a": "arg236393",
+"b": "arg198711",
+"winner": "arg198711"
+},
+{
+"round": 6,
+"pair_id": 94,
+"a": "arg198417",
+"b": "arg207727",
+"winner": "arg198417"
+},
+{
+"round": 6,
+"pair_id": 95,
+"a": "arg199548",
+"b": "arg660921",
+"winner": "arg660921"
+},
+{
+"round": 6,
+"pair_id": 96,
+"a": "arg208794",
+"b": "arg201071",
+"winner": "arg201071"
+},
+{
+"round": 6,
+"pair_id": 97,
+"a": "arg198256",
+"b": "arg205569",
+"winner": "arg205569"
+},
+{
+"round": 6,
+"pair_id": 98,
+"a": "arg542561",
+"b": "arg580100",
+"winner": "arg542561"
+},
+{
+"round": 6,
+"pair_id": 99,
+"a": "arg299409",
+"b": "arg205860",
+"winner": "arg299409"
+},
+{
+"round": 6,
+"pair_id": 100,
+"a": "arg198575",
+"b": "arg203291",
+"winner": "arg198575"
+},
+{
+"round": 6,
+"pair_id": 101,
+"a": "arg198802",
+"b": "arg251981",
+"winner": "arg198802"
+},
+{
+"round": 6,
+"pair_id": 102,
+"a": "arg252294",
+"b": "arg580102",
+"winner": "arg252294"
+},
+{
+"round": 7,
+"pair_id": 103,
+"a": "arg234411",
+"b": "arg198376",
+"winner": "arg234411"
+},
+{
+"round": 7,
+"pair_id": 104,
+"a": "arg200033",
+"b": "arg561672",
+"winner": "arg200033"
+},
+{
+"round": 7,
+"pair_id": 105,
+"a": "arg208793",
+"b": "arg203869",
+"winner": "arg203869"
+},
+{
+"round": 7,
+"pair_id": 106,
+"a": "arg542561",
+"b": "arg198890",
+"winner": "arg198890"
+},
+{
+"round": 7,
+"pair_id": 107,
+"a": "arg251866",
+"b": "arg205569",
+"winner": "arg251866"
+},
+{
+"round": 7,
+"pair_id": 108,
+"a": "arg212151",
+"b": "arg199079",
+"winner": "arg212151"
+},
+{
+"round": 7,
+"pair_id": 109,
+"a": "arg236393",
+"b": "arg203922",
+"winner": "arg203922"
+},
+{
+"round": 7,
+"pair_id": 110,
+"a": "arg198325",
+"b": "arg236207",
+"winner": "arg198325"
+},
+{
+"round": 7,
+"pair_id": 111,
+"a": "arg201071",
+"b": "arg198802",
+"winner": "arg201071"
+},
+{
+"round": 7,
+"pair_id": 112,
+"a": "arg200133",
+"b": "arg234631",
+"winner": "arg234631"
+},
+{
+"round": 7,
+"pair_id": 113,
+"a": "arg203291",
+"b": "arg198417",
+"winner": "arg198417"
+},
+{
+"round": 7,
+"pair_id": 114,
+"a": "arg198256",
+"b": "arg208794",
+"winner": "arg198256"
+},
+{
+"round": 7,
+"pair_id": 115,
+"a": "arg580100",
+"b": "arg198711",
+"winner": "arg198711"
+},
+{
+"round": 7,
+"pair_id": 116,
+"a": "arg251981",
+"b": "arg198575",
+"winner": "arg198575"
+},
+{
+"round": 7,
+"pair_id": 117,
+"a": "arg207727",
+"b": "arg199548",
+"winner": "arg207727"
+},
+{
+"round": 7,
+"pair_id": 118,
+"a": "arg299409",
+"b": "arg252294",
+"winner": "arg299409"
+},
+{
+"round": 7,
+"pair_id": 119,
+"a": "arg580102",
+"b": "arg205860",
+"winner": "arg580102"
+},
+{
+"round": 8,
+"pair_id": 120,
+"a": "arg234411",
+"b": "arg251866",
+"winner": "arg234411"
+},
+{
+"round": 8,
+"pair_id": 121,
+"a": "arg198376",
+"b": "arg561672",
+"winner": "arg198376"
+},
+{
+"round": 8,
+"pair_id": 122,
+"a": "arg234631",
+"b": "arg203922",
+"winner": "arg234631"
+},
+{
+"round": 8,
+"pair_id": 123,
+"a": "arg660921",
+"b": "arg203291",
+"winner": "arg203291"
+},
+{
+"round": 8,
+"pair_id": 124,
+"a": "arg201071",
+"b": "arg200033",
+"winner": "arg201071"
+},
+{
+"round": 8,
+"pair_id": 125,
+"a": "arg208793",
+"b": "arg236393",
+"winner": "arg236393"
+},
+{
+"round": 8,
+"pair_id": 126,
+"a": "arg205569",
+"b": "arg198711",
+"winner": "arg205569"
+},
+{
+"round": 8,
+"pair_id": 127,
+"a": "arg198325",
+"b": "arg198575",
+"winner": "arg198325"
+},
+{
+"round": 8,
+"pair_id": 128,
+"a": "arg199079",
+"b": "arg198890",
+"winner": "arg198890"
+},
+{
+"round": 8,
+"pair_id": 129,
+"a": "arg200133",
+"b": "arg198417",
+"winner": "arg200133"
+},
+{
+"round": 8,
+"pair_id": 130,
+"a": "arg212151",
+"b": "arg542561",
+"winner": "arg542561"
+},
+{
+"round": 8,
+"pair_id": 131,
+"a": "arg208794",
+"b": "arg299409",
+"winner": "arg208794"
+},
+{
+"round": 8,
+"pair_id": 132,
+"a": "arg580102",
+"b": "arg251981",
+"winner": "arg251981"
+},
+{
+"round": 8,
+"pair_id": 133,
+"a": "arg198256",
+"b": "arg198802",
+"winner": "arg198256"
+},
+{
+"round": 8,
+"pair_id": 134,
+"a": "arg580100",
+"b": "arg236207",
+"winner": "arg236207"
+},
+{
+"round": 8,
+"pair_id": 135,
+"a": "arg207727",
+"b": "arg252294",
+"winner": "arg207727"
+},
+{
+"round": 8,
+"pair_id": 136,
+"a": "arg199548",
+"b": "arg205860",
+"winner": "arg199548"
+}
+],
+"score_alone_1to10": {
+"arg198325": 4,
+"arg198417": 3,
+"arg198575": 4,
+"arg198256": 4,
+"arg198376": 4,
+"arg198711": 4,
+"arg198802": 4,
+"arg199079": 2,
+"arg198890": 4,
+"arg200033": 4,
+"arg199548": 3,
+"arg200133": 3,
+"arg201071": 3,
+"arg203291": 3,
+"arg203922": 4,
+"arg203869": 5,
+"arg205860": 1,
+"arg205569": 4,
+"arg208793": 4,
+"arg212151": 2,
+"arg208794": 5,
+"arg234411": 4,
+"arg207727": 3,
+"arg236207": 4,
+"arg234631": 3,
+"arg236393": 3,
+"arg251981": 4,
+"arg251866": 5,
+"arg299409": 2,
+"arg252294": 2,
+"arg542561": 3,
+"arg580100": 3,
+"arg580102": 1,
+"arg561672": 3,
+"arg660921": 4
+}
+}
+}
+}

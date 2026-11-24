@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0 (2026-11-24)
+
+### New
+
+- **Anonymous usage statistics from the command line, on by default, easy to turn off.** After each `supposing` command, one small event goes to Supposing. It says which command ran, whether it worked, roughly how long it took and how many items it had, which kind of judge it used, and the package, Python and OS versions, with a random id made on your machine. It never contains your texts, titles, file names, paths, rubric, model output, keys, custom model names, hostnames or command-line arguments. The first time, the command prints a short notice and sends nothing. Turn it off with `supposing telemetry off`, `SUPPOSING_TELEMETRY=0` or `DO_NOT_TRACK=1`; it is also off in CI, under pytest, and when output is piped before you have seen the notice. `supposing telemetry status` shows the id and exactly what the last event contained. Using `supposing` as a library, and the MCP server, never send anything. Details: https://app.supposing.app/docs/telemetry/. The exact fields are in `supposing.cli.telemetry_schema`.
+- `display_groups(..., live=True)` and `results(..., live=True)` label the groups of a run still going: "1st so far" (or "Top 2 so far"), "Close behind" and one "Still sorting" group for everything below; for top-N runs "2 in the top 5 so far", "Close behind", "Still sorting". The group shape is unchanged.
+- `examples/backtest_ukpconvarg/`: a pre-registered back-test against crowd convincingness judgements on 140 arguments (UKPConvArg1, CC BY 4.0), with its recorded verdicts.
+- `examples/backtest_ellipse/`: the essay benchmark (100 ELLIPSE essays, two trained raters), reproducible from the public engine; the recorded verdicts replay with no judge calls. `examples/backtest_persuade/`: the same design on 100 PERSUADE 2.0 essays, with its recorded verdicts. `examples/backtest_rapid_fund/` now covers all 184 post-cutoff decisions, scored within region.
+- `examples/backtest_upworthy/`: a pre-registered back-test on 60 Upworthy headline A/B tests (CC BY 4.0, fetched from OSF): the engine ranks each test's headlines and is compared with real click-through, against length, scoring each headline alone and ranking the whole list in one prompt. Recorded verdicts replay with no judge calls.
+
+### Changed
+
+- An empty reply is no longer retried inside the OpenRouter, OpenAI-compatible and Anthropic providers: it was a paid call. `judge_pair` makes at most two calls, the second only when the first reply is empty or unreadable (`READ_ATTEMPTS`). `Verdict.attempts` counts them, and `Verdict.completion` carries the usage and cost summed over all of them.
+
 ## 0.2.0 (2026-11-23)
 
 ### Breaking

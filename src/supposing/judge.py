@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
+from typing import Any
 
 from .providers.base import Completion, Provider, ProviderError
 from .ranking import MAX_ATTEMPTS, Comparison
@@ -60,24 +61,48 @@ def parse_verdict(raw: str) -> tuple[str | None, str]:
     return None, raw.strip()
 
 
+READ_ATTEMPTS = 2  # model calls per judge_pair at most: one more when the reply is empty or unreadable
+
+
 @dataclass
 class Verdict:
-    """A judge's answer to one comparison, with the raw completion for its cost and tokens."""
+    """A judge's answer to one comparison.
 
-    winner: str | None  # "A", "B", or None if the reply could not be read
+    ``completion`` is the last reply, with its usage replaced by the total over all ``attempts`` (every attempt
+    was a paid model call), so callers bill and log from it.
+    """
+
+    winner: str | None  # "A", "B", or None if no reply could be read
     reasoning: str
     completion: Completion
+    attempts: int = 1
+
+
+def _sum(values: list[Any]) -> Any:
+    known = [v for v in values if v is not None]
+    return sum(known) if known else None
+
+
+def _total(replies: list[Completion]) -> Completion:
+    return Completion(text=replies[-1].text, prompt_tokens=_sum([c.prompt_tokens for c in replies]),
+                      completion_tokens=_sum([c.completion_tokens for c in replies]),
+                      cost_usd=_sum([c.cost_usd for c in replies]), latency_ms=_sum([c.latency_ms for c in replies]))
 
 
 async def judge_pair(provider: Provider, rubric: str | Rubric, text_a: str, text_b: str, max_chars: int = 0) -> Verdict:
     """Ask the judge which of two texts better meets the rubric; ``text_a`` is shown first.
 
-    One provider call. Raises ``ProviderError`` if the call fails; an unreadable reply comes back as a
-    ``Verdict`` whose ``winner`` is None. Record the outcome with ``apply_verdict`` or ``apply_error``.
+    One provider call, and one more if the reply is empty or unreadable (``READ_ATTEMPTS``). Raises
+    ``ProviderError`` if a call fails; a reply that still cannot be read comes back as a ``Verdict`` whose
+    ``winner`` is None. Record the outcome with ``apply_verdict`` or ``apply_error``.
     """
-    completion = await provider.complete(SYSTEM_PROMPT, build_prompt(rubric, text_a, text_b, max_chars))
-    winner, reasoning = parse_verdict(completion.text)
-    return Verdict(winner, reasoning, completion)
+    prompt = build_prompt(rubric, text_a, text_b, max_chars)
+    replies: list[Completion] = []
+    winner, reasoning = None, ""
+    while len(replies) < READ_ATTEMPTS and winner is None:
+        replies.append(await provider.complete(SYSTEM_PROMPT, prompt))
+        winner, reasoning = parse_verdict(replies[-1].text)
+    return Verdict(winner, reasoning, _total(replies), attempts=len(replies))
 
 
 def apply_verdict(comp: Comparison, verdict: Verdict) -> None:

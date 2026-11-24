@@ -53,18 +53,17 @@ class AnthropicProvider:
                     data = response.json()
                     text = "".join(b.get("text", "") for b in data.get("content", []) if b.get("type") == "text")
                     usage = data.get("usage") or {}
-                    if text.strip():
-                        prompt_tokens = sum(
-                            usage.get(k) or 0
-                            for k in ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens")
-                        )
-                        return Completion(
-                            text=text.strip(),
-                            prompt_tokens=prompt_tokens or None,
-                            completion_tokens=usage.get("output_tokens"),
-                            latency_ms=int((time.monotonic() - started) * 1000),
-                        )
-                    last_error = "empty response from model"
+                    prompt_tokens = sum(
+                        usage.get(k) or 0
+                        for k in ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens")
+                    )
+                    # An empty reply is returned, not retried here: it was paid for (see openai_compat).
+                    return Completion(
+                        text=text.strip(),
+                        prompt_tokens=prompt_tokens or None,
+                        completion_tokens=usage.get("output_tokens"),
+                        latency_ms=int((time.monotonic() - started) * 1000),
+                    )
                 else:
                     last_error = "HTTP %s: %s" % (response.status_code, response.text[:300])
                     if response.status_code in FATAL_STATUS:

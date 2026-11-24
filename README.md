@@ -32,6 +32,8 @@ Rank your own: `uvx supposing rank ./folder --rubric "..."` on a folder of `.md`
 
 **Coding agents:** read [llms.txt](https://app.supposing.app/llms.txt). To give an agent the tools, connect the hosted MCP server at `https://api.supposing.app/mcp` ([how](https://app.supposing.app/docs/connect/)), or run it locally with `uvx "supposing[mcp]" mcp`.
 
+**Telemetry:** the command line (from 0.3.0) sends one anonymous event per command: the command, its outcome and duration, the item count as a range, and the judge kind. Never your texts, rubric, file names or keys. The Python library and the MCP server send nothing, and it is off in CI. Turn it off with `SUPPOSING_TELEMETRY=0` or `supposing telemetry off`. [Every field it sends](https://app.supposing.app/docs/telemetry/).
+
 [Documentation](https://app.supposing.app/docs) · [Developers](https://supposing.app/developers) · [Supposing Cloud](https://app.supposing.app) · [Discord](https://discord.gg/PJQGNPXCZ6)
 
 ## Try it in a minute, with no API key

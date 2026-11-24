@@ -40,7 +40,7 @@ from .rubric import Rubric
 from .runner import Ranking, RunError, rank, run_ranking
 from .store import MemoryStore, RunStore, SQLiteStore
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = [
     # Run a ranking

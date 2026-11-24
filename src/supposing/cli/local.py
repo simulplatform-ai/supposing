@@ -13,6 +13,7 @@ from ..samples import items as sample_items
 from ..samples import list_samples
 from ..samples import load as load_sample
 from ..store import SQLiteStore
+from . import telemetry
 from .output import NOT_FOUND, OK, RUN_FAILED, USAGE, CliError, ProgressLine, emit_json, info, print_results
 from .shared import FREE_PROVIDERS, cli_judge, confirm, judge_label, ranking_options, result_document, rubric_text
 
@@ -98,6 +99,8 @@ def rank(args: argparse.Namespace) -> int:
     except ConfigError as exc:
         raise CliError(str(exc), code="invalid_request", exit_code=USAGE) from exc
     lo, hi = fewest_calls(len(items), cfg), planned_calls(len(items), cfg)
+    telemetry.note(local=True, provider=provider_kind, base_url=args.base_url, model=model, level=judge["level"],
+                   items=len(items), rounds=cfg.rounds, both_orders=cfg.both_orders, sample=args.sample)
     free = provider_kind in FREE_PROVIDERS
     estimate = {"type": "ranking", "n_items": len(items), "min_calls": lo, "max_calls": hi,
                 "est_cost_usd": 0.0 if free else None, "judge": judge}

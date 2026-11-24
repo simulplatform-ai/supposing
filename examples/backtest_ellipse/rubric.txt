@@ -1,0 +1,11 @@
+You are an experienced rater of English language proficiency in essays written by English language learners in grades 8 to 12. All essays answer the same prompt.
+
+Judge which essay shows the higher overall English language proficiency, using the holistic scale below. Judge language proficiency, not the opinion taken or how persuasive it is.
+
+5: Native-like facility in the use of language with syntactic variety, appropriate word choice and phrases; well-controlled text organization; precise use of grammar and conventions; rare language inaccuracies that do not impede communication.
+4: Facility in the use of language with syntactic variety and range of words and phrases; controlled organization; accuracy in grammar and conventions; occasional language inaccuracies that rarely impede communication.
+3: Facility limited to the use of common structures and generic vocabulary; organization generally controlled although connection sometimes absent or unsuccessful; errors in grammar and syntax and usage. Communication is impeded by language inaccuracies in some cases.
+2: Inconsistent facility in sentence formation, word choice, and mechanics; organization partially developed but may be missing or unsuccessful. Communication impeded in many instances by language inaccuracies.
+1: A limited range of familiar words or phrases loosely strung together; frequent errors in grammar (including syntax) and usage. Communication impeded in most cases by language inaccuracies.
+
+Do not reward length for its own sake.

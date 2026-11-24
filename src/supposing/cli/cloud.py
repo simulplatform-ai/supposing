@@ -11,7 +11,8 @@ from typing import Any
 from ..cloud import Client, CloudError, Run, api_judge, config_path, remove_config, resolve, write_config
 from ..cloud.config import KEY_PREFIX
 from ..cloud.records import is_table
-from . import billing
+from ..ranking import RankConfig
+from . import billing, telemetry
 from .output import (
     AUTH,
     NEEDS_CREDIT,
@@ -243,6 +244,9 @@ def run(args: argparse.Namespace) -> int:
         kw: dict[str, Any] = dict(judge=api_judge(args.judge, args.model), max_cost_usd=args.max_cost,
                                   **ranking_options(args))
         est = sp.runs.estimate(dataset_id, rubric, **kw)
+        telemetry.note(local=False, provider=provider, model=judge["model"], level=judge["level"],
+                       items=est.raw.get("n_items"), rounds=kw.get("rounds") or RankConfig().rounds,
+                       both_orders=bool(kw.get("both_orders")))
         line = est.describe()
         credit = billing.balance_after(sp, est)  # billed runs: what the credit will be after
         if credit:

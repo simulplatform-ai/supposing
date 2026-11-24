@@ -1,0 +1,5912 @@
+{
+"source": "the published run of 2026-11-21: Claude Haiku via claude_cli, both orders, 8 rounds, Swiss, seed 20261121",
+"rubric_sha256": "03eb855e0574036325e0f7a3f707fca0ea04ae9b2238845371495a01b28c019c",
+"sample": [
+"B7CEDA3843F3",
+"388F31A9A1A1",
+"632998A6072F",
+"857FAF7C385C",
+"D2F9E8A1C2B4",
+"1BA83A25F117",
+"7F0CB07D9B67",
+"17F7000992D7",
+"00898D9FB10A",
+"3B62370779A1",
+"332921BEC390",
+"8B2CB9C1F189",
+"FAB2B88C059F",
+"38733F6A4A36",
+"35D64739B0D2",
+"CD586C88F4F3",
+"8B477C53521B",
+"9174D620243B",
+"F241492F8808",
+"84367AEE6898",
+"D0ACE61F9DB1",
+"23972FBA1934",
+"4E6BBA69EAFC",
+"971004AB4EED",
+"1A0AD9EDC773",
+"A90D09A72B23",
+"1B127A370E2A",
+"7483C23F8C17",
+"2D0CDBC81DC0",
+"1C32F25C46EE",
+"4A10B3C41630",
+"41F11AC58B17",
+"8CB337D8D65C",
+"000BAD50D026",
+"EBCF73C7921E",
+"B4862797CA5D",
+"9E4B02A389B4",
+"05D237F606EA",
+"4618DCF43061",
+"3FC799617EB3",
+"FF543E9E9EB2",
+"2823F7B47127",
+"5E26C9276FE3",
+"D8284C3B2D2C",
+"8D49AD0975A1",
+"8EB647435835",
+"9F34600E756D",
+"A6546D2758D0",
+"F934542997DC",
+"C9EB6EB6551D",
+"B392A34365D4",
+"05118F820085",
+"468EF37C2F2C",
+"E45E9DC77BF4",
+"A80B12A8B100",
+"FFE91DA2A101",
+"DFD2C3047A7F",
+"9271B11A158B",
+"AF1B8B6B94CD",
+"A66B93C3C8F1",
+"E4773D5D6BEA",
+"B1BB4BBB0DCC",
+"F2BDB9DFFB57",
+"E1DDD9115527",
+"EC719533AB43",
+"12F2A2D4AB24",
+"DA025E83C104",
+"F1B5E79A298B",
+"2EB01D782D2C",
+"9C245C1269BA",
+"0EDBF71D5CF6",
+"DC25CFE5EACC",
+"D5EE6230B88E",
+"BD8D21AC238D",
+"1C8F6219CF27",
+"CA07DAA86DBD",
+"D7A3A9197EDD",
+"67984D18D30D",
+"EEF3247D69D0",
+"3C133B27FD35",
+"4D4683449914",
+"93D6E4071601",
+"EE888799A911",
+"B8D4D1B62526",
+"30832988F476",
+"03E6BECDC070",
+"4CFFB607101B",
+"F800DF0813A5",
+"61EDBF8CEC7D",
+"17840D290E28",
+"41CE9804B226",
+"8E1B32095441",
+"702A25E4B218",
+"A202FBAF0CCD",
+"869367F8A718",
+"FB4FE2503800",
+"14F0D1DFE3B1",
+"5C843C6BD232",
+"812CBC21EE50",
+"7BCDFDF03FBC"
+],
+"pairwise": [
+{
+"round": 1,
+"pair_id": 1,
+"a": "1B127A370E2A",
+"b": "8E1B32095441",
+"winner": "1B127A370E2A"
+},
+{
+"round": 1,
+"pair_id": 1,
+"a": "8E1B32095441",
+"b": "1B127A370E2A",
+"winner": "1B127A370E2A"
+},
+{
+"round": 1,
+"pair_id": 2,
+"a": "FB4FE2503800",
+"b": "9271B11A158B",
+"winner": "FB4FE2503800"
+},
+{
+"round": 1,
+"pair_id": 2,
+"a": "9271B11A158B",
+"b": "FB4FE2503800",
+"winner": "9271B11A158B"
+},
+{
+"round": 1,
+"pair_id": 3,
+"a": "DC25CFE5EACC",
+"b": "B1BB4BBB0DCC",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 1,
+"pair_id": 3,
+"a": "B1BB4BBB0DCC",
+"b": "DC25CFE5EACC",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 1,
+"pair_id": 4,
+"a": "8B2CB9C1F189",
+"b": "1C32F25C46EE",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 1,
+"pair_id": 4,
+"a": "1C32F25C46EE",
+"b": "8B2CB9C1F189",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 1,
+"pair_id": 5,
+"a": "5C843C6BD232",
+"b": "1C8F6219CF27",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 1,
+"pair_id": 5,
+"a": "1C8F6219CF27",
+"b": "5C843C6BD232",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 1,
+"pair_id": 6,
+"a": "03E6BECDC070",
+"b": "F241492F8808",
+"winner": "03E6BECDC070"
+},
+{
+"round": 1,
+"pair_id": 6,
+"a": "F241492F8808",
+"b": "03E6BECDC070",
+"winner": "F241492F8808"
+},
+{
+"round": 1,
+"pair_id": 7,
+"a": "1A0AD9EDC773",
+"b": "FAB2B88C059F",
+"winner": "1A0AD9EDC773"
+},
+{
+"round": 1,
+"pair_id": 7,
+"a": "FAB2B88C059F",
+"b": "1A0AD9EDC773",
+"winner": "FAB2B88C059F"
+},
+{
+"round": 1,
+"pair_id": 8,
+"a": "3C133B27FD35",
+"b": "67984D18D30D",
+"winner": "67984D18D30D"
+},
+{
+"round": 1,
+"pair_id": 8,
+"a": "67984D18D30D",
+"b": "3C133B27FD35",
+"winner": "67984D18D30D"
+},
+{
+"round": 1,
+"pair_id": 9,
+"a": "4D4683449914",
+"b": "632998A6072F",
+"winner": "4D4683449914"
+},
+{
+"round": 1,
+"pair_id": 9,
+"a": "632998A6072F",
+"b": "4D4683449914",
+"winner": "4D4683449914"
+},
+{
+"round": 1,
+"pair_id": 10,
+"a": "84367AEE6898",
+"b": "4CFFB607101B",
+"winner": "84367AEE6898"
+},
+{
+"round": 1,
+"pair_id": 10,
+"a": "4CFFB607101B",
+"b": "84367AEE6898",
+"winner": "84367AEE6898"
+},
+{
+"round": 1,
+"pair_id": 11,
+"a": "3FC799617EB3",
+"b": "388F31A9A1A1",
+"winner": "3FC799617EB3"
+},
+{
+"round": 1,
+"pair_id": 11,
+"a": "388F31A9A1A1",
+"b": "3FC799617EB3",
+"winner": "388F31A9A1A1"
+},
+{
+"round": 1,
+"pair_id": 12,
+"a": "A90D09A72B23",
+"b": "35D64739B0D2",
+"winner": "A90D09A72B23"
+},
+{
+"round": 1,
+"pair_id": 12,
+"a": "35D64739B0D2",
+"b": "A90D09A72B23",
+"winner": "A90D09A72B23"
+},
+{
+"round": 1,
+"pair_id": 13,
+"a": "EEF3247D69D0",
+"b": "1BA83A25F117",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 1,
+"pair_id": 13,
+"a": "1BA83A25F117",
+"b": "EEF3247D69D0",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 1,
+"pair_id": 14,
+"a": "B4862797CA5D",
+"b": "5E26C9276FE3",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 1,
+"pair_id": 14,
+"a": "5E26C9276FE3",
+"b": "B4862797CA5D",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 1,
+"pair_id": 15,
+"a": "468EF37C2F2C",
+"b": "2D0CDBC81DC0",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 1,
+"pair_id": 15,
+"a": "2D0CDBC81DC0",
+"b": "468EF37C2F2C",
+"winner": "468EF37C2F2C"
+},
+{
+"round": 1,
+"pair_id": 16,
+"a": "F934542997DC",
+"b": "EC719533AB43",
+"winner": "F934542997DC"
+},
+{
+"round": 1,
+"pair_id": 16,
+"a": "EC719533AB43",
+"b": "F934542997DC",
+"winner": "F934542997DC"
+},
+{
+"round": 1,
+"pair_id": 17,
+"a": "D0ACE61F9DB1",
+"b": "971004AB4EED",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 1,
+"pair_id": 17,
+"a": "971004AB4EED",
+"b": "D0ACE61F9DB1",
+"winner": "971004AB4EED"
+},
+{
+"round": 1,
+"pair_id": 18,
+"a": "857FAF7C385C",
+"b": "7BCDFDF03FBC",
+"winner": "857FAF7C385C"
+},
+{
+"round": 1,
+"pair_id": 18,
+"a": "7BCDFDF03FBC",
+"b": "857FAF7C385C",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 1,
+"pair_id": 19,
+"a": "E45E9DC77BF4",
+"b": "E1DDD9115527",
+"winner": "E1DDD9115527"
+},
+{
+"round": 1,
+"pair_id": 19,
+"a": "E1DDD9115527",
+"b": "E45E9DC77BF4",
+"winner": "E1DDD9115527"
+},
+{
+"round": 1,
+"pair_id": 20,
+"a": "17F7000992D7",
+"b": "332921BEC390",
+"winner": "17F7000992D7"
+},
+{
+"round": 1,
+"pair_id": 20,
+"a": "332921BEC390",
+"b": "17F7000992D7",
+"winner": "332921BEC390"
+},
+{
+"round": 1,
+"pair_id": 21,
+"a": "61EDBF8CEC7D",
+"b": "DA025E83C104",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 1,
+"pair_id": 21,
+"a": "DA025E83C104",
+"b": "61EDBF8CEC7D",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 1,
+"pair_id": 22,
+"a": "2EB01D782D2C",
+"b": "8EB647435835",
+"winner": "2EB01D782D2C"
+},
+{
+"round": 1,
+"pair_id": 22,
+"a": "8EB647435835",
+"b": "2EB01D782D2C",
+"winner": "2EB01D782D2C"
+},
+{
+"round": 1,
+"pair_id": 23,
+"a": "3B62370779A1",
+"b": "FF543E9E9EB2",
+"winner": "FF543E9E9EB2"
+},
+{
+"round": 1,
+"pair_id": 23,
+"a": "FF543E9E9EB2",
+"b": "3B62370779A1",
+"winner": "3B62370779A1"
+},
+{
+"round": 1,
+"pair_id": 24,
+"a": "EBCF73C7921E",
+"b": "8B477C53521B",
+"winner": "8B477C53521B"
+},
+{
+"round": 1,
+"pair_id": 24,
+"a": "8B477C53521B",
+"b": "EBCF73C7921E",
+"winner": "8B477C53521B"
+},
+{
+"round": 1,
+"pair_id": 25,
+"a": "E4773D5D6BEA",
+"b": "D2F9E8A1C2B4",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 1,
+"pair_id": 25,
+"a": "D2F9E8A1C2B4",
+"b": "E4773D5D6BEA",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 1,
+"pair_id": 26,
+"a": "D5EE6230B88E",
+"b": "30832988F476",
+"winner": "D5EE6230B88E"
+},
+{
+"round": 1,
+"pair_id": 26,
+"a": "30832988F476",
+"b": "D5EE6230B88E",
+"winner": "D5EE6230B88E"
+},
+{
+"round": 1,
+"pair_id": 27,
+"a": "8CB337D8D65C",
+"b": "D8284C3B2D2C",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 1,
+"pair_id": 27,
+"a": "D8284C3B2D2C",
+"b": "8CB337D8D65C",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 1,
+"pair_id": 28,
+"a": "AF1B8B6B94CD",
+"b": "B392A34365D4",
+"winner": "B392A34365D4"
+},
+{
+"round": 1,
+"pair_id": 28,
+"a": "B392A34365D4",
+"b": "AF1B8B6B94CD",
+"winner": "B392A34365D4"
+},
+{
+"round": 1,
+"pair_id": 29,
+"a": "812CBC21EE50",
+"b": "12F2A2D4AB24",
+"winner": "12F2A2D4AB24"
+},
+{
+"round": 1,
+"pair_id": 29,
+"a": "12F2A2D4AB24",
+"b": "812CBC21EE50",
+"winner": "12F2A2D4AB24"
+},
+{
+"round": 1,
+"pair_id": 30,
+"a": "9F34600E756D",
+"b": "41F11AC58B17",
+"winner": "41F11AC58B17"
+},
+{
+"round": 1,
+"pair_id": 30,
+"a": "41F11AC58B17",
+"b": "9F34600E756D",
+"winner": "41F11AC58B17"
+},
+{
+"round": 1,
+"pair_id": 31,
+"a": "05118F820085",
+"b": "8D49AD0975A1",
+"winner": "05118F820085"
+},
+{
+"round": 1,
+"pair_id": 31,
+"a": "8D49AD0975A1",
+"b": "05118F820085",
+"winner": "05118F820085"
+},
+{
+"round": 1,
+"pair_id": 32,
+"a": "000BAD50D026",
+"b": "CA07DAA86DBD",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 1,
+"pair_id": 32,
+"a": "CA07DAA86DBD",
+"b": "000BAD50D026",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 1,
+"pair_id": 33,
+"a": "BD8D21AC238D",
+"b": "702A25E4B218",
+"winner": "702A25E4B218"
+},
+{
+"round": 1,
+"pair_id": 33,
+"a": "702A25E4B218",
+"b": "BD8D21AC238D",
+"winner": "702A25E4B218"
+},
+{
+"round": 1,
+"pair_id": 34,
+"a": "05D237F606EA",
+"b": "869367F8A718",
+"winner": "05D237F606EA"
+},
+{
+"round": 1,
+"pair_id": 34,
+"a": "869367F8A718",
+"b": "05D237F606EA",
+"winner": "869367F8A718"
+},
+{
+"round": 1,
+"pair_id": 35,
+"a": "00898D9FB10A",
+"b": "9E4B02A389B4",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 1,
+"pair_id": 35,
+"a": "9E4B02A389B4",
+"b": "00898D9FB10A",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 1,
+"pair_id": 36,
+"a": "2823F7B47127",
+"b": "EE888799A911",
+"winner": "2823F7B47127"
+},
+{
+"round": 1,
+"pair_id": 36,
+"a": "EE888799A911",
+"b": "2823F7B47127",
+"winner": "2823F7B47127"
+},
+{
+"round": 1,
+"pair_id": 37,
+"a": "D7A3A9197EDD",
+"b": "A66B93C3C8F1",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 1,
+"pair_id": 37,
+"a": "A66B93C3C8F1",
+"b": "D7A3A9197EDD",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 1,
+"pair_id": 38,
+"a": "9174D620243B",
+"b": "41CE9804B226",
+"winner": "9174D620243B"
+},
+{
+"round": 1,
+"pair_id": 38,
+"a": "41CE9804B226",
+"b": "9174D620243B",
+"winner": "9174D620243B"
+},
+{
+"round": 1,
+"pair_id": 39,
+"a": "F1B5E79A298B",
+"b": "B8D4D1B62526",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 1,
+"pair_id": 39,
+"a": "B8D4D1B62526",
+"b": "F1B5E79A298B",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 1,
+"pair_id": 40,
+"a": "A80B12A8B100",
+"b": "7483C23F8C17",
+"winner": "A80B12A8B100"
+},
+{
+"round": 1,
+"pair_id": 40,
+"a": "7483C23F8C17",
+"b": "A80B12A8B100",
+"winner": "7483C23F8C17"
+},
+{
+"round": 1,
+"pair_id": 41,
+"a": "A202FBAF0CCD",
+"b": "F2BDB9DFFB57",
+"winner": "A202FBAF0CCD"
+},
+{
+"round": 1,
+"pair_id": 41,
+"a": "F2BDB9DFFB57",
+"b": "A202FBAF0CCD",
+"winner": "A202FBAF0CCD"
+},
+{
+"round": 1,
+"pair_id": 42,
+"a": "4618DCF43061",
+"b": "38733F6A4A36",
+"winner": "38733F6A4A36"
+},
+{
+"round": 1,
+"pair_id": 42,
+"a": "38733F6A4A36",
+"b": "4618DCF43061",
+"winner": "38733F6A4A36"
+},
+{
+"round": 1,
+"pair_id": 43,
+"a": "DFD2C3047A7F",
+"b": "C9EB6EB6551D",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 1,
+"pair_id": 43,
+"a": "C9EB6EB6551D",
+"b": "DFD2C3047A7F",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 1,
+"pair_id": 44,
+"a": "CD586C88F4F3",
+"b": "9C245C1269BA",
+"winner": "CD586C88F4F3"
+},
+{
+"round": 1,
+"pair_id": 44,
+"a": "9C245C1269BA",
+"b": "CD586C88F4F3",
+"winner": "CD586C88F4F3"
+},
+{
+"round": 1,
+"pair_id": 45,
+"a": "F800DF0813A5",
+"b": "FFE91DA2A101",
+"winner": "F800DF0813A5"
+},
+{
+"round": 1,
+"pair_id": 45,
+"a": "FFE91DA2A101",
+"b": "F800DF0813A5",
+"winner": "FFE91DA2A101"
+},
+{
+"round": 1,
+"pair_id": 46,
+"a": "23972FBA1934",
+"b": "7F0CB07D9B67",
+"winner": "23972FBA1934"
+},
+{
+"round": 1,
+"pair_id": 46,
+"a": "7F0CB07D9B67",
+"b": "23972FBA1934",
+"winner": "23972FBA1934"
+},
+{
+"round": 1,
+"pair_id": 47,
+"a": "14F0D1DFE3B1",
+"b": "A6546D2758D0",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 1,
+"pair_id": 47,
+"a": "A6546D2758D0",
+"b": "14F0D1DFE3B1",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 1,
+"pair_id": 48,
+"a": "93D6E4071601",
+"b": "0EDBF71D5CF6",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 1,
+"pair_id": 48,
+"a": "0EDBF71D5CF6",
+"b": "93D6E4071601",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 1,
+"pair_id": 49,
+"a": "B7CEDA3843F3",
+"b": "4E6BBA69EAFC",
+"winner": "4E6BBA69EAFC"
+},
+{
+"round": 1,
+"pair_id": 49,
+"a": "4E6BBA69EAFC",
+"b": "B7CEDA3843F3",
+"winner": "4E6BBA69EAFC"
+},
+{
+"round": 1,
+"pair_id": 50,
+"a": "4A10B3C41630",
+"b": "17840D290E28",
+"winner": "4A10B3C41630"
+},
+{
+"round": 1,
+"pair_id": 50,
+"a": "17840D290E28",
+"b": "4A10B3C41630",
+"winner": "4A10B3C41630"
+},
+{
+"round": 2,
+"pair_id": 51,
+"a": "CA07DAA86DBD",
+"b": "14F0D1DFE3B1",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 2,
+"pair_id": 51,
+"a": "14F0D1DFE3B1",
+"b": "CA07DAA86DBD",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 2,
+"pair_id": 52,
+"a": "1C8F6219CF27",
+"b": "4D4683449914",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 2,
+"pair_id": 52,
+"a": "4D4683449914",
+"b": "1C8F6219CF27",
+"winner": "4D4683449914"
+},
+{
+"round": 2,
+"pair_id": 53,
+"a": "A66B93C3C8F1",
+"b": "1B127A370E2A",
+"winner": "1B127A370E2A"
+},
+{
+"round": 2,
+"pair_id": 53,
+"a": "1B127A370E2A",
+"b": "A66B93C3C8F1",
+"winner": "1B127A370E2A"
+},
+{
+"round": 2,
+"pair_id": 54,
+"a": "84367AEE6898",
+"b": "2EB01D782D2C",
+"winner": "84367AEE6898"
+},
+{
+"round": 2,
+"pair_id": 54,
+"a": "2EB01D782D2C",
+"b": "84367AEE6898",
+"winner": "2EB01D782D2C"
+},
+{
+"round": 2,
+"pair_id": 55,
+"a": "EEF3247D69D0",
+"b": "8B477C53521B",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 2,
+"pair_id": 55,
+"a": "8B477C53521B",
+"b": "EEF3247D69D0",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 2,
+"pair_id": 56,
+"a": "23972FBA1934",
+"b": "C9EB6EB6551D",
+"winner": "23972FBA1934"
+},
+{
+"round": 2,
+"pair_id": 56,
+"a": "C9EB6EB6551D",
+"b": "23972FBA1934",
+"winner": "23972FBA1934"
+},
+{
+"round": 2,
+"pair_id": 57,
+"a": "2823F7B47127",
+"b": "4A10B3C41630",
+"winner": "2823F7B47127"
+},
+{
+"round": 2,
+"pair_id": 57,
+"a": "4A10B3C41630",
+"b": "2823F7B47127",
+"winner": "2823F7B47127"
+},
+{
+"round": 2,
+"pair_id": 58,
+"a": "A202FBAF0CCD",
+"b": "D2F9E8A1C2B4",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 2,
+"pair_id": 58,
+"a": "D2F9E8A1C2B4",
+"b": "A202FBAF0CCD",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 2,
+"pair_id": 59,
+"a": "CD586C88F4F3",
+"b": "8B2CB9C1F189",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 2,
+"pair_id": 59,
+"a": "8B2CB9C1F189",
+"b": "CD586C88F4F3",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 2,
+"pair_id": 60,
+"a": "D8284C3B2D2C",
+"b": "0EDBF71D5CF6",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 2,
+"pair_id": 60,
+"a": "0EDBF71D5CF6",
+"b": "D8284C3B2D2C",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 2,
+"pair_id": 61,
+"a": "41F11AC58B17",
+"b": "B392A34365D4",
+"winner": "B392A34365D4"
+},
+{
+"round": 2,
+"pair_id": 61,
+"a": "B392A34365D4",
+"b": "41F11AC58B17",
+"winner": "B392A34365D4"
+},
+{
+"round": 2,
+"pair_id": 62,
+"a": "9174D620243B",
+"b": "B8D4D1B62526",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 2,
+"pair_id": 62,
+"a": "B8D4D1B62526",
+"b": "9174D620243B",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 2,
+"pair_id": 63,
+"a": "D5EE6230B88E",
+"b": "05118F820085",
+"winner": "D5EE6230B88E"
+},
+{
+"round": 2,
+"pair_id": 63,
+"a": "05118F820085",
+"b": "D5EE6230B88E",
+"winner": "D5EE6230B88E"
+},
+{
+"round": 2,
+"pair_id": 64,
+"a": "38733F6A4A36",
+"b": "A90D09A72B23",
+"winner": "38733F6A4A36"
+},
+{
+"round": 2,
+"pair_id": 64,
+"a": "A90D09A72B23",
+"b": "38733F6A4A36",
+"winner": "38733F6A4A36"
+},
+{
+"round": 2,
+"pair_id": 65,
+"a": "12F2A2D4AB24",
+"b": "9E4B02A389B4",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 2,
+"pair_id": 65,
+"a": "9E4B02A389B4",
+"b": "12F2A2D4AB24",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 2,
+"pair_id": 66,
+"a": "5E26C9276FE3",
+"b": "702A25E4B218",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 2,
+"pair_id": 66,
+"a": "702A25E4B218",
+"b": "5E26C9276FE3",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 2,
+"pair_id": 67,
+"a": "4E6BBA69EAFC",
+"b": "61EDBF8CEC7D",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 2,
+"pair_id": 67,
+"a": "61EDBF8CEC7D",
+"b": "4E6BBA69EAFC",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 2,
+"pair_id": 68,
+"a": "F934542997DC",
+"b": "67984D18D30D",
+"winner": "67984D18D30D"
+},
+{
+"round": 2,
+"pair_id": 68,
+"a": "67984D18D30D",
+"b": "F934542997DC",
+"winner": "67984D18D30D"
+},
+{
+"round": 2,
+"pair_id": 69,
+"a": "3FC799617EB3",
+"b": "E1DDD9115527",
+"winner": "E1DDD9115527"
+},
+{
+"round": 2,
+"pair_id": 69,
+"a": "E1DDD9115527",
+"b": "3FC799617EB3",
+"winner": "E1DDD9115527"
+},
+{
+"round": 2,
+"pair_id": 70,
+"a": "FAB2B88C059F",
+"b": "7483C23F8C17",
+"winner": "FAB2B88C059F"
+},
+{
+"round": 2,
+"pair_id": 70,
+"a": "7483C23F8C17",
+"b": "FAB2B88C059F",
+"winner": "7483C23F8C17"
+},
+{
+"round": 2,
+"pair_id": 71,
+"a": "FFE91DA2A101",
+"b": "971004AB4EED",
+"winner": "FFE91DA2A101"
+},
+{
+"round": 2,
+"pair_id": 71,
+"a": "971004AB4EED",
+"b": "FFE91DA2A101",
+"winner": "971004AB4EED"
+},
+{
+"round": 2,
+"pair_id": 72,
+"a": "7BCDFDF03FBC",
+"b": "A80B12A8B100",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 2,
+"pair_id": 72,
+"a": "A80B12A8B100",
+"b": "7BCDFDF03FBC",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 2,
+"pair_id": 73,
+"a": "3B62370779A1",
+"b": "05D237F606EA",
+"winner": "05D237F606EA"
+},
+{
+"round": 2,
+"pair_id": 73,
+"a": "05D237F606EA",
+"b": "3B62370779A1",
+"winner": "05D237F606EA"
+},
+{
+"round": 2,
+"pair_id": 74,
+"a": "F241492F8808",
+"b": "468EF37C2F2C",
+"winner": "F241492F8808"
+},
+{
+"round": 2,
+"pair_id": 74,
+"a": "468EF37C2F2C",
+"b": "F241492F8808",
+"winner": "468EF37C2F2C"
+},
+{
+"round": 2,
+"pair_id": 75,
+"a": "B1BB4BBB0DCC",
+"b": "9271B11A158B",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 2,
+"pair_id": 75,
+"a": "9271B11A158B",
+"b": "B1BB4BBB0DCC",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 2,
+"pair_id": 76,
+"a": "869367F8A718",
+"b": "D0ACE61F9DB1",
+"winner": "869367F8A718"
+},
+{
+"round": 2,
+"pair_id": 76,
+"a": "D0ACE61F9DB1",
+"b": "869367F8A718",
+"winner": "869367F8A718"
+},
+{
+"round": 2,
+"pair_id": 77,
+"a": "857FAF7C385C",
+"b": "388F31A9A1A1",
+"winner": "857FAF7C385C"
+},
+{
+"round": 2,
+"pair_id": 77,
+"a": "388F31A9A1A1",
+"b": "857FAF7C385C",
+"winner": "857FAF7C385C"
+},
+{
+"round": 2,
+"pair_id": 78,
+"a": "2D0CDBC81DC0",
+"b": "03E6BECDC070",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 2,
+"pair_id": 78,
+"a": "03E6BECDC070",
+"b": "2D0CDBC81DC0",
+"winner": "03E6BECDC070"
+},
+{
+"round": 2,
+"pair_id": 79,
+"a": "F800DF0813A5",
+"b": "FF543E9E9EB2",
+"winner": "FF543E9E9EB2"
+},
+{
+"round": 2,
+"pair_id": 79,
+"a": "FF543E9E9EB2",
+"b": "F800DF0813A5",
+"winner": "FF543E9E9EB2"
+},
+{
+"round": 2,
+"pair_id": 80,
+"a": "332921BEC390",
+"b": "DC25CFE5EACC",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 2,
+"pair_id": 80,
+"a": "DC25CFE5EACC",
+"b": "332921BEC390",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 2,
+"pair_id": 81,
+"a": "1A0AD9EDC773",
+"b": "FB4FE2503800",
+"winner": "FB4FE2503800"
+},
+{
+"round": 2,
+"pair_id": 81,
+"a": "FB4FE2503800",
+"b": "1A0AD9EDC773",
+"winner": "FB4FE2503800"
+},
+{
+"round": 2,
+"pair_id": 82,
+"a": "17F7000992D7",
+"b": "4618DCF43061",
+"winner": "17F7000992D7"
+},
+{
+"round": 2,
+"pair_id": 82,
+"a": "4618DCF43061",
+"b": "17F7000992D7",
+"winner": "4618DCF43061"
+},
+{
+"round": 2,
+"pair_id": 83,
+"a": "EBCF73C7921E",
+"b": "F2BDB9DFFB57",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 2,
+"pair_id": 83,
+"a": "F2BDB9DFFB57",
+"b": "EBCF73C7921E",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 2,
+"pair_id": 84,
+"a": "4CFFB607101B",
+"b": "9C245C1269BA",
+"winner": "4CFFB607101B"
+},
+{
+"round": 2,
+"pair_id": 84,
+"a": "9C245C1269BA",
+"b": "4CFFB607101B",
+"winner": "9C245C1269BA"
+},
+{
+"round": 2,
+"pair_id": 85,
+"a": "AF1B8B6B94CD",
+"b": "B7CEDA3843F3",
+"winner": "B7CEDA3843F3"
+},
+{
+"round": 2,
+"pair_id": 85,
+"a": "B7CEDA3843F3",
+"b": "AF1B8B6B94CD",
+"winner": "B7CEDA3843F3"
+},
+{
+"round": 2,
+"pair_id": 86,
+"a": "5C843C6BD232",
+"b": "8D49AD0975A1",
+"winner": "5C843C6BD232"
+},
+{
+"round": 2,
+"pair_id": 86,
+"a": "8D49AD0975A1",
+"b": "5C843C6BD232",
+"winner": "5C843C6BD232"
+},
+{
+"round": 2,
+"pair_id": 87,
+"a": "000BAD50D026",
+"b": "30832988F476",
+"winner": "30832988F476"
+},
+{
+"round": 2,
+"pair_id": 87,
+"a": "30832988F476",
+"b": "000BAD50D026",
+"winner": "30832988F476"
+},
+{
+"round": 2,
+"pair_id": 88,
+"a": "41CE9804B226",
+"b": "8E1B32095441",
+"winner": "8E1B32095441"
+},
+{
+"round": 2,
+"pair_id": 88,
+"a": "8E1B32095441",
+"b": "41CE9804B226",
+"winner": "8E1B32095441"
+},
+{
+"round": 2,
+"pair_id": 89,
+"a": "A6546D2758D0",
+"b": "BD8D21AC238D",
+"winner": "A6546D2758D0"
+},
+{
+"round": 2,
+"pair_id": 89,
+"a": "BD8D21AC238D",
+"b": "A6546D2758D0",
+"winner": "BD8D21AC238D"
+},
+{
+"round": 2,
+"pair_id": 90,
+"a": "D7A3A9197EDD",
+"b": "00898D9FB10A",
+"winner": "00898D9FB10A"
+},
+{
+"round": 2,
+"pair_id": 90,
+"a": "00898D9FB10A",
+"b": "D7A3A9197EDD",
+"winner": "00898D9FB10A"
+},
+{
+"round": 2,
+"pair_id": 91,
+"a": "35D64739B0D2",
+"b": "E4773D5D6BEA",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 2,
+"pair_id": 91,
+"a": "E4773D5D6BEA",
+"b": "35D64739B0D2",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 2,
+"pair_id": 92,
+"a": "E45E9DC77BF4",
+"b": "1C32F25C46EE",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 2,
+"pair_id": 92,
+"a": "1C32F25C46EE",
+"b": "E45E9DC77BF4",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 2,
+"pair_id": 93,
+"a": "3C133B27FD35",
+"b": "B4862797CA5D",
+"winner": "3C133B27FD35"
+},
+{
+"round": 2,
+"pair_id": 93,
+"a": "B4862797CA5D",
+"b": "3C133B27FD35",
+"winner": "3C133B27FD35"
+},
+{
+"round": 2,
+"pair_id": 94,
+"a": "17840D290E28",
+"b": "7F0CB07D9B67",
+"winner": "7F0CB07D9B67"
+},
+{
+"round": 2,
+"pair_id": 94,
+"a": "7F0CB07D9B67",
+"b": "17840D290E28",
+"winner": "7F0CB07D9B67"
+},
+{
+"round": 2,
+"pair_id": 95,
+"a": "F1B5E79A298B",
+"b": "1BA83A25F117",
+"winner": "F1B5E79A298B"
+},
+{
+"round": 2,
+"pair_id": 95,
+"a": "1BA83A25F117",
+"b": "F1B5E79A298B",
+"winner": "F1B5E79A298B"
+},
+{
+"round": 2,
+"pair_id": 96,
+"a": "DFD2C3047A7F",
+"b": "812CBC21EE50",
+"winner": "DFD2C3047A7F"
+},
+{
+"round": 2,
+"pair_id": 96,
+"a": "812CBC21EE50",
+"b": "DFD2C3047A7F",
+"winner": "812CBC21EE50"
+},
+{
+"round": 2,
+"pair_id": 97,
+"a": "EE888799A911",
+"b": "EC719533AB43",
+"winner": "EC719533AB43"
+},
+{
+"round": 2,
+"pair_id": 97,
+"a": "EC719533AB43",
+"b": "EE888799A911",
+"winner": "EE888799A911"
+},
+{
+"round": 2,
+"pair_id": 98,
+"a": "632998A6072F",
+"b": "8CB337D8D65C",
+"winner": "632998A6072F"
+},
+{
+"round": 2,
+"pair_id": 98,
+"a": "8CB337D8D65C",
+"b": "632998A6072F",
+"winner": "8CB337D8D65C"
+},
+{
+"round": 2,
+"pair_id": 99,
+"a": "8EB647435835",
+"b": "93D6E4071601",
+"winner": "93D6E4071601"
+},
+{
+"round": 2,
+"pair_id": 99,
+"a": "93D6E4071601",
+"b": "8EB647435835",
+"winner": "93D6E4071601"
+},
+{
+"round": 2,
+"pair_id": 100,
+"a": "DA025E83C104",
+"b": "9F34600E756D",
+"winner": "DA025E83C104"
+},
+{
+"round": 2,
+"pair_id": 100,
+"a": "9F34600E756D",
+"b": "DA025E83C104",
+"winner": "DA025E83C104"
+},
+{
+"round": 3,
+"pair_id": 101,
+"a": "D2F9E8A1C2B4",
+"b": "67984D18D30D",
+"winner": "67984D18D30D"
+},
+{
+"round": 3,
+"pair_id": 101,
+"a": "67984D18D30D",
+"b": "D2F9E8A1C2B4",
+"winner": "67984D18D30D"
+},
+{
+"round": 3,
+"pair_id": 102,
+"a": "D8284C3B2D2C",
+"b": "D5EE6230B88E",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 3,
+"pair_id": 102,
+"a": "D5EE6230B88E",
+"b": "D8284C3B2D2C",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 3,
+"pair_id": 103,
+"a": "9E4B02A389B4",
+"b": "61EDBF8CEC7D",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 3,
+"pair_id": 103,
+"a": "61EDBF8CEC7D",
+"b": "9E4B02A389B4",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 3,
+"pair_id": 104,
+"a": "1B127A370E2A",
+"b": "23972FBA1934",
+"winner": "1B127A370E2A"
+},
+{
+"round": 3,
+"pair_id": 104,
+"a": "23972FBA1934",
+"b": "1B127A370E2A",
+"winner": "23972FBA1934"
+},
+{
+"round": 3,
+"pair_id": 105,
+"a": "E1DDD9115527",
+"b": "B8D4D1B62526",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 3,
+"pair_id": 105,
+"a": "B8D4D1B62526",
+"b": "E1DDD9115527",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 3,
+"pair_id": 106,
+"a": "38733F6A4A36",
+"b": "5E26C9276FE3",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 3,
+"pair_id": 106,
+"a": "5E26C9276FE3",
+"b": "38733F6A4A36",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 3,
+"pair_id": 107,
+"a": "EEF3247D69D0",
+"b": "B392A34365D4",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 3,
+"pair_id": 107,
+"a": "B392A34365D4",
+"b": "EEF3247D69D0",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 3,
+"pair_id": 108,
+"a": "8B2CB9C1F189",
+"b": "2823F7B47127",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 3,
+"pair_id": 108,
+"a": "2823F7B47127",
+"b": "8B2CB9C1F189",
+"winner": "2823F7B47127"
+},
+{
+"round": 3,
+"pair_id": 109,
+"a": "857FAF7C385C",
+"b": "05D237F606EA",
+"winner": "857FAF7C385C"
+},
+{
+"round": 3,
+"pair_id": 109,
+"a": "05D237F606EA",
+"b": "857FAF7C385C",
+"winner": "05D237F606EA"
+},
+{
+"round": 3,
+"pair_id": 110,
+"a": "4D4683449914",
+"b": "B1BB4BBB0DCC",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 3,
+"pair_id": 110,
+"a": "B1BB4BBB0DCC",
+"b": "4D4683449914",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 3,
+"pair_id": 111,
+"a": "7BCDFDF03FBC",
+"b": "DC25CFE5EACC",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 3,
+"pair_id": 111,
+"a": "DC25CFE5EACC",
+"b": "7BCDFDF03FBC",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 3,
+"pair_id": 112,
+"a": "4E6BBA69EAFC",
+"b": "1C8F6219CF27",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 3,
+"pair_id": 112,
+"a": "1C8F6219CF27",
+"b": "4E6BBA69EAFC",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 3,
+"pair_id": 113,
+"a": "FF543E9E9EB2",
+"b": "869367F8A718",
+"winner": "869367F8A718"
+},
+{
+"round": 3,
+"pair_id": 113,
+"a": "869367F8A718",
+"b": "FF543E9E9EB2",
+"winner": "869367F8A718"
+},
+{
+"round": 3,
+"pair_id": 114,
+"a": "CA07DAA86DBD",
+"b": "3C133B27FD35",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 3,
+"pair_id": 114,
+"a": "3C133B27FD35",
+"b": "CA07DAA86DBD",
+"winner": "3C133B27FD35"
+},
+{
+"round": 3,
+"pair_id": 115,
+"a": "84367AEE6898",
+"b": "A202FBAF0CCD",
+"winner": "84367AEE6898"
+},
+{
+"round": 3,
+"pair_id": 115,
+"a": "A202FBAF0CCD",
+"b": "84367AEE6898",
+"winner": "84367AEE6898"
+},
+{
+"round": 3,
+"pair_id": 116,
+"a": "702A25E4B218",
+"b": "2EB01D782D2C",
+"winner": "702A25E4B218"
+},
+{
+"round": 3,
+"pair_id": 116,
+"a": "2EB01D782D2C",
+"b": "702A25E4B218",
+"winner": "702A25E4B218"
+},
+{
+"round": 3,
+"pair_id": 117,
+"a": "12F2A2D4AB24",
+"b": "14F0D1DFE3B1",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 3,
+"pair_id": 117,
+"a": "14F0D1DFE3B1",
+"b": "12F2A2D4AB24",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 3,
+"pair_id": 118,
+"a": "0EDBF71D5CF6",
+"b": "7F0CB07D9B67",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 3,
+"pair_id": 118,
+"a": "7F0CB07D9B67",
+"b": "0EDBF71D5CF6",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 3,
+"pair_id": 119,
+"a": "C9EB6EB6551D",
+"b": "9174D620243B",
+"winner": "9174D620243B"
+},
+{
+"round": 3,
+"pair_id": 119,
+"a": "9174D620243B",
+"b": "C9EB6EB6551D",
+"winner": "9174D620243B"
+},
+{
+"round": 3,
+"pair_id": 120,
+"a": "5C843C6BD232",
+"b": "00898D9FB10A",
+"winner": "00898D9FB10A"
+},
+{
+"round": 3,
+"pair_id": 120,
+"a": "00898D9FB10A",
+"b": "5C843C6BD232",
+"winner": "00898D9FB10A"
+},
+{
+"round": 3,
+"pair_id": 121,
+"a": "F934542997DC",
+"b": "FB4FE2503800",
+"winner": "F934542997DC"
+},
+{
+"round": 3,
+"pair_id": 121,
+"a": "FB4FE2503800",
+"b": "F934542997DC",
+"winner": "FB4FE2503800"
+},
+{
+"round": 3,
+"pair_id": 122,
+"a": "03E6BECDC070",
+"b": "4A10B3C41630",
+"winner": "03E6BECDC070"
+},
+{
+"round": 3,
+"pair_id": 122,
+"a": "4A10B3C41630",
+"b": "03E6BECDC070",
+"winner": "03E6BECDC070"
+},
+{
+"round": 3,
+"pair_id": 123,
+"a": "F1B5E79A298B",
+"b": "05118F820085",
+"winner": "F1B5E79A298B"
+},
+{
+"round": 3,
+"pair_id": 123,
+"a": "05118F820085",
+"b": "F1B5E79A298B",
+"winner": "F1B5E79A298B"
+},
+{
+"round": 3,
+"pair_id": 124,
+"a": "E4773D5D6BEA",
+"b": "8E1B32095441",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 3,
+"pair_id": 124,
+"a": "8E1B32095441",
+"b": "E4773D5D6BEA",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 3,
+"pair_id": 125,
+"a": "468EF37C2F2C",
+"b": "CD586C88F4F3",
+"winner": "CD586C88F4F3"
+},
+{
+"round": 3,
+"pair_id": 125,
+"a": "CD586C88F4F3",
+"b": "468EF37C2F2C",
+"winner": "CD586C88F4F3"
+},
+{
+"round": 3,
+"pair_id": 126,
+"a": "41F11AC58B17",
+"b": "E45E9DC77BF4",
+"winner": "41F11AC58B17"
+},
+{
+"round": 3,
+"pair_id": 126,
+"a": "E45E9DC77BF4",
+"b": "41F11AC58B17",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 3,
+"pair_id": 127,
+"a": "3B62370779A1",
+"b": "DA025E83C104",
+"winner": "3B62370779A1"
+},
+{
+"round": 3,
+"pair_id": 127,
+"a": "DA025E83C104",
+"b": "3B62370779A1",
+"winner": "3B62370779A1"
+},
+{
+"round": 3,
+"pair_id": 128,
+"a": "F241492F8808",
+"b": "A66B93C3C8F1",
+"winner": "F241492F8808"
+},
+{
+"round": 3,
+"pair_id": 128,
+"a": "A66B93C3C8F1",
+"b": "F241492F8808",
+"winner": "F241492F8808"
+},
+{
+"round": 3,
+"pair_id": 129,
+"a": "FFE91DA2A101",
+"b": "9271B11A158B",
+"winner": "9271B11A158B"
+},
+{
+"round": 3,
+"pair_id": 129,
+"a": "9271B11A158B",
+"b": "FFE91DA2A101",
+"winner": "9271B11A158B"
+},
+{
+"round": 3,
+"pair_id": 130,
+"a": "30832988F476",
+"b": "2D0CDBC81DC0",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 3,
+"pair_id": 130,
+"a": "2D0CDBC81DC0",
+"b": "30832988F476",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 3,
+"pair_id": 131,
+"a": "F2BDB9DFFB57",
+"b": "17F7000992D7",
+"winner": "17F7000992D7"
+},
+{
+"round": 3,
+"pair_id": 131,
+"a": "17F7000992D7",
+"b": "F2BDB9DFFB57",
+"winner": "17F7000992D7"
+},
+{
+"round": 3,
+"pair_id": 132,
+"a": "8CB337D8D65C",
+"b": "8B477C53521B",
+"winner": "8CB337D8D65C"
+},
+{
+"round": 3,
+"pair_id": 132,
+"a": "8B477C53521B",
+"b": "8CB337D8D65C",
+"winner": "8CB337D8D65C"
+},
+{
+"round": 3,
+"pair_id": 133,
+"a": "3FC799617EB3",
+"b": "971004AB4EED",
+"winner": "971004AB4EED"
+},
+{
+"round": 3,
+"pair_id": 133,
+"a": "971004AB4EED",
+"b": "3FC799617EB3",
+"winner": "971004AB4EED"
+},
+{
+"round": 3,
+"pair_id": 134,
+"a": "332921BEC390",
+"b": "FAB2B88C059F",
+"winner": "FAB2B88C059F"
+},
+{
+"round": 3,
+"pair_id": 134,
+"a": "FAB2B88C059F",
+"b": "332921BEC390",
+"winner": "FAB2B88C059F"
+},
+{
+"round": 3,
+"pair_id": 135,
+"a": "B7CEDA3843F3",
+"b": "4618DCF43061",
+"winner": "4618DCF43061"
+},
+{
+"round": 3,
+"pair_id": 135,
+"a": "4618DCF43061",
+"b": "B7CEDA3843F3",
+"winner": "4618DCF43061"
+},
+{
+"round": 3,
+"pair_id": 136,
+"a": "93D6E4071601",
+"b": "D0ACE61F9DB1",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 3,
+"pair_id": 136,
+"a": "D0ACE61F9DB1",
+"b": "93D6E4071601",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 3,
+"pair_id": 137,
+"a": "EE888799A911",
+"b": "A90D09A72B23",
+"winner": "A90D09A72B23"
+},
+{
+"round": 3,
+"pair_id": 137,
+"a": "A90D09A72B23",
+"b": "EE888799A911",
+"winner": "A90D09A72B23"
+},
+{
+"round": 3,
+"pair_id": 138,
+"a": "632998A6072F",
+"b": "7483C23F8C17",
+"winner": "632998A6072F"
+},
+{
+"round": 3,
+"pair_id": 138,
+"a": "7483C23F8C17",
+"b": "632998A6072F",
+"winner": "7483C23F8C17"
+},
+{
+"round": 3,
+"pair_id": 139,
+"a": "A80B12A8B100",
+"b": "EC719533AB43",
+"winner": "EC719533AB43"
+},
+{
+"round": 3,
+"pair_id": 139,
+"a": "EC719533AB43",
+"b": "A80B12A8B100",
+"winner": "EC719533AB43"
+},
+{
+"round": 3,
+"pair_id": 140,
+"a": "1A0AD9EDC773",
+"b": "388F31A9A1A1",
+"winner": "1A0AD9EDC773"
+},
+{
+"round": 3,
+"pair_id": 140,
+"a": "388F31A9A1A1",
+"b": "1A0AD9EDC773",
+"winner": "1A0AD9EDC773"
+},
+{
+"round": 3,
+"pair_id": 141,
+"a": "4CFFB607101B",
+"b": "F800DF0813A5",
+"winner": "4CFFB607101B"
+},
+{
+"round": 3,
+"pair_id": 141,
+"a": "F800DF0813A5",
+"b": "4CFFB607101B",
+"winner": "4CFFB607101B"
+},
+{
+"round": 3,
+"pair_id": 142,
+"a": "1BA83A25F117",
+"b": "9C245C1269BA",
+"winner": "9C245C1269BA"
+},
+{
+"round": 3,
+"pair_id": 142,
+"a": "9C245C1269BA",
+"b": "1BA83A25F117",
+"winner": "9C245C1269BA"
+},
+{
+"round": 3,
+"pair_id": 143,
+"a": "B4862797CA5D",
+"b": "BD8D21AC238D",
+"winner": "BD8D21AC238D"
+},
+{
+"round": 3,
+"pair_id": 143,
+"a": "BD8D21AC238D",
+"b": "B4862797CA5D",
+"winner": "BD8D21AC238D"
+},
+{
+"round": 3,
+"pair_id": 144,
+"a": "812CBC21EE50",
+"b": "A6546D2758D0",
+"winner": "812CBC21EE50"
+},
+{
+"round": 3,
+"pair_id": 144,
+"a": "A6546D2758D0",
+"b": "812CBC21EE50",
+"winner": "A6546D2758D0"
+},
+{
+"round": 3,
+"pair_id": 145,
+"a": "1C32F25C46EE",
+"b": "000BAD50D026",
+"winner": "1C32F25C46EE"
+},
+{
+"round": 3,
+"pair_id": 145,
+"a": "000BAD50D026",
+"b": "1C32F25C46EE",
+"winner": "000BAD50D026"
+},
+{
+"round": 3,
+"pair_id": 146,
+"a": "AF1B8B6B94CD",
+"b": "41CE9804B226",
+"winner": "41CE9804B226"
+},
+{
+"round": 3,
+"pair_id": 146,
+"a": "41CE9804B226",
+"b": "AF1B8B6B94CD",
+"winner": "AF1B8B6B94CD"
+},
+{
+"round": 3,
+"pair_id": 147,
+"a": "17840D290E28",
+"b": "DFD2C3047A7F",
+"winner": "DFD2C3047A7F"
+},
+{
+"round": 3,
+"pair_id": 147,
+"a": "DFD2C3047A7F",
+"b": "17840D290E28",
+"winner": "DFD2C3047A7F"
+},
+{
+"round": 3,
+"pair_id": 148,
+"a": "EBCF73C7921E",
+"b": "35D64739B0D2",
+"winner": "35D64739B0D2"
+},
+{
+"round": 3,
+"pair_id": 148,
+"a": "35D64739B0D2",
+"b": "EBCF73C7921E",
+"winner": "35D64739B0D2"
+},
+{
+"round": 3,
+"pair_id": 149,
+"a": "8EB647435835",
+"b": "D7A3A9197EDD",
+"winner": "8EB647435835"
+},
+{
+"round": 3,
+"pair_id": 149,
+"a": "D7A3A9197EDD",
+"b": "8EB647435835",
+"winner": "8EB647435835"
+},
+{
+"round": 3,
+"pair_id": 150,
+"a": "9F34600E756D",
+"b": "8D49AD0975A1",
+"winner": "8D49AD0975A1"
+},
+{
+"round": 3,
+"pair_id": 150,
+"a": "8D49AD0975A1",
+"b": "9F34600E756D",
+"winner": "8D49AD0975A1"
+},
+{
+"round": 4,
+"pair_id": 151,
+"a": "67984D18D30D",
+"b": "5E26C9276FE3",
+"winner": "67984D18D30D"
+},
+{
+"round": 4,
+"pair_id": 151,
+"a": "5E26C9276FE3",
+"b": "67984D18D30D",
+"winner": "67984D18D30D"
+},
+{
+"round": 4,
+"pair_id": 152,
+"a": "B8D4D1B62526",
+"b": "D8284C3B2D2C",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 4,
+"pair_id": 152,
+"a": "D8284C3B2D2C",
+"b": "B8D4D1B62526",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 4,
+"pair_id": 153,
+"a": "9E4B02A389B4",
+"b": "2823F7B47127",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 4,
+"pair_id": 153,
+"a": "2823F7B47127",
+"b": "9E4B02A389B4",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 4,
+"pair_id": 154,
+"a": "EEF3247D69D0",
+"b": "702A25E4B218",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 4,
+"pair_id": 154,
+"a": "702A25E4B218",
+"b": "EEF3247D69D0",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 4,
+"pair_id": 155,
+"a": "DC25CFE5EACC",
+"b": "05D237F606EA",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 4,
+"pair_id": 155,
+"a": "05D237F606EA",
+"b": "DC25CFE5EACC",
+"winner": "05D237F606EA"
+},
+{
+"round": 4,
+"pair_id": 156,
+"a": "8B2CB9C1F189",
+"b": "B1BB4BBB0DCC",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 4,
+"pair_id": 156,
+"a": "B1BB4BBB0DCC",
+"b": "8B2CB9C1F189",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 4,
+"pair_id": 157,
+"a": "869367F8A718",
+"b": "D2F9E8A1C2B4",
+"winner": "869367F8A718"
+},
+{
+"round": 4,
+"pair_id": 157,
+"a": "D2F9E8A1C2B4",
+"b": "869367F8A718",
+"winner": "869367F8A718"
+},
+{
+"round": 4,
+"pair_id": 158,
+"a": "38733F6A4A36",
+"b": "23972FBA1934",
+"winner": "38733F6A4A36"
+},
+{
+"round": 4,
+"pair_id": 158,
+"a": "23972FBA1934",
+"b": "38733F6A4A36",
+"winner": "38733F6A4A36"
+},
+{
+"round": 4,
+"pair_id": 159,
+"a": "1C8F6219CF27",
+"b": "9174D620243B",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 4,
+"pair_id": 159,
+"a": "9174D620243B",
+"b": "1C8F6219CF27",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 4,
+"pair_id": 160,
+"a": "84367AEE6898",
+"b": "1B127A370E2A",
+"winner": "1B127A370E2A"
+},
+{
+"round": 4,
+"pair_id": 160,
+"a": "1B127A370E2A",
+"b": "84367AEE6898",
+"winner": "1B127A370E2A"
+},
+{
+"round": 4,
+"pair_id": 161,
+"a": "14F0D1DFE3B1",
+"b": "CD586C88F4F3",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 4,
+"pair_id": 161,
+"a": "CD586C88F4F3",
+"b": "14F0D1DFE3B1",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 4,
+"pair_id": 162,
+"a": "FB4FE2503800",
+"b": "857FAF7C385C",
+"winner": "857FAF7C385C"
+},
+{
+"round": 4,
+"pair_id": 162,
+"a": "857FAF7C385C",
+"b": "FB4FE2503800",
+"winner": "857FAF7C385C"
+},
+{
+"round": 4,
+"pair_id": 163,
+"a": "03E6BECDC070",
+"b": "D5EE6230B88E",
+"winner": "03E6BECDC070"
+},
+{
+"round": 4,
+"pair_id": 163,
+"a": "D5EE6230B88E",
+"b": "03E6BECDC070",
+"winner": "03E6BECDC070"
+},
+{
+"round": 4,
+"pair_id": 164,
+"a": "7BCDFDF03FBC",
+"b": "00898D9FB10A",
+"winner": "00898D9FB10A"
+},
+{
+"round": 4,
+"pair_id": 164,
+"a": "00898D9FB10A",
+"b": "7BCDFDF03FBC",
+"winner": "00898D9FB10A"
+},
+{
+"round": 4,
+"pair_id": 165,
+"a": "E1DDD9115527",
+"b": "F241492F8808",
+"winner": "E1DDD9115527"
+},
+{
+"round": 4,
+"pair_id": 165,
+"a": "F241492F8808",
+"b": "E1DDD9115527",
+"winner": "E1DDD9115527"
+},
+{
+"round": 4,
+"pair_id": 166,
+"a": "CA07DAA86DBD",
+"b": "0EDBF71D5CF6",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 4,
+"pair_id": 166,
+"a": "0EDBF71D5CF6",
+"b": "CA07DAA86DBD",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 4,
+"pair_id": 167,
+"a": "61EDBF8CEC7D",
+"b": "2D0CDBC81DC0",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 4,
+"pair_id": 167,
+"a": "2D0CDBC81DC0",
+"b": "61EDBF8CEC7D",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 4,
+"pair_id": 168,
+"a": "F1B5E79A298B",
+"b": "4D4683449914",
+"winner": "4D4683449914"
+},
+{
+"round": 4,
+"pair_id": 168,
+"a": "4D4683449914",
+"b": "F1B5E79A298B",
+"winner": "4D4683449914"
+},
+{
+"round": 4,
+"pair_id": 169,
+"a": "9271B11A158B",
+"b": "3C133B27FD35",
+"winner": "9271B11A158B"
+},
+{
+"round": 4,
+"pair_id": 169,
+"a": "3C133B27FD35",
+"b": "9271B11A158B",
+"winner": "9271B11A158B"
+},
+{
+"round": 4,
+"pair_id": 170,
+"a": "F934542997DC",
+"b": "A90D09A72B23",
+"winner": "F934542997DC"
+},
+{
+"round": 4,
+"pair_id": 170,
+"a": "A90D09A72B23",
+"b": "F934542997DC",
+"winner": "A90D09A72B23"
+},
+{
+"round": 4,
+"pair_id": 171,
+"a": "D0ACE61F9DB1",
+"b": "E4773D5D6BEA",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 4,
+"pair_id": 171,
+"a": "E4773D5D6BEA",
+"b": "D0ACE61F9DB1",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 4,
+"pair_id": 172,
+"a": "3B62370779A1",
+"b": "2EB01D782D2C",
+"winner": "3B62370779A1"
+},
+{
+"round": 4,
+"pair_id": 172,
+"a": "2EB01D782D2C",
+"b": "3B62370779A1",
+"winner": "2EB01D782D2C"
+},
+{
+"round": 4,
+"pair_id": 173,
+"a": "8CB337D8D65C",
+"b": "468EF37C2F2C",
+"winner": "8CB337D8D65C"
+},
+{
+"round": 4,
+"pair_id": 173,
+"a": "468EF37C2F2C",
+"b": "8CB337D8D65C",
+"winner": "468EF37C2F2C"
+},
+{
+"round": 4,
+"pair_id": 174,
+"a": "FAB2B88C059F",
+"b": "4618DCF43061",
+"winner": "4618DCF43061"
+},
+{
+"round": 4,
+"pair_id": 174,
+"a": "4618DCF43061",
+"b": "FAB2B88C059F",
+"winner": "4618DCF43061"
+},
+{
+"round": 4,
+"pair_id": 175,
+"a": "B392A34365D4",
+"b": "FF543E9E9EB2",
+"winner": "B392A34365D4"
+},
+{
+"round": 4,
+"pair_id": 175,
+"a": "FF543E9E9EB2",
+"b": "B392A34365D4",
+"winner": "B392A34365D4"
+},
+{
+"round": 4,
+"pair_id": 176,
+"a": "971004AB4EED",
+"b": "1A0AD9EDC773",
+"winner": "971004AB4EED"
+},
+{
+"round": 4,
+"pair_id": 176,
+"a": "1A0AD9EDC773",
+"b": "971004AB4EED",
+"winner": "1A0AD9EDC773"
+},
+{
+"round": 4,
+"pair_id": 177,
+"a": "EC719533AB43",
+"b": "9C245C1269BA",
+"winner": "EC719533AB43"
+},
+{
+"round": 4,
+"pair_id": 177,
+"a": "9C245C1269BA",
+"b": "EC719533AB43",
+"winner": "EC719533AB43"
+},
+{
+"round": 4,
+"pair_id": 178,
+"a": "12F2A2D4AB24",
+"b": "632998A6072F",
+"winner": "632998A6072F"
+},
+{
+"round": 4,
+"pair_id": 178,
+"a": "632998A6072F",
+"b": "12F2A2D4AB24",
+"winner": "632998A6072F"
+},
+{
+"round": 4,
+"pair_id": 179,
+"a": "17F7000992D7",
+"b": "E45E9DC77BF4",
+"winner": "17F7000992D7"
+},
+{
+"round": 4,
+"pair_id": 179,
+"a": "E45E9DC77BF4",
+"b": "17F7000992D7",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 4,
+"pair_id": 180,
+"a": "4CFFB607101B",
+"b": "BD8D21AC238D",
+"winner": "BD8D21AC238D"
+},
+{
+"round": 4,
+"pair_id": 180,
+"a": "BD8D21AC238D",
+"b": "4CFFB607101B",
+"winner": "BD8D21AC238D"
+},
+{
+"round": 4,
+"pair_id": 181,
+"a": "7483C23F8C17",
+"b": "4E6BBA69EAFC",
+"winner": "7483C23F8C17"
+},
+{
+"round": 4,
+"pair_id": 181,
+"a": "4E6BBA69EAFC",
+"b": "7483C23F8C17",
+"winner": "4E6BBA69EAFC"
+},
+{
+"round": 4,
+"pair_id": 182,
+"a": "C9EB6EB6551D",
+"b": "93D6E4071601",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 4,
+"pair_id": 182,
+"a": "93D6E4071601",
+"b": "C9EB6EB6551D",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 4,
+"pair_id": 183,
+"a": "05118F820085",
+"b": "A202FBAF0CCD",
+"winner": "A202FBAF0CCD"
+},
+{
+"round": 4,
+"pair_id": 183,
+"a": "A202FBAF0CCD",
+"b": "05118F820085",
+"winner": "A202FBAF0CCD"
+},
+{
+"round": 4,
+"pair_id": 184,
+"a": "A6546D2758D0",
+"b": "41F11AC58B17",
+"winner": "A6546D2758D0"
+},
+{
+"round": 4,
+"pair_id": 184,
+"a": "41F11AC58B17",
+"b": "A6546D2758D0",
+"winner": "41F11AC58B17"
+},
+{
+"round": 4,
+"pair_id": 185,
+"a": "A80B12A8B100",
+"b": "7F0CB07D9B67",
+"winner": "A80B12A8B100"
+},
+{
+"round": 4,
+"pair_id": 185,
+"a": "7F0CB07D9B67",
+"b": "A80B12A8B100",
+"winner": "A80B12A8B100"
+},
+{
+"round": 4,
+"pair_id": 186,
+"a": "332921BEC390",
+"b": "8E1B32095441",
+"winner": "332921BEC390"
+},
+{
+"round": 4,
+"pair_id": 186,
+"a": "8E1B32095441",
+"b": "332921BEC390",
+"winner": "8E1B32095441"
+},
+{
+"round": 4,
+"pair_id": 187,
+"a": "30832988F476",
+"b": "35D64739B0D2",
+"winner": "30832988F476"
+},
+{
+"round": 4,
+"pair_id": 187,
+"a": "35D64739B0D2",
+"b": "30832988F476",
+"winner": "35D64739B0D2"
+},
+{
+"round": 4,
+"pair_id": 188,
+"a": "5C843C6BD232",
+"b": "A66B93C3C8F1",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 4,
+"pair_id": 188,
+"a": "A66B93C3C8F1",
+"b": "5C843C6BD232",
+"winner": "5C843C6BD232"
+},
+{
+"round": 4,
+"pair_id": 189,
+"a": "DFD2C3047A7F",
+"b": "EE888799A911",
+"winner": "EE888799A911"
+},
+{
+"round": 4,
+"pair_id": 189,
+"a": "EE888799A911",
+"b": "DFD2C3047A7F",
+"winner": "DFD2C3047A7F"
+},
+{
+"round": 4,
+"pair_id": 190,
+"a": "4A10B3C41630",
+"b": "FFE91DA2A101",
+"winner": "4A10B3C41630"
+},
+{
+"round": 4,
+"pair_id": 190,
+"a": "FFE91DA2A101",
+"b": "4A10B3C41630",
+"winner": "FFE91DA2A101"
+},
+{
+"round": 4,
+"pair_id": 191,
+"a": "DA025E83C104",
+"b": "812CBC21EE50",
+"winner": "812CBC21EE50"
+},
+{
+"round": 4,
+"pair_id": 191,
+"a": "812CBC21EE50",
+"b": "DA025E83C104",
+"winner": "812CBC21EE50"
+},
+{
+"round": 4,
+"pair_id": 192,
+"a": "8B477C53521B",
+"b": "388F31A9A1A1",
+"winner": "388F31A9A1A1"
+},
+{
+"round": 4,
+"pair_id": 192,
+"a": "388F31A9A1A1",
+"b": "8B477C53521B",
+"winner": "388F31A9A1A1"
+},
+{
+"round": 4,
+"pair_id": 193,
+"a": "B7CEDA3843F3",
+"b": "F800DF0813A5",
+"winner": "B7CEDA3843F3"
+},
+{
+"round": 4,
+"pair_id": 193,
+"a": "F800DF0813A5",
+"b": "B7CEDA3843F3",
+"winner": "B7CEDA3843F3"
+},
+{
+"round": 4,
+"pair_id": 194,
+"a": "1BA83A25F117",
+"b": "3FC799617EB3",
+"winner": "1BA83A25F117"
+},
+{
+"round": 4,
+"pair_id": 194,
+"a": "3FC799617EB3",
+"b": "1BA83A25F117",
+"winner": "3FC799617EB3"
+},
+{
+"round": 4,
+"pair_id": 195,
+"a": "B4862797CA5D",
+"b": "8EB647435835",
+"winner": "B4862797CA5D"
+},
+{
+"round": 4,
+"pair_id": 195,
+"a": "8EB647435835",
+"b": "B4862797CA5D",
+"winner": "B4862797CA5D"
+},
+{
+"round": 4,
+"pair_id": 196,
+"a": "1C32F25C46EE",
+"b": "8D49AD0975A1",
+"winner": "1C32F25C46EE"
+},
+{
+"round": 4,
+"pair_id": 196,
+"a": "8D49AD0975A1",
+"b": "1C32F25C46EE",
+"winner": "1C32F25C46EE"
+},
+{
+"round": 4,
+"pair_id": 197,
+"a": "000BAD50D026",
+"b": "F2BDB9DFFB57",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 4,
+"pair_id": 197,
+"a": "F2BDB9DFFB57",
+"b": "000BAD50D026",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 4,
+"pair_id": 198,
+"a": "41CE9804B226",
+"b": "17840D290E28",
+"winner": "41CE9804B226"
+},
+{
+"round": 4,
+"pair_id": 198,
+"a": "17840D290E28",
+"b": "41CE9804B226",
+"winner": "41CE9804B226"
+},
+{
+"round": 4,
+"pair_id": 199,
+"a": "AF1B8B6B94CD",
+"b": "D7A3A9197EDD",
+"winner": "AF1B8B6B94CD"
+},
+{
+"round": 4,
+"pair_id": 199,
+"a": "D7A3A9197EDD",
+"b": "AF1B8B6B94CD",
+"winner": "AF1B8B6B94CD"
+},
+{
+"round": 4,
+"pair_id": 200,
+"a": "EBCF73C7921E",
+"b": "9F34600E756D",
+"winner": "9F34600E756D"
+},
+{
+"round": 4,
+"pair_id": 200,
+"a": "9F34600E756D",
+"b": "EBCF73C7921E",
+"winner": "9F34600E756D"
+},
+{
+"round": 5,
+"pair_id": 201,
+"a": "9E4B02A389B4",
+"b": "67984D18D30D",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 5,
+"pair_id": 201,
+"a": "67984D18D30D",
+"b": "9E4B02A389B4",
+"winner": "67984D18D30D"
+},
+{
+"round": 5,
+"pair_id": 202,
+"a": "B8D4D1B62526",
+"b": "EEF3247D69D0",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 5,
+"pair_id": 202,
+"a": "EEF3247D69D0",
+"b": "B8D4D1B62526",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 5,
+"pair_id": 203,
+"a": "5E26C9276FE3",
+"b": "D8284C3B2D2C",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 5,
+"pair_id": 203,
+"a": "D8284C3B2D2C",
+"b": "5E26C9276FE3",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 5,
+"pair_id": 204,
+"a": "1C8F6219CF27",
+"b": "8B2CB9C1F189",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 5,
+"pair_id": 204,
+"a": "8B2CB9C1F189",
+"b": "1C8F6219CF27",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 5,
+"pair_id": 205,
+"a": "38733F6A4A36",
+"b": "00898D9FB10A",
+"winner": "00898D9FB10A"
+},
+{
+"round": 5,
+"pair_id": 205,
+"a": "00898D9FB10A",
+"b": "38733F6A4A36",
+"winner": "00898D9FB10A"
+},
+{
+"round": 5,
+"pair_id": 206,
+"a": "B1BB4BBB0DCC",
+"b": "869367F8A718",
+"winner": "869367F8A718"
+},
+{
+"round": 5,
+"pair_id": 206,
+"a": "869367F8A718",
+"b": "B1BB4BBB0DCC",
+"winner": "869367F8A718"
+},
+{
+"round": 5,
+"pair_id": 207,
+"a": "E1DDD9115527",
+"b": "05D237F606EA",
+"winner": "E1DDD9115527"
+},
+{
+"round": 5,
+"pair_id": 207,
+"a": "05D237F606EA",
+"b": "E1DDD9115527",
+"winner": "05D237F606EA"
+},
+{
+"round": 5,
+"pair_id": 208,
+"a": "2823F7B47127",
+"b": "61EDBF8CEC7D",
+"winner": "2823F7B47127"
+},
+{
+"round": 5,
+"pair_id": 208,
+"a": "61EDBF8CEC7D",
+"b": "2823F7B47127",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 5,
+"pair_id": 209,
+"a": "B392A34365D4",
+"b": "1B127A370E2A",
+"winner": "B392A34365D4"
+},
+{
+"round": 5,
+"pair_id": 209,
+"a": "1B127A370E2A",
+"b": "B392A34365D4",
+"winner": "1B127A370E2A"
+},
+{
+"round": 5,
+"pair_id": 210,
+"a": "4D4683449914",
+"b": "857FAF7C385C",
+"winner": "4D4683449914"
+},
+{
+"round": 5,
+"pair_id": 210,
+"a": "857FAF7C385C",
+"b": "4D4683449914",
+"winner": "857FAF7C385C"
+},
+{
+"round": 5,
+"pair_id": 211,
+"a": "0EDBF71D5CF6",
+"b": "14F0D1DFE3B1",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 5,
+"pair_id": 211,
+"a": "14F0D1DFE3B1",
+"b": "0EDBF71D5CF6",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 5,
+"pair_id": 212,
+"a": "A90D09A72B23",
+"b": "23972FBA1934",
+"winner": "A90D09A72B23"
+},
+{
+"round": 5,
+"pair_id": 212,
+"a": "23972FBA1934",
+"b": "A90D09A72B23",
+"winner": "A90D09A72B23"
+},
+{
+"round": 5,
+"pair_id": 213,
+"a": "702A25E4B218",
+"b": "7BCDFDF03FBC",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 5,
+"pair_id": 213,
+"a": "7BCDFDF03FBC",
+"b": "702A25E4B218",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 5,
+"pair_id": 214,
+"a": "F934542997DC",
+"b": "4618DCF43061",
+"winner": "F934542997DC"
+},
+{
+"round": 5,
+"pair_id": 214,
+"a": "4618DCF43061",
+"b": "F934542997DC",
+"winner": "4618DCF43061"
+},
+{
+"round": 5,
+"pair_id": 215,
+"a": "03E6BECDC070",
+"b": "DC25CFE5EACC",
+"winner": "03E6BECDC070"
+},
+{
+"round": 5,
+"pair_id": 215,
+"a": "DC25CFE5EACC",
+"b": "03E6BECDC070",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 5,
+"pair_id": 216,
+"a": "D2F9E8A1C2B4",
+"b": "FB4FE2503800",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 5,
+"pair_id": 216,
+"a": "FB4FE2503800",
+"b": "D2F9E8A1C2B4",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 5,
+"pair_id": 217,
+"a": "CA07DAA86DBD",
+"b": "9174D620243B",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 5,
+"pair_id": 217,
+"a": "9174D620243B",
+"b": "CA07DAA86DBD",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 5,
+"pair_id": 218,
+"a": "9271B11A158B",
+"b": "CD586C88F4F3",
+"winner": "9271B11A158B"
+},
+{
+"round": 5,
+"pair_id": 218,
+"a": "CD586C88F4F3",
+"b": "9271B11A158B",
+"winner": "CD586C88F4F3"
+},
+{
+"round": 5,
+"pair_id": 219,
+"a": "BD8D21AC238D",
+"b": "E4773D5D6BEA",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 5,
+"pair_id": 219,
+"a": "E4773D5D6BEA",
+"b": "BD8D21AC238D",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 5,
+"pair_id": 220,
+"a": "4E6BBA69EAFC",
+"b": "8CB337D8D65C",
+"winner": "8CB337D8D65C"
+},
+{
+"round": 5,
+"pair_id": 220,
+"a": "8CB337D8D65C",
+"b": "4E6BBA69EAFC",
+"winner": "8CB337D8D65C"
+},
+{
+"round": 5,
+"pair_id": 221,
+"a": "17F7000992D7",
+"b": "D0ACE61F9DB1",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 5,
+"pair_id": 221,
+"a": "D0ACE61F9DB1",
+"b": "17F7000992D7",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 5,
+"pair_id": 222,
+"a": "2D0CDBC81DC0",
+"b": "2EB01D782D2C",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 5,
+"pair_id": 222,
+"a": "2EB01D782D2C",
+"b": "2D0CDBC81DC0",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 5,
+"pair_id": 223,
+"a": "632998A6072F",
+"b": "84367AEE6898",
+"winner": "632998A6072F"
+},
+{
+"round": 5,
+"pair_id": 223,
+"a": "84367AEE6898",
+"b": "632998A6072F",
+"winner": "632998A6072F"
+},
+{
+"round": 5,
+"pair_id": 224,
+"a": "EC719533AB43",
+"b": "E45E9DC77BF4",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 5,
+"pair_id": 224,
+"a": "E45E9DC77BF4",
+"b": "EC719533AB43",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 5,
+"pair_id": 225,
+"a": "3C133B27FD35",
+"b": "F241492F8808",
+"winner": "F241492F8808"
+},
+{
+"round": 5,
+"pair_id": 225,
+"a": "F241492F8808",
+"b": "3C133B27FD35",
+"winner": "F241492F8808"
+},
+{
+"round": 5,
+"pair_id": 226,
+"a": "3B62370779A1",
+"b": "1A0AD9EDC773",
+"winner": "3B62370779A1"
+},
+{
+"round": 5,
+"pair_id": 226,
+"a": "1A0AD9EDC773",
+"b": "3B62370779A1",
+"winner": "1A0AD9EDC773"
+},
+{
+"round": 5,
+"pair_id": 227,
+"a": "971004AB4EED",
+"b": "A6546D2758D0",
+"winner": "971004AB4EED"
+},
+{
+"round": 5,
+"pair_id": 227,
+"a": "A6546D2758D0",
+"b": "971004AB4EED",
+"winner": "971004AB4EED"
+},
+{
+"round": 5,
+"pair_id": 228,
+"a": "468EF37C2F2C",
+"b": "7483C23F8C17",
+"winner": "468EF37C2F2C"
+},
+{
+"round": 5,
+"pair_id": 228,
+"a": "7483C23F8C17",
+"b": "468EF37C2F2C",
+"winner": "7483C23F8C17"
+},
+{
+"round": 5,
+"pair_id": 229,
+"a": "D5EE6230B88E",
+"b": "FAB2B88C059F",
+"winner": "D5EE6230B88E"
+},
+{
+"round": 5,
+"pair_id": 229,
+"a": "FAB2B88C059F",
+"b": "D5EE6230B88E",
+"winner": "FAB2B88C059F"
+},
+{
+"round": 5,
+"pair_id": 230,
+"a": "F1B5E79A298B",
+"b": "FF543E9E9EB2",
+"winner": "F1B5E79A298B"
+},
+{
+"round": 5,
+"pair_id": 230,
+"a": "FF543E9E9EB2",
+"b": "F1B5E79A298B",
+"winner": "FF543E9E9EB2"
+},
+{
+"round": 5,
+"pair_id": 231,
+"a": "A202FBAF0CCD",
+"b": "C9EB6EB6551D",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 5,
+"pair_id": 231,
+"a": "C9EB6EB6551D",
+"b": "A202FBAF0CCD",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 5,
+"pair_id": 232,
+"a": "8E1B32095441",
+"b": "12F2A2D4AB24",
+"winner": "8E1B32095441"
+},
+{
+"round": 5,
+"pair_id": 232,
+"a": "12F2A2D4AB24",
+"b": "8E1B32095441",
+"winner": "8E1B32095441"
+},
+{
+"round": 5,
+"pair_id": 233,
+"a": "B7CEDA3843F3",
+"b": "41F11AC58B17",
+"winner": "41F11AC58B17"
+},
+{
+"round": 5,
+"pair_id": 233,
+"a": "41F11AC58B17",
+"b": "B7CEDA3843F3",
+"winner": "B7CEDA3843F3"
+},
+{
+"round": 5,
+"pair_id": 234,
+"a": "A80B12A8B100",
+"b": "EE888799A911",
+"winner": "A80B12A8B100"
+},
+{
+"round": 5,
+"pair_id": 234,
+"a": "EE888799A911",
+"b": "A80B12A8B100",
+"winner": "A80B12A8B100"
+},
+{
+"round": 5,
+"pair_id": 235,
+"a": "4A10B3C41630",
+"b": "812CBC21EE50",
+"winner": "812CBC21EE50"
+},
+{
+"round": 5,
+"pair_id": 235,
+"a": "812CBC21EE50",
+"b": "4A10B3C41630",
+"winner": "812CBC21EE50"
+},
+{
+"round": 5,
+"pair_id": 236,
+"a": "9C245C1269BA",
+"b": "DFD2C3047A7F",
+"winner": "9C245C1269BA"
+},
+{
+"round": 5,
+"pair_id": 236,
+"a": "DFD2C3047A7F",
+"b": "9C245C1269BA",
+"winner": "9C245C1269BA"
+},
+{
+"round": 5,
+"pair_id": 237,
+"a": "5C843C6BD232",
+"b": "332921BEC390",
+"winner": "332921BEC390"
+},
+{
+"round": 5,
+"pair_id": 237,
+"a": "332921BEC390",
+"b": "5C843C6BD232",
+"winner": "5C843C6BD232"
+},
+{
+"round": 5,
+"pair_id": 238,
+"a": "4CFFB607101B",
+"b": "30832988F476",
+"winner": "4CFFB607101B"
+},
+{
+"round": 5,
+"pair_id": 238,
+"a": "30832988F476",
+"b": "4CFFB607101B",
+"winner": "30832988F476"
+},
+{
+"round": 5,
+"pair_id": 239,
+"a": "FFE91DA2A101",
+"b": "F2BDB9DFFB57",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 5,
+"pair_id": 239,
+"a": "F2BDB9DFFB57",
+"b": "FFE91DA2A101",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 5,
+"pair_id": 240,
+"a": "A66B93C3C8F1",
+"b": "388F31A9A1A1",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 5,
+"pair_id": 240,
+"a": "388F31A9A1A1",
+"b": "A66B93C3C8F1",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 5,
+"pair_id": 241,
+"a": "05118F820085",
+"b": "B4862797CA5D",
+"winner": "B4862797CA5D"
+},
+{
+"round": 5,
+"pair_id": 241,
+"a": "B4862797CA5D",
+"b": "05118F820085",
+"winner": "B4862797CA5D"
+},
+{
+"round": 5,
+"pair_id": 242,
+"a": "35D64739B0D2",
+"b": "3FC799617EB3",
+"winner": "35D64739B0D2"
+},
+{
+"round": 5,
+"pair_id": 242,
+"a": "3FC799617EB3",
+"b": "35D64739B0D2",
+"winner": "35D64739B0D2"
+},
+{
+"round": 5,
+"pair_id": 243,
+"a": "AF1B8B6B94CD",
+"b": "93D6E4071601",
+"winner": "93D6E4071601"
+},
+{
+"round": 5,
+"pair_id": 243,
+"a": "93D6E4071601",
+"b": "AF1B8B6B94CD",
+"winner": "93D6E4071601"
+},
+{
+"round": 5,
+"pair_id": 244,
+"a": "1C32F25C46EE",
+"b": "41CE9804B226",
+"winner": "41CE9804B226"
+},
+{
+"round": 5,
+"pair_id": 244,
+"a": "41CE9804B226",
+"b": "1C32F25C46EE",
+"winner": "41CE9804B226"
+},
+{
+"round": 5,
+"pair_id": 245,
+"a": "F800DF0813A5",
+"b": "7F0CB07D9B67",
+"winner": "F800DF0813A5"
+},
+{
+"round": 5,
+"pair_id": 245,
+"a": "7F0CB07D9B67",
+"b": "F800DF0813A5",
+"winner": "F800DF0813A5"
+},
+{
+"round": 5,
+"pair_id": 246,
+"a": "8B477C53521B",
+"b": "1BA83A25F117",
+"winner": "1BA83A25F117"
+},
+{
+"round": 5,
+"pair_id": 246,
+"a": "1BA83A25F117",
+"b": "8B477C53521B",
+"winner": "1BA83A25F117"
+},
+{
+"round": 5,
+"pair_id": 247,
+"a": "000BAD50D026",
+"b": "DA025E83C104",
+"winner": "000BAD50D026"
+},
+{
+"round": 5,
+"pair_id": 247,
+"a": "DA025E83C104",
+"b": "000BAD50D026",
+"winner": "DA025E83C104"
+},
+{
+"round": 5,
+"pair_id": 248,
+"a": "8D49AD0975A1",
+"b": "8EB647435835",
+"winner": "8D49AD0975A1"
+},
+{
+"round": 5,
+"pair_id": 248,
+"a": "8EB647435835",
+"b": "8D49AD0975A1",
+"winner": "8D49AD0975A1"
+},
+{
+"round": 5,
+"pair_id": 249,
+"a": "9F34600E756D",
+"b": "17840D290E28",
+"winner": "17840D290E28"
+},
+{
+"round": 5,
+"pair_id": 249,
+"a": "17840D290E28",
+"b": "9F34600E756D",
+"winner": "17840D290E28"
+},
+{
+"round": 5,
+"pair_id": 250,
+"a": "D7A3A9197EDD",
+"b": "EBCF73C7921E",
+"winner": "D7A3A9197EDD"
+},
+{
+"round": 5,
+"pair_id": 250,
+"a": "EBCF73C7921E",
+"b": "D7A3A9197EDD",
+"winner": "EBCF73C7921E"
+},
+{
+"round": 6,
+"pair_id": 251,
+"a": "EEF3247D69D0",
+"b": "EBCF73C7921E",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 6,
+"pair_id": 251,
+"a": "EBCF73C7921E",
+"b": "EEF3247D69D0",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 6,
+"pair_id": 252,
+"a": "9E4B02A389B4",
+"b": "869367F8A718",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 6,
+"pair_id": 252,
+"a": "869367F8A718",
+"b": "9E4B02A389B4",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 6,
+"pair_id": 253,
+"a": "B8D4D1B62526",
+"b": "00898D9FB10A",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 6,
+"pair_id": 253,
+"a": "00898D9FB10A",
+"b": "B8D4D1B62526",
+"winner": "00898D9FB10A"
+},
+{
+"round": 6,
+"pair_id": 254,
+"a": "8B2CB9C1F189",
+"b": "D8284C3B2D2C",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 6,
+"pair_id": 254,
+"a": "D8284C3B2D2C",
+"b": "8B2CB9C1F189",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 6,
+"pair_id": 255,
+"a": "5E26C9276FE3",
+"b": "1C8F6219CF27",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 6,
+"pair_id": 255,
+"a": "1C8F6219CF27",
+"b": "5E26C9276FE3",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 6,
+"pair_id": 256,
+"a": "38733F6A4A36",
+"b": "61EDBF8CEC7D",
+"winner": "38733F6A4A36"
+},
+{
+"round": 6,
+"pair_id": 256,
+"a": "61EDBF8CEC7D",
+"b": "38733F6A4A36",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 6,
+"pair_id": 257,
+"a": "05D237F606EA",
+"b": "D2F9E8A1C2B4",
+"winner": "05D237F606EA"
+},
+{
+"round": 6,
+"pair_id": 257,
+"a": "D2F9E8A1C2B4",
+"b": "05D237F606EA",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 6,
+"pair_id": 258,
+"a": "7BCDFDF03FBC",
+"b": "E1DDD9115527",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 6,
+"pair_id": 258,
+"a": "E1DDD9115527",
+"b": "7BCDFDF03FBC",
+"winner": "E1DDD9115527"
+},
+{
+"round": 6,
+"pair_id": 259,
+"a": "B392A34365D4",
+"b": "0EDBF71D5CF6",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 6,
+"pair_id": 259,
+"a": "0EDBF71D5CF6",
+"b": "B392A34365D4",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 6,
+"pair_id": 260,
+"a": "1B127A370E2A",
+"b": "2823F7B47127",
+"winner": "2823F7B47127"
+},
+{
+"round": 6,
+"pair_id": 260,
+"a": "2823F7B47127",
+"b": "1B127A370E2A",
+"winner": "2823F7B47127"
+},
+{
+"round": 6,
+"pair_id": 261,
+"a": "03E6BECDC070",
+"b": "14F0D1DFE3B1",
+"winner": "03E6BECDC070"
+},
+{
+"round": 6,
+"pair_id": 261,
+"a": "14F0D1DFE3B1",
+"b": "03E6BECDC070",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 6,
+"pair_id": 262,
+"a": "857FAF7C385C",
+"b": "DC25CFE5EACC",
+"winner": "857FAF7C385C"
+},
+{
+"round": 6,
+"pair_id": 262,
+"a": "DC25CFE5EACC",
+"b": "857FAF7C385C",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 6,
+"pair_id": 263,
+"a": "702A25E4B218",
+"b": "4D4683449914",
+"winner": "702A25E4B218"
+},
+{
+"round": 6,
+"pair_id": 263,
+"a": "4D4683449914",
+"b": "702A25E4B218",
+"winner": "4D4683449914"
+},
+{
+"round": 6,
+"pair_id": 264,
+"a": "F934542997DC",
+"b": "B1BB4BBB0DCC",
+"winner": "F934542997DC"
+},
+{
+"round": 6,
+"pair_id": 264,
+"a": "B1BB4BBB0DCC",
+"b": "F934542997DC",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 6,
+"pair_id": 265,
+"a": "CD586C88F4F3",
+"b": "D0ACE61F9DB1",
+"winner": "CD586C88F4F3"
+},
+{
+"round": 6,
+"pair_id": 265,
+"a": "D0ACE61F9DB1",
+"b": "CD586C88F4F3",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 6,
+"pair_id": 266,
+"a": "A90D09A72B23",
+"b": "8CB337D8D65C",
+"winner": "A90D09A72B23"
+},
+{
+"round": 6,
+"pair_id": 266,
+"a": "8CB337D8D65C",
+"b": "A90D09A72B23",
+"winner": "8CB337D8D65C"
+},
+{
+"round": 6,
+"pair_id": 267,
+"a": "F241492F8808",
+"b": "CA07DAA86DBD",
+"winner": "F241492F8808"
+},
+{
+"round": 6,
+"pair_id": 267,
+"a": "CA07DAA86DBD",
+"b": "F241492F8808",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 6,
+"pair_id": 268,
+"a": "E4773D5D6BEA",
+"b": "23972FBA1934",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 6,
+"pair_id": 268,
+"a": "23972FBA1934",
+"b": "E4773D5D6BEA",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 6,
+"pair_id": 269,
+"a": "9271B11A158B",
+"b": "4618DCF43061",
+"winner": "9271B11A158B"
+},
+{
+"round": 6,
+"pair_id": 269,
+"a": "4618DCF43061",
+"b": "9271B11A158B",
+"winner": "4618DCF43061"
+},
+{
+"round": 6,
+"pair_id": 270,
+"a": "632998A6072F",
+"b": "2D0CDBC81DC0",
+"winner": "632998A6072F"
+},
+{
+"round": 6,
+"pair_id": 270,
+"a": "2D0CDBC81DC0",
+"b": "632998A6072F",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 6,
+"pair_id": 271,
+"a": "FB4FE2503800",
+"b": "971004AB4EED",
+"winner": "FB4FE2503800"
+},
+{
+"round": 6,
+"pair_id": 271,
+"a": "971004AB4EED",
+"b": "FB4FE2503800",
+"winner": "FB4FE2503800"
+},
+{
+"round": 6,
+"pair_id": 272,
+"a": "17F7000992D7",
+"b": "F1B5E79A298B",
+"winner": "17F7000992D7"
+},
+{
+"round": 6,
+"pair_id": 272,
+"a": "F1B5E79A298B",
+"b": "17F7000992D7",
+"winner": "17F7000992D7"
+},
+{
+"round": 6,
+"pair_id": 273,
+"a": "E45E9DC77BF4",
+"b": "468EF37C2F2C",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 6,
+"pair_id": 273,
+"a": "468EF37C2F2C",
+"b": "E45E9DC77BF4",
+"winner": "468EF37C2F2C"
+},
+{
+"round": 6,
+"pair_id": 274,
+"a": "9174D620243B",
+"b": "7483C23F8C17",
+"winner": "9174D620243B"
+},
+{
+"round": 6,
+"pair_id": 274,
+"a": "7483C23F8C17",
+"b": "9174D620243B",
+"winner": "9174D620243B"
+},
+{
+"round": 6,
+"pair_id": 275,
+"a": "D5EE6230B88E",
+"b": "FF543E9E9EB2",
+"winner": "D5EE6230B88E"
+},
+{
+"round": 6,
+"pair_id": 275,
+"a": "FF543E9E9EB2",
+"b": "D5EE6230B88E",
+"winner": "FF543E9E9EB2"
+},
+{
+"round": 6,
+"pair_id": 276,
+"a": "8E1B32095441",
+"b": "EC719533AB43",
+"winner": "EC719533AB43"
+},
+{
+"round": 6,
+"pair_id": 276,
+"a": "EC719533AB43",
+"b": "8E1B32095441",
+"winner": "8E1B32095441"
+},
+{
+"round": 6,
+"pair_id": 277,
+"a": "41F11AC58B17",
+"b": "5C843C6BD232",
+"winner": "41F11AC58B17"
+},
+{
+"round": 6,
+"pair_id": 277,
+"a": "5C843C6BD232",
+"b": "41F11AC58B17",
+"winner": "41F11AC58B17"
+},
+{
+"round": 6,
+"pair_id": 278,
+"a": "FAB2B88C059F",
+"b": "4E6BBA69EAFC",
+"winner": "4E6BBA69EAFC"
+},
+{
+"round": 6,
+"pair_id": 278,
+"a": "4E6BBA69EAFC",
+"b": "FAB2B88C059F",
+"winner": "4E6BBA69EAFC"
+},
+{
+"round": 6,
+"pair_id": 279,
+"a": "C9EB6EB6551D",
+"b": "3B62370779A1",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 6,
+"pair_id": 279,
+"a": "3B62370779A1",
+"b": "C9EB6EB6551D",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 6,
+"pair_id": 280,
+"a": "332921BEC390",
+"b": "84367AEE6898",
+"winner": "84367AEE6898"
+},
+{
+"round": 6,
+"pair_id": 280,
+"a": "84367AEE6898",
+"b": "332921BEC390",
+"winner": "84367AEE6898"
+},
+{
+"round": 6,
+"pair_id": 281,
+"a": "A80B12A8B100",
+"b": "1A0AD9EDC773",
+"winner": "A80B12A8B100"
+},
+{
+"round": 6,
+"pair_id": 281,
+"a": "1A0AD9EDC773",
+"b": "A80B12A8B100",
+"winner": "A80B12A8B100"
+},
+{
+"round": 6,
+"pair_id": 282,
+"a": "A66B93C3C8F1",
+"b": "3C133B27FD35",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 6,
+"pair_id": 282,
+"a": "3C133B27FD35",
+"b": "A66B93C3C8F1",
+"winner": "3C133B27FD35"
+},
+{
+"round": 6,
+"pair_id": 283,
+"a": "BD8D21AC238D",
+"b": "9C245C1269BA",
+"winner": "9C245C1269BA"
+},
+{
+"round": 6,
+"pair_id": 283,
+"a": "9C245C1269BA",
+"b": "BD8D21AC238D",
+"winner": "9C245C1269BA"
+},
+{
+"round": 6,
+"pair_id": 284,
+"a": "4CFFB607101B",
+"b": "2EB01D782D2C",
+"winner": "4CFFB607101B"
+},
+{
+"round": 6,
+"pair_id": 284,
+"a": "2EB01D782D2C",
+"b": "4CFFB607101B",
+"winner": "2EB01D782D2C"
+},
+{
+"round": 6,
+"pair_id": 285,
+"a": "B7CEDA3843F3",
+"b": "A6546D2758D0",
+"winner": "A6546D2758D0"
+},
+{
+"round": 6,
+"pair_id": 285,
+"a": "A6546D2758D0",
+"b": "B7CEDA3843F3",
+"winner": "A6546D2758D0"
+},
+{
+"round": 6,
+"pair_id": 286,
+"a": "35D64739B0D2",
+"b": "A202FBAF0CCD",
+"winner": "35D64739B0D2"
+},
+{
+"round": 6,
+"pair_id": 286,
+"a": "A202FBAF0CCD",
+"b": "35D64739B0D2",
+"winner": "A202FBAF0CCD"
+},
+{
+"round": 6,
+"pair_id": 287,
+"a": "93D6E4071601",
+"b": "812CBC21EE50",
+"winner": "812CBC21EE50"
+},
+{
+"round": 6,
+"pair_id": 287,
+"a": "812CBC21EE50",
+"b": "93D6E4071601",
+"winner": "812CBC21EE50"
+},
+{
+"round": 6,
+"pair_id": 288,
+"a": "F2BDB9DFFB57",
+"b": "12F2A2D4AB24",
+"winner": "12F2A2D4AB24"
+},
+{
+"round": 6,
+"pair_id": 288,
+"a": "12F2A2D4AB24",
+"b": "F2BDB9DFFB57",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 6,
+"pair_id": 289,
+"a": "30832988F476",
+"b": "B4862797CA5D",
+"winner": "30832988F476"
+},
+{
+"round": 6,
+"pair_id": 289,
+"a": "B4862797CA5D",
+"b": "30832988F476",
+"winner": "30832988F476"
+},
+{
+"round": 6,
+"pair_id": 290,
+"a": "DFD2C3047A7F",
+"b": "41CE9804B226",
+"winner": "DFD2C3047A7F"
+},
+{
+"round": 6,
+"pair_id": 290,
+"a": "41CE9804B226",
+"b": "DFD2C3047A7F",
+"winner": "DFD2C3047A7F"
+},
+{
+"round": 6,
+"pair_id": 291,
+"a": "4A10B3C41630",
+"b": "1BA83A25F117",
+"winner": "1BA83A25F117"
+},
+{
+"round": 6,
+"pair_id": 291,
+"a": "1BA83A25F117",
+"b": "4A10B3C41630",
+"winner": "4A10B3C41630"
+},
+{
+"round": 6,
+"pair_id": 292,
+"a": "FFE91DA2A101",
+"b": "EE888799A911",
+"winner": "FFE91DA2A101"
+},
+{
+"round": 6,
+"pair_id": 292,
+"a": "EE888799A911",
+"b": "FFE91DA2A101",
+"winner": "EE888799A911"
+},
+{
+"round": 6,
+"pair_id": 293,
+"a": "3FC799617EB3",
+"b": "F800DF0813A5",
+"winner": "F800DF0813A5"
+},
+{
+"round": 6,
+"pair_id": 293,
+"a": "F800DF0813A5",
+"b": "3FC799617EB3",
+"winner": "3FC799617EB3"
+},
+{
+"round": 6,
+"pair_id": 294,
+"a": "388F31A9A1A1",
+"b": "05118F820085",
+"winner": "388F31A9A1A1"
+},
+{
+"round": 6,
+"pair_id": 294,
+"a": "05118F820085",
+"b": "388F31A9A1A1",
+"winner": "388F31A9A1A1"
+},
+{
+"round": 6,
+"pair_id": 295,
+"a": "AF1B8B6B94CD",
+"b": "1C32F25C46EE",
+"winner": "1C32F25C46EE"
+},
+{
+"round": 6,
+"pair_id": 295,
+"a": "1C32F25C46EE",
+"b": "AF1B8B6B94CD",
+"winner": "1C32F25C46EE"
+},
+{
+"round": 6,
+"pair_id": 296,
+"a": "000BAD50D026",
+"b": "7F0CB07D9B67",
+"winner": "000BAD50D026"
+},
+{
+"round": 6,
+"pair_id": 296,
+"a": "7F0CB07D9B67",
+"b": "000BAD50D026",
+"winner": "7F0CB07D9B67"
+},
+{
+"round": 6,
+"pair_id": 297,
+"a": "DA025E83C104",
+"b": "8D49AD0975A1",
+"winner": "8D49AD0975A1"
+},
+{
+"round": 6,
+"pair_id": 297,
+"a": "8D49AD0975A1",
+"b": "DA025E83C104",
+"winner": "8D49AD0975A1"
+},
+{
+"round": 6,
+"pair_id": 298,
+"a": "8B477C53521B",
+"b": "17840D290E28",
+"winner": "8B477C53521B"
+},
+{
+"round": 6,
+"pair_id": 298,
+"a": "17840D290E28",
+"b": "8B477C53521B",
+"winner": "17840D290E28"
+},
+{
+"round": 6,
+"pair_id": 299,
+"a": "9F34600E756D",
+"b": "8EB647435835",
+"winner": "8EB647435835"
+},
+{
+"round": 6,
+"pair_id": 299,
+"a": "8EB647435835",
+"b": "9F34600E756D",
+"winner": "8EB647435835"
+},
+{
+"round": 6,
+"pair_id": 300,
+"a": "67984D18D30D",
+"b": "D7A3A9197EDD",
+"winner": "67984D18D30D"
+},
+{
+"round": 6,
+"pair_id": 300,
+"a": "D7A3A9197EDD",
+"b": "67984D18D30D",
+"winner": "67984D18D30D"
+},
+{
+"round": 7,
+"pair_id": 301,
+"a": "67984D18D30D",
+"b": "EBCF73C7921E",
+"winner": "67984D18D30D"
+},
+{
+"round": 7,
+"pair_id": 301,
+"a": "EBCF73C7921E",
+"b": "67984D18D30D",
+"winner": "67984D18D30D"
+},
+{
+"round": 7,
+"pair_id": 302,
+"a": "9E4B02A389B4",
+"b": "B8D4D1B62526",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 7,
+"pair_id": 302,
+"a": "B8D4D1B62526",
+"b": "9E4B02A389B4",
+"winner": "B8D4D1B62526"
+},
+{
+"round": 7,
+"pair_id": 303,
+"a": "869367F8A718",
+"b": "D8284C3B2D2C",
+"winner": "869367F8A718"
+},
+{
+"round": 7,
+"pair_id": 303,
+"a": "D8284C3B2D2C",
+"b": "869367F8A718",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 7,
+"pair_id": 304,
+"a": "1C8F6219CF27",
+"b": "00898D9FB10A",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 7,
+"pair_id": 304,
+"a": "00898D9FB10A",
+"b": "1C8F6219CF27",
+"winner": "00898D9FB10A"
+},
+{
+"round": 7,
+"pair_id": 305,
+"a": "5E26C9276FE3",
+"b": "61EDBF8CEC7D",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 7,
+"pair_id": 305,
+"a": "61EDBF8CEC7D",
+"b": "5E26C9276FE3",
+"winner": "61EDBF8CEC7D"
+},
+{
+"round": 7,
+"pair_id": 306,
+"a": "D2F9E8A1C2B4",
+"b": "2823F7B47127",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 7,
+"pair_id": 306,
+"a": "2823F7B47127",
+"b": "D2F9E8A1C2B4",
+"winner": "2823F7B47127"
+},
+{
+"round": 7,
+"pair_id": 307,
+"a": "E1DDD9115527",
+"b": "8B2CB9C1F189",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 7,
+"pair_id": 307,
+"a": "8B2CB9C1F189",
+"b": "E1DDD9115527",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 7,
+"pair_id": 308,
+"a": "38733F6A4A36",
+"b": "05D237F606EA",
+"winner": "38733F6A4A36"
+},
+{
+"round": 7,
+"pair_id": 308,
+"a": "05D237F606EA",
+"b": "38733F6A4A36",
+"winner": "05D237F606EA"
+},
+{
+"round": 7,
+"pair_id": 309,
+"a": "B1BB4BBB0DCC",
+"b": "0EDBF71D5CF6",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 7,
+"pair_id": 309,
+"a": "0EDBF71D5CF6",
+"b": "B1BB4BBB0DCC",
+"winner": "0EDBF71D5CF6"
+},
+{
+"round": 7,
+"pair_id": 310,
+"a": "7BCDFDF03FBC",
+"b": "4D4683449914",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 7,
+"pair_id": 310,
+"a": "4D4683449914",
+"b": "7BCDFDF03FBC",
+"winner": "4D4683449914"
+},
+{
+"round": 7,
+"pair_id": 311,
+"a": "14F0D1DFE3B1",
+"b": "857FAF7C385C",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 7,
+"pair_id": 311,
+"a": "857FAF7C385C",
+"b": "14F0D1DFE3B1",
+"winner": "857FAF7C385C"
+},
+{
+"round": 7,
+"pair_id": 312,
+"a": "E4773D5D6BEA",
+"b": "DC25CFE5EACC",
+"winner": "E4773D5D6BEA"
+},
+{
+"round": 7,
+"pair_id": 312,
+"a": "DC25CFE5EACC",
+"b": "E4773D5D6BEA",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 7,
+"pair_id": 313,
+"a": "03E6BECDC070",
+"b": "A90D09A72B23",
+"winner": "03E6BECDC070"
+},
+{
+"round": 7,
+"pair_id": 313,
+"a": "A90D09A72B23",
+"b": "03E6BECDC070",
+"winner": "A90D09A72B23"
+},
+{
+"round": 7,
+"pair_id": 314,
+"a": "8CB337D8D65C",
+"b": "D0ACE61F9DB1",
+"winner": "8CB337D8D65C"
+},
+{
+"round": 7,
+"pair_id": 314,
+"a": "D0ACE61F9DB1",
+"b": "8CB337D8D65C",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 7,
+"pair_id": 315,
+"a": "1B127A370E2A",
+"b": "2D0CDBC81DC0",
+"winner": "1B127A370E2A"
+},
+{
+"round": 7,
+"pair_id": 315,
+"a": "2D0CDBC81DC0",
+"b": "1B127A370E2A",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 7,
+"pair_id": 316,
+"a": "FB4FE2503800",
+"b": "702A25E4B218",
+"winner": "702A25E4B218"
+},
+{
+"round": 7,
+"pair_id": 316,
+"a": "702A25E4B218",
+"b": "FB4FE2503800",
+"winner": "702A25E4B218"
+},
+{
+"round": 7,
+"pair_id": 317,
+"a": "F241492F8808",
+"b": "9271B11A158B",
+"winner": "F241492F8808"
+},
+{
+"round": 7,
+"pair_id": 317,
+"a": "9271B11A158B",
+"b": "F241492F8808",
+"winner": "9271B11A158B"
+},
+{
+"round": 7,
+"pair_id": 318,
+"a": "B392A34365D4",
+"b": "632998A6072F",
+"winner": "B392A34365D4"
+},
+{
+"round": 7,
+"pair_id": 318,
+"a": "632998A6072F",
+"b": "B392A34365D4",
+"winner": "B392A34365D4"
+},
+{
+"round": 7,
+"pair_id": 319,
+"a": "CD586C88F4F3",
+"b": "F934542997DC",
+"winner": "CD586C88F4F3"
+},
+{
+"round": 7,
+"pair_id": 319,
+"a": "F934542997DC",
+"b": "CD586C88F4F3",
+"winner": "F934542997DC"
+},
+{
+"round": 7,
+"pair_id": 320,
+"a": "4618DCF43061",
+"b": "CA07DAA86DBD",
+"winner": "4618DCF43061"
+},
+{
+"round": 7,
+"pair_id": 320,
+"a": "CA07DAA86DBD",
+"b": "4618DCF43061",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 7,
+"pair_id": 321,
+"a": "23972FBA1934",
+"b": "9174D620243B",
+"winner": "23972FBA1934"
+},
+{
+"round": 7,
+"pair_id": 321,
+"a": "9174D620243B",
+"b": "23972FBA1934",
+"winner": "23972FBA1934"
+},
+{
+"round": 7,
+"pair_id": 322,
+"a": "468EF37C2F2C",
+"b": "17F7000992D7",
+"winner": "468EF37C2F2C"
+},
+{
+"round": 7,
+"pair_id": 322,
+"a": "17F7000992D7",
+"b": "468EF37C2F2C",
+"winner": "17F7000992D7"
+},
+{
+"round": 7,
+"pair_id": 323,
+"a": "C9EB6EB6551D",
+"b": "E45E9DC77BF4",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 7,
+"pair_id": 323,
+"a": "E45E9DC77BF4",
+"b": "C9EB6EB6551D",
+"winner": "C9EB6EB6551D"
+},
+{
+"round": 7,
+"pair_id": 324,
+"a": "84367AEE6898",
+"b": "4E6BBA69EAFC",
+"winner": "4E6BBA69EAFC"
+},
+{
+"round": 7,
+"pair_id": 324,
+"a": "4E6BBA69EAFC",
+"b": "84367AEE6898",
+"winner": "84367AEE6898"
+},
+{
+"round": 7,
+"pair_id": 325,
+"a": "D5EE6230B88E",
+"b": "41F11AC58B17",
+"winner": "D5EE6230B88E"
+},
+{
+"round": 7,
+"pair_id": 325,
+"a": "41F11AC58B17",
+"b": "D5EE6230B88E",
+"winner": "41F11AC58B17"
+},
+{
+"round": 7,
+"pair_id": 326,
+"a": "9C245C1269BA",
+"b": "A80B12A8B100",
+"winner": "9C245C1269BA"
+},
+{
+"round": 7,
+"pair_id": 326,
+"a": "A80B12A8B100",
+"b": "9C245C1269BA",
+"winner": "9C245C1269BA"
+},
+{
+"round": 7,
+"pair_id": 327,
+"a": "EC719533AB43",
+"b": "7483C23F8C17",
+"winner": "EC719533AB43"
+},
+{
+"round": 7,
+"pair_id": 327,
+"a": "7483C23F8C17",
+"b": "EC719533AB43",
+"winner": "EC719533AB43"
+},
+{
+"round": 7,
+"pair_id": 328,
+"a": "971004AB4EED",
+"b": "812CBC21EE50",
+"winner": "971004AB4EED"
+},
+{
+"round": 7,
+"pair_id": 328,
+"a": "812CBC21EE50",
+"b": "971004AB4EED",
+"winner": "812CBC21EE50"
+},
+{
+"round": 7,
+"pair_id": 329,
+"a": "8E1B32095441",
+"b": "3C133B27FD35",
+"winner": "8E1B32095441"
+},
+{
+"round": 7,
+"pair_id": 329,
+"a": "3C133B27FD35",
+"b": "8E1B32095441",
+"winner": "8E1B32095441"
+},
+{
+"round": 7,
+"pair_id": 330,
+"a": "A6546D2758D0",
+"b": "A66B93C3C8F1",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 7,
+"pair_id": 330,
+"a": "A66B93C3C8F1",
+"b": "A6546D2758D0",
+"winner": "A6546D2758D0"
+},
+{
+"round": 7,
+"pair_id": 331,
+"a": "35D64739B0D2",
+"b": "BD8D21AC238D",
+"winner": "35D64739B0D2"
+},
+{
+"round": 7,
+"pair_id": 331,
+"a": "BD8D21AC238D",
+"b": "35D64739B0D2",
+"winner": "BD8D21AC238D"
+},
+{
+"round": 7,
+"pair_id": 332,
+"a": "1A0AD9EDC773",
+"b": "A202FBAF0CCD",
+"winner": "A202FBAF0CCD"
+},
+{
+"round": 7,
+"pair_id": 332,
+"a": "A202FBAF0CCD",
+"b": "1A0AD9EDC773",
+"winner": "A202FBAF0CCD"
+},
+{
+"round": 7,
+"pair_id": 333,
+"a": "FF543E9E9EB2",
+"b": "FAB2B88C059F",
+"winner": "FAB2B88C059F"
+},
+{
+"round": 7,
+"pair_id": 333,
+"a": "FAB2B88C059F",
+"b": "FF543E9E9EB2",
+"winner": "FF543E9E9EB2"
+},
+{
+"round": 7,
+"pair_id": 334,
+"a": "DFD2C3047A7F",
+"b": "2EB01D782D2C",
+"winner": "DFD2C3047A7F"
+},
+{
+"round": 7,
+"pair_id": 334,
+"a": "2EB01D782D2C",
+"b": "DFD2C3047A7F",
+"winner": "2EB01D782D2C"
+},
+{
+"round": 7,
+"pair_id": 335,
+"a": "B7CEDA3843F3",
+"b": "12F2A2D4AB24",
+"winner": "12F2A2D4AB24"
+},
+{
+"round": 7,
+"pair_id": 335,
+"a": "12F2A2D4AB24",
+"b": "B7CEDA3843F3",
+"winner": "B7CEDA3843F3"
+},
+{
+"round": 7,
+"pair_id": 336,
+"a": "30832988F476",
+"b": "F1B5E79A298B",
+"winner": "30832988F476"
+},
+{
+"round": 7,
+"pair_id": 336,
+"a": "F1B5E79A298B",
+"b": "30832988F476",
+"winner": "30832988F476"
+},
+{
+"round": 7,
+"pair_id": 337,
+"a": "3B62370779A1",
+"b": "4CFFB607101B",
+"winner": "4CFFB607101B"
+},
+{
+"round": 7,
+"pair_id": 337,
+"a": "4CFFB607101B",
+"b": "3B62370779A1",
+"winner": "4CFFB607101B"
+},
+{
+"round": 7,
+"pair_id": 338,
+"a": "EE888799A911",
+"b": "332921BEC390",
+"winner": "332921BEC390"
+},
+{
+"round": 7,
+"pair_id": 338,
+"a": "332921BEC390",
+"b": "EE888799A911",
+"winner": "332921BEC390"
+},
+{
+"round": 7,
+"pair_id": 339,
+"a": "5C843C6BD232",
+"b": "F2BDB9DFFB57",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 7,
+"pair_id": 339,
+"a": "F2BDB9DFFB57",
+"b": "5C843C6BD232",
+"winner": "5C843C6BD232"
+},
+{
+"round": 7,
+"pair_id": 340,
+"a": "FFE91DA2A101",
+"b": "B4862797CA5D",
+"winner": "FFE91DA2A101"
+},
+{
+"round": 7,
+"pair_id": 340,
+"a": "B4862797CA5D",
+"b": "FFE91DA2A101",
+"winner": "B4862797CA5D"
+},
+{
+"round": 7,
+"pair_id": 341,
+"a": "4A10B3C41630",
+"b": "41CE9804B226",
+"winner": "41CE9804B226"
+},
+{
+"round": 7,
+"pair_id": 341,
+"a": "41CE9804B226",
+"b": "4A10B3C41630",
+"winner": "4A10B3C41630"
+},
+{
+"round": 7,
+"pair_id": 342,
+"a": "1BA83A25F117",
+"b": "93D6E4071601",
+"winner": "93D6E4071601"
+},
+{
+"round": 7,
+"pair_id": 342,
+"a": "93D6E4071601",
+"b": "1BA83A25F117",
+"winner": "93D6E4071601"
+},
+{
+"round": 7,
+"pair_id": 343,
+"a": "1C32F25C46EE",
+"b": "388F31A9A1A1",
+"winner": "1C32F25C46EE"
+},
+{
+"round": 7,
+"pair_id": 343,
+"a": "388F31A9A1A1",
+"b": "1C32F25C46EE",
+"winner": "1C32F25C46EE"
+},
+{
+"round": 7,
+"pair_id": 344,
+"a": "7F0CB07D9B67",
+"b": "3FC799617EB3",
+"winner": "3FC799617EB3"
+},
+{
+"round": 7,
+"pair_id": 344,
+"a": "3FC799617EB3",
+"b": "7F0CB07D9B67",
+"winner": "3FC799617EB3"
+},
+{
+"round": 7,
+"pair_id": 345,
+"a": "F800DF0813A5",
+"b": "000BAD50D026",
+"winner": "F800DF0813A5"
+},
+{
+"round": 7,
+"pair_id": 345,
+"a": "000BAD50D026",
+"b": "F800DF0813A5",
+"winner": "000BAD50D026"
+},
+{
+"round": 7,
+"pair_id": 346,
+"a": "8D49AD0975A1",
+"b": "AF1B8B6B94CD",
+"winner": "8D49AD0975A1"
+},
+{
+"round": 7,
+"pair_id": 346,
+"a": "AF1B8B6B94CD",
+"b": "8D49AD0975A1",
+"winner": "AF1B8B6B94CD"
+},
+{
+"round": 7,
+"pair_id": 347,
+"a": "DA025E83C104",
+"b": "05118F820085",
+"winner": "DA025E83C104"
+},
+{
+"round": 7,
+"pair_id": 347,
+"a": "05118F820085",
+"b": "DA025E83C104",
+"winner": "05118F820085"
+},
+{
+"round": 7,
+"pair_id": 348,
+"a": "8EB647435835",
+"b": "8B477C53521B",
+"winner": "8EB647435835"
+},
+{
+"round": 7,
+"pair_id": 348,
+"a": "8B477C53521B",
+"b": "8EB647435835",
+"winner": "8B477C53521B"
+},
+{
+"round": 7,
+"pair_id": 349,
+"a": "D7A3A9197EDD",
+"b": "17840D290E28",
+"winner": "D7A3A9197EDD"
+},
+{
+"round": 7,
+"pair_id": 349,
+"a": "17840D290E28",
+"b": "D7A3A9197EDD",
+"winner": "17840D290E28"
+},
+{
+"round": 7,
+"pair_id": 350,
+"a": "EEF3247D69D0",
+"b": "9F34600E756D",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 7,
+"pair_id": 350,
+"a": "9F34600E756D",
+"b": "EEF3247D69D0",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 8,
+"pair_id": 351,
+"a": "EEF3247D69D0",
+"b": "67984D18D30D",
+"winner": "EEF3247D69D0"
+},
+{
+"round": 8,
+"pair_id": 351,
+"a": "67984D18D30D",
+"b": "EEF3247D69D0",
+"winner": "67984D18D30D"
+},
+{
+"round": 8,
+"pair_id": 352,
+"a": "EBCF73C7921E",
+"b": "D8284C3B2D2C",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 8,
+"pair_id": 352,
+"a": "D8284C3B2D2C",
+"b": "EBCF73C7921E",
+"winner": "D8284C3B2D2C"
+},
+{
+"round": 8,
+"pair_id": 353,
+"a": "B8D4D1B62526",
+"b": "869367F8A718",
+"winner": "869367F8A718"
+},
+{
+"round": 8,
+"pair_id": 353,
+"a": "869367F8A718",
+"b": "B8D4D1B62526",
+"winner": "869367F8A718"
+},
+{
+"round": 8,
+"pair_id": 354,
+"a": "8B2CB9C1F189",
+"b": "00898D9FB10A",
+"winner": "8B2CB9C1F189"
+},
+{
+"round": 8,
+"pair_id": 354,
+"a": "00898D9FB10A",
+"b": "8B2CB9C1F189",
+"winner": "00898D9FB10A"
+},
+{
+"round": 8,
+"pair_id": 355,
+"a": "05D237F606EA",
+"b": "1C8F6219CF27",
+"winner": "05D237F606EA"
+},
+{
+"round": 8,
+"pair_id": 355,
+"a": "1C8F6219CF27",
+"b": "05D237F606EA",
+"winner": "1C8F6219CF27"
+},
+{
+"round": 8,
+"pair_id": 356,
+"a": "61EDBF8CEC7D",
+"b": "D2F9E8A1C2B4",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 8,
+"pair_id": 356,
+"a": "D2F9E8A1C2B4",
+"b": "61EDBF8CEC7D",
+"winner": "D2F9E8A1C2B4"
+},
+{
+"round": 8,
+"pair_id": 357,
+"a": "5E26C9276FE3",
+"b": "2823F7B47127",
+"winner": "5E26C9276FE3"
+},
+{
+"round": 8,
+"pair_id": 357,
+"a": "2823F7B47127",
+"b": "5E26C9276FE3",
+"winner": "2823F7B47127"
+},
+{
+"round": 8,
+"pair_id": 358,
+"a": "E1DDD9115527",
+"b": "B1BB4BBB0DCC",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 8,
+"pair_id": 358,
+"a": "B1BB4BBB0DCC",
+"b": "E1DDD9115527",
+"winner": "B1BB4BBB0DCC"
+},
+{
+"round": 8,
+"pair_id": 359,
+"a": "0EDBF71D5CF6",
+"b": "7BCDFDF03FBC",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 8,
+"pair_id": 359,
+"a": "7BCDFDF03FBC",
+"b": "0EDBF71D5CF6",
+"winner": "7BCDFDF03FBC"
+},
+{
+"round": 8,
+"pair_id": 360,
+"a": "DC25CFE5EACC",
+"b": "14F0D1DFE3B1",
+"winner": "DC25CFE5EACC"
+},
+{
+"round": 8,
+"pair_id": 360,
+"a": "14F0D1DFE3B1",
+"b": "DC25CFE5EACC",
+"winner": "14F0D1DFE3B1"
+},
+{
+"round": 8,
+"pair_id": 361,
+"a": "38733F6A4A36",
+"b": "E4773D5D6BEA",
+"winner": "38733F6A4A36"
+},
+{
+"round": 8,
+"pair_id": 361,
+"a": "E4773D5D6BEA",
+"b": "38733F6A4A36",
+"winner": "38733F6A4A36"
+},
+{
+"round": 8,
+"pair_id": 362,
+"a": "4D4683449914",
+"b": "03E6BECDC070",
+"winner": "4D4683449914"
+},
+{
+"round": 8,
+"pair_id": 362,
+"a": "03E6BECDC070",
+"b": "4D4683449914",
+"winner": "03E6BECDC070"
+},
+{
+"round": 8,
+"pair_id": 363,
+"a": "1B127A370E2A",
+"b": "857FAF7C385C",
+"winner": "857FAF7C385C"
+},
+{
+"round": 8,
+"pair_id": 363,
+"a": "857FAF7C385C",
+"b": "1B127A370E2A",
+"winner": "857FAF7C385C"
+},
+{
+"round": 8,
+"pair_id": 364,
+"a": "A90D09A72B23",
+"b": "B392A34365D4",
+"winner": "A90D09A72B23"
+},
+{
+"round": 8,
+"pair_id": 364,
+"a": "B392A34365D4",
+"b": "A90D09A72B23",
+"winner": "B392A34365D4"
+},
+{
+"round": 8,
+"pair_id": 365,
+"a": "8CB337D8D65C",
+"b": "F934542997DC",
+"winner": "F934542997DC"
+},
+{
+"round": 8,
+"pair_id": 365,
+"a": "F934542997DC",
+"b": "8CB337D8D65C",
+"winner": "F934542997DC"
+},
+{
+"round": 8,
+"pair_id": 366,
+"a": "9271B11A158B",
+"b": "702A25E4B218",
+"winner": "702A25E4B218"
+},
+{
+"round": 8,
+"pair_id": 366,
+"a": "702A25E4B218",
+"b": "9271B11A158B",
+"winner": "702A25E4B218"
+},
+{
+"round": 8,
+"pair_id": 367,
+"a": "D0ACE61F9DB1",
+"b": "CA07DAA86DBD",
+"winner": "D0ACE61F9DB1"
+},
+{
+"round": 8,
+"pair_id": 367,
+"a": "CA07DAA86DBD",
+"b": "D0ACE61F9DB1",
+"winner": "CA07DAA86DBD"
+},
+{
+"round": 8,
+"pair_id": 368,
+"a": "C9EB6EB6551D",
+"b": "F241492F8808",
+"winner": "F241492F8808"
+},
+{
+"round": 8,
+"pair_id": 368,
+"a": "F241492F8808",
+"b": "C9EB6EB6551D",
+"winner": "F241492F8808"
+},
+{
+"round": 8,
+"pair_id": 369,
+"a": "2D0CDBC81DC0",
+"b": "CD586C88F4F3",
+"winner": "2D0CDBC81DC0"
+},
+{
+"round": 8,
+"pair_id": 369,
+"a": "CD586C88F4F3",
+"b": "2D0CDBC81DC0",
+"winner": "CD586C88F4F3"
+},
+{
+"round": 8,
+"pair_id": 370,
+"a": "632998A6072F",
+"b": "23972FBA1934",
+"winner": "23972FBA1934"
+},
+{
+"round": 8,
+"pair_id": 370,
+"a": "23972FBA1934",
+"b": "632998A6072F",
+"winner": "23972FBA1934"
+},
+{
+"round": 8,
+"pair_id": 371,
+"a": "4618DCF43061",
+"b": "84367AEE6898",
+"winner": "4618DCF43061"
+},
+{
+"round": 8,
+"pair_id": 371,
+"a": "84367AEE6898",
+"b": "4618DCF43061",
+"winner": "4618DCF43061"
+},
+{
+"round": 8,
+"pair_id": 372,
+"a": "4E6BBA69EAFC",
+"b": "9174D620243B",
+"winner": "9174D620243B"
+},
+{
+"round": 8,
+"pair_id": 372,
+"a": "9174D620243B",
+"b": "4E6BBA69EAFC",
+"winner": "4E6BBA69EAFC"
+},
+{
+"round": 8,
+"pair_id": 373,
+"a": "D5EE6230B88E",
+"b": "FB4FE2503800",
+"winner": "D5EE6230B88E"
+},
+{
+"round": 8,
+"pair_id": 373,
+"a": "FB4FE2503800",
+"b": "D5EE6230B88E",
+"winner": "FB4FE2503800"
+},
+{
+"round": 8,
+"pair_id": 374,
+"a": "17F7000992D7",
+"b": "EC719533AB43",
+"winner": "17F7000992D7"
+},
+{
+"round": 8,
+"pair_id": 374,
+"a": "EC719533AB43",
+"b": "17F7000992D7",
+"winner": "17F7000992D7"
+},
+{
+"round": 8,
+"pair_id": 375,
+"a": "9C245C1269BA",
+"b": "41F11AC58B17",
+"winner": "9C245C1269BA"
+},
+{
+"round": 8,
+"pair_id": 375,
+"a": "41F11AC58B17",
+"b": "9C245C1269BA",
+"winner": "41F11AC58B17"
+},
+{
+"round": 8,
+"pair_id": 376,
+"a": "E45E9DC77BF4",
+"b": "A202FBAF0CCD",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 8,
+"pair_id": 376,
+"a": "A202FBAF0CCD",
+"b": "E45E9DC77BF4",
+"winner": "E45E9DC77BF4"
+},
+{
+"round": 8,
+"pair_id": 377,
+"a": "8E1B32095441",
+"b": "971004AB4EED",
+"winner": "8E1B32095441"
+},
+{
+"round": 8,
+"pair_id": 377,
+"a": "971004AB4EED",
+"b": "8E1B32095441",
+"winner": "971004AB4EED"
+},
+{
+"round": 8,
+"pair_id": 378,
+"a": "2EB01D782D2C",
+"b": "BD8D21AC238D",
+"winner": "2EB01D782D2C"
+},
+{
+"round": 8,
+"pair_id": 378,
+"a": "BD8D21AC238D",
+"b": "2EB01D782D2C",
+"winner": "BD8D21AC238D"
+},
+{
+"round": 8,
+"pair_id": 379,
+"a": "A80B12A8B100",
+"b": "468EF37C2F2C",
+"winner": "468EF37C2F2C"
+},
+{
+"round": 8,
+"pair_id": 379,
+"a": "468EF37C2F2C",
+"b": "A80B12A8B100",
+"winner": "468EF37C2F2C"
+},
+{
+"round": 8,
+"pair_id": 380,
+"a": "7483C23F8C17",
+"b": "30832988F476",
+"winner": "7483C23F8C17"
+},
+{
+"round": 8,
+"pair_id": 380,
+"a": "30832988F476",
+"b": "7483C23F8C17",
+"winner": "30832988F476"
+},
+{
+"round": 8,
+"pair_id": 381,
+"a": "4CFFB607101B",
+"b": "35D64739B0D2",
+"winner": "4CFFB607101B"
+},
+{
+"round": 8,
+"pair_id": 381,
+"a": "35D64739B0D2",
+"b": "4CFFB607101B",
+"winner": "35D64739B0D2"
+},
+{
+"round": 8,
+"pair_id": 382,
+"a": "A6546D2758D0",
+"b": "332921BEC390",
+"winner": "332921BEC390"
+},
+{
+"round": 8,
+"pair_id": 382,
+"a": "332921BEC390",
+"b": "A6546D2758D0",
+"winner": "332921BEC390"
+},
+{
+"round": 8,
+"pair_id": 383,
+"a": "FAB2B88C059F",
+"b": "812CBC21EE50",
+"winner": "812CBC21EE50"
+},
+{
+"round": 8,
+"pair_id": 383,
+"a": "812CBC21EE50",
+"b": "FAB2B88C059F",
+"winner": "812CBC21EE50"
+},
+{
+"round": 8,
+"pair_id": 384,
+"a": "FF543E9E9EB2",
+"b": "3C133B27FD35",
+"winner": "3C133B27FD35"
+},
+{
+"round": 8,
+"pair_id": 384,
+"a": "3C133B27FD35",
+"b": "FF543E9E9EB2",
+"winner": "3C133B27FD35"
+},
+{
+"round": 8,
+"pair_id": 385,
+"a": "DFD2C3047A7F",
+"b": "A66B93C3C8F1",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 8,
+"pair_id": 385,
+"a": "A66B93C3C8F1",
+"b": "DFD2C3047A7F",
+"winner": "A66B93C3C8F1"
+},
+{
+"round": 8,
+"pair_id": 386,
+"a": "12F2A2D4AB24",
+"b": "5C843C6BD232",
+"winner": "12F2A2D4AB24"
+},
+{
+"round": 8,
+"pair_id": 386,
+"a": "5C843C6BD232",
+"b": "12F2A2D4AB24",
+"winner": "12F2A2D4AB24"
+},
+{
+"round": 8,
+"pair_id": 387,
+"a": "F1B5E79A298B",
+"b": "F2BDB9DFFB57",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 8,
+"pair_id": 387,
+"a": "F2BDB9DFFB57",
+"b": "F1B5E79A298B",
+"winner": "F2BDB9DFFB57"
+},
+{
+"round": 8,
+"pair_id": 388,
+"a": "1A0AD9EDC773",
+"b": "B7CEDA3843F3",
+"winner": "B7CEDA3843F3"
+},
+{
+"round": 8,
+"pair_id": 388,
+"a": "B7CEDA3843F3",
+"b": "1A0AD9EDC773",
+"winner": "1A0AD9EDC773"
+},
+{
+"round": 8,
+"pair_id": 389,
+"a": "EE888799A911",
+"b": "3B62370779A1",
+"winner": "3B62370779A1"
+},
+{
+"round": 8,
+"pair_id": 389,
+"a": "3B62370779A1",
+"b": "EE888799A911",
+"winner": "3B62370779A1"
+},
+{
+"round": 8,
+"pair_id": 390,
+"a": "93D6E4071601",
+"b": "41CE9804B226",
+"winner": "93D6E4071601"
+},
+{
+"round": 8,
+"pair_id": 390,
+"a": "41CE9804B226",
+"b": "93D6E4071601",
+"winner": "93D6E4071601"
+},
+{
+"round": 8,
+"pair_id": 391,
+"a": "1C32F25C46EE",
+"b": "4A10B3C41630",
+"winner": "1C32F25C46EE"
+},
+{
+"round": 8,
+"pair_id": 391,
+"a": "4A10B3C41630",
+"b": "1C32F25C46EE",
+"winner": "4A10B3C41630"
+},
+{
+"round": 8,
+"pair_id": 392,
+"a": "3FC799617EB3",
+"b": "FFE91DA2A101",
+"winner": "FFE91DA2A101"
+},
+{
+"round": 8,
+"pair_id": 392,
+"a": "FFE91DA2A101",
+"b": "3FC799617EB3",
+"winner": "FFE91DA2A101"
+},
+{
+"round": 8,
+"pair_id": 393,
+"a": "B4862797CA5D",
+"b": "F800DF0813A5",
+"winner": "F800DF0813A5"
+},
+{
+"round": 8,
+"pair_id": 393,
+"a": "F800DF0813A5",
+"b": "B4862797CA5D",
+"winner": "B4862797CA5D"
+},
+{
+"round": 8,
+"pair_id": 394,
+"a": "1BA83A25F117",
+"b": "388F31A9A1A1",
+"winner": "388F31A9A1A1"
+},
+{
+"round": 8,
+"pair_id": 394,
+"a": "388F31A9A1A1",
+"b": "1BA83A25F117",
+"winner": "388F31A9A1A1"
+},
+{
+"round": 8,
+"pair_id": 395,
+"a": "05118F820085",
+"b": "AF1B8B6B94CD",
+"winner": "05118F820085"
+},
+{
+"round": 8,
+"pair_id": 395,
+"a": "AF1B8B6B94CD",
+"b": "05118F820085",
+"winner": "05118F820085"
+},
+{
+"round": 8,
+"pair_id": 396,
+"a": "000BAD50D026",
+"b": "8D49AD0975A1",
+"winner": "000BAD50D026"
+},
+{
+"round": 8,
+"pair_id": 396,
+"a": "8D49AD0975A1",
+"b": "000BAD50D026",
+"winner": "8D49AD0975A1"
+},
+{
+"round": 8,
+"pair_id": 397,
+"a": "DA025E83C104",
+"b": "7F0CB07D9B67",
+"winner": "DA025E83C104"
+},
+{
+"round": 8,
+"pair_id": 397,
+"a": "7F0CB07D9B67",
+"b": "DA025E83C104",
+"winner": "7F0CB07D9B67"
+},
+{
+"round": 8,
+"pair_id": 398,
+"a": "17840D290E28",
+"b": "8EB647435835",
+"winner": "8EB647435835"
+},
+{
+"round": 8,
+"pair_id": 398,
+"a": "8EB647435835",
+"b": "17840D290E28",
+"winner": "17840D290E28"
+},
+{
+"round": 8,
+"pair_id": 399,
+"a": "D7A3A9197EDD",
+"b": "8B477C53521B",
+"winner": "8B477C53521B"
+},
+{
+"round": 8,
+"pair_id": 399,
+"a": "8B477C53521B",
+"b": "D7A3A9197EDD",
+"winner": "8B477C53521B"
+},
+{
+"round": 8,
+"pair_id": 400,
+"a": "9F34600E756D",
+"b": "9E4B02A389B4",
+"winner": "9E4B02A389B4"
+},
+{
+"round": 8,
+"pair_id": 400,
+"a": "9E4B02A389B4",
+"b": "9F34600E756D",
+"winner": "9E4B02A389B4"
+}
+],
+"score_alone_1to10": {
+"388F31A9A1A1": 2,
+"632998A6072F": 3,
+"857FAF7C385C": 3,
+"B7CEDA3843F3": 2,
+"D2F9E8A1C2B4": 3,
+"17F7000992D7": 3,
+"1BA83A25F117": 3,
+"7F0CB07D9B67": 2,
+"3B62370779A1": 2,
+"332921BEC390": 3,
+"FAB2B88C059F": 3,
+"8B2CB9C1F189": 3,
+"38733F6A4A36": 3,
+"35D64739B0D2": 2,
+"CD586C88F4F3": 3,
+"8B477C53521B": 2,
+"9174D620243B": 3,
+"F241492F8808": 3,
+"D0ACE61F9DB1": 3,
+"23972FBA1934": 3,
+"84367AEE6898": 3,
+"1A0AD9EDC773": 2,
+"4E6BBA69EAFC": 3,
+"971004AB4EED": 3,
+"1B127A370E2A": 3,
+"7483C23F8C17": 3,
+"A90D09A72B23": 3,
+"1C32F25C46EE": 2,
+"2D0CDBC81DC0": 2,
+"4A10B3C41630": 2,
+"41F11AC58B17": 2,
+"000BAD50D026": 2,
+"8CB337D8D65C": 3,
+"EBCF73C7921E": 2,
+"B4862797CA5D": 2,
+"9E4B02A389B4": 5,
+"00898D9FB10A": 3,
+"05D237F606EA": 3,
+"3FC799617EB3": 2,
+"4618DCF43061": 2,
+"FF543E9E9EB2": 2,
+"5E26C9276FE3": 3,
+"2823F7B47127": 2,
+"8D49AD0975A1": 2,
+"D8284C3B2D2C": 3,
+"8EB647435835": 2,
+"9F34600E756D": 2,
+"A6546D2758D0": 2,
+"F934542997DC": 3,
+"B392A34365D4": 3,
+"C9EB6EB6551D": 3,
+"468EF37C2F2C": 2,
+"05118F820085": 2,
+"A80B12A8B100": 3,
+"FFE91DA2A101": 2,
+"E45E9DC77BF4": 4,
+"DFD2C3047A7F": 3,
+"A66B93C3C8F1": 2,
+"9271B11A158B": 2,
+"E4773D5D6BEA": 3,
+"B1BB4BBB0DCC": 3,
+"AF1B8B6B94CD": 2,
+"F2BDB9DFFB57": 2,
+"EC719533AB43": 3,
+"DA025E83C104": 2,
+"F1B5E79A298B": 2,
+"12F2A2D4AB24": 3,
+"E1DDD9115527": 2,
+"2EB01D782D2C": 3,
+"9C245C1269BA": 3,
+"0EDBF71D5CF6": 3,
+"DC25CFE5EACC": 2,
+"D5EE6230B88E": 2,
+"BD8D21AC238D": 2,
+"1C8F6219CF27": 3,
+"67984D18D30D": 3,
+"D7A3A9197EDD": 1,
+"CA07DAA86DBD": 3,
+"EEF3247D69D0": 3,
+"3C133B27FD35": 2,
+"93D6E4071601": 2,
+"4D4683449914": 3,
+"EE888799A911": 2,
+"B8D4D1B62526": 2,
+"30832988F476": 3,
+"4CFFB607101B": 2,
+"03E6BECDC070": 3,
+"F800DF0813A5": 2,
+"17840D290E28": 2,
+"61EDBF8CEC7D": 3,
+"8E1B32095441": 3,
+"41CE9804B226": 2,
+"702A25E4B218": 2,
+"FB4FE2503800": 2,
+"869367F8A718": 3,
+"14F0D1DFE3B1": 3,
+"812CBC21EE50": 2,
+"5C843C6BD232": 3,
+"A202FBAF0CCD": 2,
+"7BCDFDF03FBC": 4
+},
+"score_alone_1to5": {
+"D2F9E8A1C2B4": 3,
+"632998A6072F": 3,
+"B7CEDA3843F3": 2,
+"857FAF7C385C": 2,
+"1BA83A25F117": 2,
+"7F0CB07D9B67": 2,
+"388F31A9A1A1": 2,
+"17F7000992D7": 2,
+"00898D9FB10A": 3,
+"332921BEC390": 2,
+"3B62370779A1": 2,
+"8B2CB9C1F189": 2,
+"FAB2B88C059F": 2,
+"35D64739B0D2": 2,
+"38733F6A4A36": 2,
+"8B477C53521B": 1,
+"CD586C88F4F3": 2,
+"9174D620243B": 2,
+"F241492F8808": 2,
+"84367AEE6898": 2,
+"23972FBA1934": 2,
+"971004AB4EED": 2,
+"D0ACE61F9DB1": 2,
+"4E6BBA69EAFC": 3,
+"1A0AD9EDC773": 2,
+"7483C23F8C17": 2,
+"4A10B3C41630": 2,
+"A90D09A72B23": 2,
+"2D0CDBC81DC0": 2,
+"1C32F25C46EE": 2,
+"1B127A370E2A": 2,
+"000BAD50D026": 2,
+"8CB337D8D65C": 2,
+"41F11AC58B17": 2,
+"B4862797CA5D": 2,
+"9E4B02A389B4": 3,
+"EBCF73C7921E": 2,
+"3FC799617EB3": 2,
+"05D237F606EA": 3,
+"4618DCF43061": 2,
+"FF543E9E9EB2": 2,
+"2823F7B47127": 2,
+"5E26C9276FE3": 3,
+"8D49AD0975A1": 2,
+"D8284C3B2D2C": 3,
+"8EB647435835": 2,
+"9F34600E756D": 2,
+"A6546D2758D0": 2,
+"F934542997DC": 2,
+"C9EB6EB6551D": 3,
+"B392A34365D4": 2,
+"05118F820085": 2,
+"468EF37C2F2C": 2,
+"E45E9DC77BF4": 2,
+"A80B12A8B100": 2,
+"FFE91DA2A101": 2,
+"AF1B8B6B94CD": 1,
+"DFD2C3047A7F": 2,
+"9271B11A158B": 2,
+"A66B93C3C8F1": 2,
+"E4773D5D6BEA": 3,
+"B1BB4BBB0DCC": 3,
+"EC719533AB43": 2,
+"F2BDB9DFFB57": 2,
+"E1DDD9115527": 2,
+"12F2A2D4AB24": 2,
+"DA025E83C104": 2,
+"F1B5E79A298B": 2,
+"2EB01D782D2C": 2,
+"9C245C1269BA": 2,
+"0EDBF71D5CF6": 2,
+"D5EE6230B88E": 2,
+"DC25CFE5EACC": 2,
+"BD8D21AC238D": 2,
+"CA07DAA86DBD": 3,
+"D7A3A9197EDD": 1,
+"1C8F6219CF27": 2,
+"67984D18D30D": 3,
+"EEF3247D69D0": 3,
+"3C133B27FD35": 2,
+"EE888799A911": 2,
+"4D4683449914": 2,
+"93D6E4071601": 2,
+"30832988F476": 2,
+"B8D4D1B62526": 2,
+"F800DF0813A5": 2,
+"4CFFB607101B": 2,
+"03E6BECDC070": 3,
+"61EDBF8CEC7D": 3,
+"17840D290E28": 2,
+"41CE9804B226": 2,
+"8E1B32095441": 2,
+"A202FBAF0CCD": 2,
+"702A25E4B218": 3,
+"FB4FE2503800": 2,
+"869367F8A718": 3,
+"14F0D1DFE3B1": 3,
+"5C843C6BD232": 2,
+"812CBC21EE50": 2,
+"7BCDFDF03FBC": 2
+}
+}

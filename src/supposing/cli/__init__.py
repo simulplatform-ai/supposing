@@ -3,7 +3,9 @@ take the same flags and print the same result shape. Every command takes ``--jso
 from __future__ import annotations
 
 import argparse
+import json
 import sys
+import time
 from collections.abc import Callable
 from pathlib import Path
 from typing import NoReturn
@@ -11,17 +13,19 @@ from typing import NoReturn
 from .. import __version__
 from ..cloud import JUDGE_HELP, CloudError
 from ..rubric import Rubric
-from . import billing, cloud, local
+from . import billing, cloud, local, telemetry
 from .output import (
     AUTH,
     EXIT_CODES_HELP,
     INTERRUPTED,
     NEEDS_CREDIT,
     NOT_FOUND,
+    OK,
     REFUSED,
     UNAVAILABLE,
     USAGE,
     CliError,
+    emit_json,
     error,
 )
 
@@ -191,10 +195,25 @@ def build_parser() -> argparse.ArgumentParser:
     r.add_argument("--status", choices=["pending", "claimed", "done", "failed"])
     r.add_argument("--limit", type=int, default=50)
 
+    r = add("telemetry", _telemetry, "anonymous usage data: turn it off or on, or see its state and the last "
+            "event sent")
+    r.add_argument("action", nargs="?", choices=["status", "off", "on"], default="status")
     r = add("mcp", _mcp, "serve the MCP tools over stdio for a local coding agent (needs supposing[mcp])")
     r.add_argument("--local", action="store_true", help="rank with the engine on this machine even if logged in")
     r.add_argument("mcp_args", nargs=argparse.REMAINDER, help=argparse.SUPPRESS)
     return parser
+
+
+def _telemetry(args: argparse.Namespace) -> int:
+    s = telemetry.set_enabled(args.action == "on") if args.action in ("on", "off") else telemetry.status()
+    if args.json:
+        emit_json(s)
+        return OK
+    print("Telemetry: %s" % ("on" if s["enabled"] else "off (%s)" % s["off_because"]))
+    print("Install id: %s" % (s["install_id"] or "none yet"))
+    print("Last event: %s" % (json.dumps(s["last_event"], indent=2) if s["last_event"] else "none sent"))
+    print("What is sent and why: %s" % s["docs"])
+    return OK
 
 
 def _mcp(args: argparse.Namespace) -> int:
@@ -230,6 +249,15 @@ def main(argv: list[str] | None = None) -> int:
         args = build_parser().parse_args(argv)
     except CliError as exc:
         return error(exc, True)
+    started, code = time.monotonic(), None
+    try:
+        code = _dispatch(args)
+        return code
+    finally:  # one anonymous event per command, unless telemetry is off (see telemetry.py)
+        telemetry.finish(telemetry.command_name(args), code, time.monotonic() - started)
+
+
+def _dispatch(args: argparse.Namespace) -> int:
     try:
         return args.handler(args)
     except CliError as exc:

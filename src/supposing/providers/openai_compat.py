@@ -78,16 +78,15 @@ class OpenAICompatProvider:
                         last_error = str(data["error"].get("message", data["error"]))
                     else:
                         usage = data.get("usage") or {}
-                        text = (data["choices"][0]["message"].get("content") or "").strip()
-                        if text:
-                            return Completion(
-                                text=text,
-                                prompt_tokens=usage.get("prompt_tokens"),
-                                completion_tokens=usage.get("completion_tokens"),
-                                cost_usd=usage.get("cost"),
-                                latency_ms=int((time.monotonic() - started) * 1000),
-                            )
-                        last_error = "empty response from model"
+                        # An empty reply is returned, not retried here: the model was paid for it, and the
+                        # caller decides whether to try again (judge_pair tries once more).
+                        return Completion(
+                            text=(data["choices"][0]["message"].get("content") or "").strip(),
+                            prompt_tokens=usage.get("prompt_tokens"),
+                            completion_tokens=usage.get("completion_tokens"),
+                            cost_usd=usage.get("cost"),
+                            latency_ms=int((time.monotonic() - started) * 1000),
+                        )
                 else:
                     last_error = "HTTP %s: %s" % (response.status_code, error_message(response))
                     if response.status_code in FATAL_STATUS:

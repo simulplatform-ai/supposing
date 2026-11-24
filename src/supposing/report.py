@@ -126,7 +126,8 @@ def tiers(leaderboard: list[dict[str, Any]]) -> list[list[dict[str, Any]]]:
 IN, OUT = 0.95, 0.05  # a top-N place is settled in at >= 95% and settled out at <= 5%
 
 
-def display_groups(leaderboard: list[dict[str, Any]], top_n: int | None = None) -> list[dict[str, Any]]:
+def display_groups(leaderboard: list[dict[str, Any]], top_n: int | None = None, live: bool = False
+                   ) -> list[dict[str, Any]]:
     """The leaderboard in display groups, best first: ``[{key, label, tier, close, item_ids}]``.
 
     Top-N runs (``top_n`` below the item count, with ``p_top_n`` on every row) get at most three groups, in
@@ -140,6 +141,11 @@ def display_groups(leaderboard: list[dict[str, Any]], top_n: int | None = None) 
     ends before every rank range below begins. A set the judge cannot separate is honestly one group.
 
     ``tier`` is a colour step from 1 (best) to 4; ``close`` marks the contested group.
+
+    ``live=True`` is for a run still going, whose groups will change: a full ranking gets at most three groups,
+    "1st so far" (or "Top 2 so far" when the judge cannot yet separate them), "Close behind" (the next tier)
+    and "Still sorting" (every tier below, as one group); a top-N run's labels become "2 in the top 5 so far",
+    "Close behind" and "Still sorting". Keys and tiers are those of the finished groups.
     """
     n = len(leaderboard)
     if not n:
@@ -154,19 +160,26 @@ def display_groups(leaderboard: list[dict[str, Any]], top_n: int | None = None) 
         settled, close, out = leaderboard[:start], leaderboard[start:end], leaderboard[end:]
         left = max(0, top_n - len(settled))
         groups = [
-            ("settled", "%d settled in the top %d" % (len(settled), top_n), 1, False, settled),
-            ("close", "%d place%s left · %d contender%s" % (left, "" if left == 1 else "s", len(close),
-                                                         "" if len(close) == 1 else "s"), 2, True, close),
-            ("out", "%d out" % len(out), 3, False, out),
+            ("settled", "%d in the top %d so far" % (len(settled), top_n) if live else
+             "%d settled in the top %d" % (len(settled), top_n), 1, False, settled),
+            ("close", "Close behind" if live else "%d place%s left · %d contender%s" % (
+                left, "" if left == 1 else "s", len(close), "" if len(close) == 1 else "s"), 2, True, close),
+            ("out", "Still sorting" if live else "%d out" % len(out), 3, False, out),
         ]
     else:
         found = tiers(leaderboard)
+        if live and len(found) > 3:
+            found = found[:2] + [[r for rows in found[2:] for r in rows]]
         k = len(found)
         groups = []
         for i, rows in enumerate(found):
             lo, hi = rows[0]["rank"], rows[-1]["rank"]
-            groups.append(("tier-%d" % (i + 1), "Rank %d" % lo if lo == hi else "Ranks %d-%d" % (lo, hi),
-                           2 if k == 1 else 1 + round(3 * i / (k - 1)), False, rows))
+            if live:
+                label = (("1st so far" if len(rows) == 1 else "Top %d so far" % len(rows)) if i == 0 else
+                         "Close behind" if i == 1 else "Still sorting")
+            else:
+                label = "Rank %d" % lo if lo == hi else "Ranks %d-%d" % (lo, hi)
+            groups.append(("tier-%d" % (i + 1), label, 2 if k == 1 else 1 + round(3 * i / (k - 1)), False, rows))
     return [{"key": key, "label": label, "tier": tier, "close": close, "item_ids": [r["item_id"] for r in rows]}
             for key, label, tier, close, rows in groups if rows]
 

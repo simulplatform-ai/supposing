@@ -60,3 +60,56 @@ async def test_make_provider_passes_max_tokens_to_openrouter_and_sends_it():
     assert sent[0]["max_tokens"] == 600
     await capped.close()
     await default.close()
+
+
+async def test_an_empty_reply_is_returned_with_its_usage_not_retried():
+    """An empty reply was paid for: the provider returns it, and judge_pair decides about trying again."""
+    calls = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls.append(1)
+        return httpx.Response(200, json={"choices": [{"message": {"content": ""}}],
+                                         "usage": {"prompt_tokens": 900, "completion_tokens": 600, "cost": 0.004}})
+
+    p = provider(handler)
+    p.max_attempts = 4
+    c = await p.complete("s", "u")
+    assert c.text == "" and c.cost_usd == 0.004 and c.completion_tokens == 600 and len(calls) == 1
+    await p.close()
+
+
+class Replies:
+    """A provider that gives the replies it is handed, in order, each billed 0.004."""
+
+    name = model = "replies"
+
+    def __init__(self, *texts: str):
+        self.texts = list(texts)
+        self.calls = 0
+
+    async def complete(self, system, user):
+        from supposing import Completion
+
+        self.calls += 1
+        return Completion(self.texts.pop(0), prompt_tokens=900, completion_tokens=100, cost_usd=0.004)
+
+    async def close(self):
+        pass
+
+
+@pytest.mark.parametrize(("texts", "winner", "attempts"), [
+    (['{"reasoning": "r", "winner": "B"}'], "B", 1),
+    (["", '{"reasoning": "r", "winner": "A"}'], "A", 2),
+    (["no verdict here", "", '{"winner": "A"}'], None, 2),  # at most one more call inside judge_pair
+])
+async def test_judge_pair_tries_once_more_and_reports_every_attempt(texts, winner, attempts):
+    from supposing import Comparison, apply_verdict, judge_pair
+
+    p = Replies(*texts)
+    v = await judge_pair(p, "Better?", "a", "b")
+    assert (v.winner, v.attempts, p.calls) == (winner, attempts, attempts)
+    assert v.completion.cost_usd == pytest.approx(0.004 * attempts)
+    assert (v.completion.prompt_tokens, v.completion.completion_tokens) == (900 * attempts, 100 * attempts)
+    comp = Comparison(id="c", round=1, pair_id=1, item_a="x", item_b="y")
+    apply_verdict(comp, v)
+    assert comp.cost_usd == pytest.approx(0.004 * attempts)

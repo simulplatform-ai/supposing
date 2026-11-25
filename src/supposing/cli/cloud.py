@@ -13,6 +13,7 @@ from ..cloud.config import KEY_PREFIX
 from ..cloud.records import is_table
 from ..ranking import RankConfig
 from . import billing, telemetry
+from .local import local_comparisons
 from .output import (
     AUTH,
     NEEDS_CREDIT,
@@ -28,7 +29,16 @@ from .output import (
     print_results,
     table,
 )
-from .shared import cli_judge, confirm, judge_label, ranking_options, result_document, rubric_text
+from .shared import (
+    COMPARISON_FIELDS,
+    cli_judge,
+    confirm,
+    judge_label,
+    print_comparisons,
+    ranking_options,
+    result_document,
+    rubric_text,
+)
 
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", re.I)
 
@@ -190,8 +200,9 @@ def _follow(sp: Client, args: argparse.Namespace, run: Run, estimate: dict[str, 
                        on_event=lambda e: bar.update(_progress_text(e.run, e.leaders[0].title if e.leaders else None)))
     bar.end()
     results = sp.runs.results(run.id)
+    rows = _all_comparisons(sp, run.id) if getattr(args, "with_comparisons", False) else None
     if args.json:
-        emit_json(result_document(run.to_dict(), estimate, results.to_dict(), skipped))
+        emit_json(result_document(run.to_dict(), estimate, results.to_dict(), skipped, rows))
     else:
         if run.status != "done":
             info("Run %s %s%s" % (run.id, run.status, ": %s" % run.error if run.error else "."))
@@ -199,14 +210,28 @@ def _follow(sp: Client, args: argparse.Namespace, run: Run, estimate: dict[str, 
         if run.note:
             print(run.note)
         print("Cost $%.4f. Every verdict: supposing comparisons %s" % (run.progress.cost_usd, run.id))
+        if rows is not None:
+            print()
+            print_comparisons(rows)
     return OK if run.status == "done" else RUN_FAILED
+
+
+def _all_comparisons(sp: Client, run_id: str) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    cursor = None
+    while True:
+        page = sp.runs.comparisons(run_id, limit=500, cursor=cursor)
+        rows += [{k: c.raw.get(k) for k in COMPARISON_FIELDS} for c in page.data]
+        if not page.next_cursor:
+            return rows
+        cursor = page.next_cursor
 
 
 def _unavailable_hint(sp: Client, provider: str, available: list[str]) -> str:
     """What is missing before this judge can run here, and the one thing to do about it."""
     if provider == "claude_cli":
         return ("Your Claude subscription works only on your own machine: supposing rank ... --judge claude_cli "
-                "(uv tool install supposing).")
+                "(uvx --python 3.12 supposing rank ...).")
     if provider == "openrouter":
         try:
             payments = sp.billing.get().enabled
@@ -228,6 +253,13 @@ def run(args: argparse.Namespace) -> int:
                            code="not_a_folder", exit_code=USAGE,
                            hint="Pass a folder of documents, a .jsonl or .csv file, or an id from "
                            "`supposing datasets list`.")
+        told = [f for f in ("--context", "--examples", "--system", "--max-calls")
+                if getattr(args, f[2:].replace("-", "_"), None)]
+        if told:
+            raise CliError("%s works with supposing rank for now; the cloud doesn't take it yet." % ", ".join(told),
+                           code="unsupported", exit_code=USAGE,
+                           hint="Run it on this machine: supposing rank %s ... (same flags), or put the brief in the "
+                           "rubric for the cloud." % args.source)
         judge = cli_judge(args, local=False)
         provider = judge["provider"]
         available = sp.settings().get("providers") or []  # before uploading: a refused run leaves no dataset
@@ -387,21 +419,18 @@ def results(args: argparse.Namespace) -> int:
 
 
 def comparisons(args: argparse.Namespace) -> int:
+    if args.state:
+        return local_comparisons(args)
+    if not args.run_id:
+        raise CliError("Which run? Pass a run id, or --state for a local run.", code="usage", exit_code=USAGE,
+                       hint="supposing runs list shows cloud runs; a local run reads from its file: "
+                       "supposing comparisons --state run.db")
     with _client(args) as sp:
         page = sp.runs.comparisons(args.run_id, item_id=args.item_id, status=args.status, limit=args.limit)
     if args.json:
         emit_json({"data": [c.to_dict() for c in page.data], "next_cursor": page.next_cursor})
         return OK
-    if not page.data:
-        print("No calls yet.")
-    for c in page.data:
-        won = c.title_a if c.winner_item == c.item_a else c.title_b if c.winner_item == c.item_b else None
-        print("round %d · %s vs %s · %s" % (c.round, c.title_a, c.title_b,
-                                            "winner %s" % won if won else c.status))
-        if c.reasoning:
-            print("  " + c.reasoning.strip().replace("\n", "\n  "))
-        if c.error:
-            print("  error: %s" % c.error)
+    print_comparisons([{k: c.raw.get(k) for k in COMPARISON_FIELDS} for c in page.data])
     if page.next_cursor:
         print("More: --json shows next_cursor.")
     return OK

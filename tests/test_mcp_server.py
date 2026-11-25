@@ -26,6 +26,8 @@ async def test_same_tools_as_the_hosted_server():
     async with local() as client:
         tools = {t.name: t for t in (await client.list_tools()).tools}
         assert set(tools) == {"list_samples", "rank_documents", "get_run", "get_results", "compare_options"}
+        from supposing import __version__
+        assert client.server_info.version == __version__
         assert "folder" in tools["rank_documents"].input_schema["properties"]
         for name, read_only in (("list_samples", True), ("rank_documents", False), ("compare_options", False), ("get_run", True),
                                 ("get_results", True)):
@@ -112,3 +114,38 @@ async def test_runs_over_real_stdio(tmp_path):
                                                     "judge": MOCK})
     assert not res.is_error, text(res)
     assert res.structured_content["ranking"]["leaderboard"][0]["title"] == "option 2"
+
+
+async def test_context_and_examples_reach_the_local_judge(monkeypatch):
+    from supposing import mcp_server
+    from supposing.providers import make_provider as real_make
+
+    seen: list[str] = []
+    real = real_make({"provider": "mock"})
+
+    class Spy:
+        name, model = "mock", "mock"
+
+        async def complete(self, system, user):
+            seen.append(user)
+            return await real.complete(system, user)
+
+        async def close(self):
+            await real.close()
+
+    monkeypatch.setattr(mcp_server, "make_provider", lambda spec: Spy())
+    async with local() as client:
+        res = await client.call_tool("compare_options", {
+            "rubric": "Which is clearer?", "options": ["a [[q=0.2]]", "b [[q=0.8]]"], "judge": MOCK,
+            "context": "BRIEF-MARK: for nurses", "examples": [{"a": "EX-A", "b": "EX-B", "winner": "A"}]})
+    assert not res.is_error, text(res)
+    assert seen and "BRIEF-MARK" in seen[0] and "EX-A" in seen[0]
+
+
+async def test_cloud_mode_refuses_context_for_now():
+    from supposing.mcp_server import BackendError, CloudBackend, RunSpec
+
+    with pytest.raises(BackendError) as exc:
+        await CloudBackend(None).estimate(RunSpec("d", "r", context="x"))  # type: ignore[arg-type]
+    assert exc.value.code == "unsupported" and "--local" in (exc.value.hint or "")
+

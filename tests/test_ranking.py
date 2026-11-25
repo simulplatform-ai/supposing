@@ -125,3 +125,134 @@ def test_kill_and_resume(tmp_path):
     assert all(c.status == "done" for c in final)
     assert all(c.attempts == 1 for c in final), "a decided comparison was judged twice"
     assert out.stdout == ref.stdout, "a resumed run must give the same result as an uninterrupted one"
+
+
+def test_a_saved_run_is_refused_under_a_different_rubric_or_judge(tmp_path):
+    """sp-4lk: verdicts are never reused under a different question or judge; resuming the same run still works."""
+    from supposing import RunError, SQLiteStore
+
+    items = corpus(6)
+    path = tmp_path / "run.db"
+    first = rank(items, "Which is clearer?", provider="mock", rounds=2, store=SQLiteStore(path))
+    again = rank(items, "Which is clearer?", provider="mock", rounds=3, store=SQLiteStore(path))
+    assert again.fingerprint == first.fingerprint
+    assert {c.id for c in first.comparisons} <= {c.id for c in again.comparisons}
+    for change in (dict(rubric="Which is shortest?"), dict(provider=MockProvider(model="another-model")),
+                   dict(both_orders=True), dict(max_chars=100)):
+        kw = {"rubric": "Which is clearer?", "provider": "mock", "rounds": 2, **change}
+        with pytest.raises(RunError) as err:
+            rank(items, kw.pop("rubric"), store=SQLiteStore(path), **kw)
+        assert err.value.code == "state_mismatch" and "start fresh" in (err.value.hint or "")
+    other = rank(items, "Which is shortest?", provider="mock", rounds=2, store=SQLiteStore(path), run_id="new")
+    assert other.fingerprint != first.fingerprint and len(other.comparisons) == len(first.comparisons)
+
+
+def test_cli_refuses_a_state_file_made_with_another_rubric(tmp_path, capsys):
+    import json
+
+    from supposing.cli import main
+
+    docs = tmp_path / "docs"
+    docs.mkdir()
+    for i in range(4):
+        (docs / ("d%d.md" % i)).write_text("Doc %d [[q=%.2f]]" % (i, i / 4))
+    base = ["rank", str(docs), "--judge", "mock", "--rounds", "1", "--state", str(tmp_path / "s.db"), "--json"]
+    assert main(base + ["--rubric", "Which is clearer?"]) == 0
+    capsys.readouterr()
+    code = main(base + ["--rubric", "Which is shortest?"])
+    err = json.loads(capsys.readouterr().out)["error"]
+    assert code != 0 and err["code"] == "state_mismatch" and "start fresh" in err["hint"]
+
+
+@pytest.mark.parametrize("n", [2, 3, 5, 8, 9, 13])
+@pytest.mark.parametrize("rounds", [1, 3, 8])
+def test_a_run_without_added_items_makes_exactly_its_planned_rounds(n, rounds):
+    """Catch-up rounds are for added items only: odd counts and byes never trigger them."""
+    from supposing.ranking import Comparison as C
+    from supposing.ranking import behind
+
+    items = corpus(n)
+    cfg = RankConfig(rounds=rounds, seed=n)
+    comps: list[C] = []
+    while True:
+        action = next_action(comps, cfg, n, [it.id for it in items])
+        if action.kind == "done":
+            break
+        if action.kind == "plan":
+            new, _ = plan_round(items, comps, cfg, action.round)
+            if not new:
+                break
+            comps += new
+            continue
+        for c in action.pending:
+            c.status, c.winner_item = "done", c.item_a
+    assert max(c.round for c in comps) == rounds
+    assert not behind([it.id for it in items], comps, cfg)
+
+
+def test_an_added_item_is_judged_before_it_is_ranked(tmp_path):
+    """sp-ll9: an item added to a finished run gets catch-up comparisons, then a range from its verdicts."""
+    from supposing import SQLiteStore
+
+    items = corpus(10)
+    path = tmp_path / "run.db"
+    first = rank(items, "Which is better?", provider=MockProvider(sharpness=12), rounds=4, store=SQLiteStore(path))
+    late = Item(id="late", text="Late document. [[q=0.999]]", title="Late")
+    again = rank(items + [late], "Which is better?", provider=MockProvider(sharpness=12), rounds=4,
+                 store=SQLiteStore(path))
+    games = [c for c in again.comparisons if "late" in (c.item_a, c.item_b) and c.status == "done"]
+    assert len(games) >= 3 and len(again.comparisons) > len(first.comparisons)  # 11 items: 4 rounds, 3+ games each
+    row = next(r for r in again.leaderboard if r["item_id"] == "late")
+    assert not row["few_verdicts"] and row["rank_lo"] <= 3
+
+
+def test_items_with_too_few_verdicts_get_the_widest_range():
+    from supposing import Comparison, results
+
+    items = corpus(6)
+    comps = [Comparison(id="c%d" % i, round=1, pair_id=i, item_a=a, item_b=b, status="done", winner_item=a)
+             for i, (a, b) in enumerate([("doc00", "doc01"), ("doc00", "doc02"), ("doc00", "doc03"),
+                                         ("doc01", "doc02"), ("doc01", "doc03"), ("doc02", "doc03")])]
+    res = results(items, comps)
+    rows = {r["item_id"]: r for r in res["leaderboard"]}
+    assert rows["doc04"]["few_verdicts"] and (rows["doc04"]["rank_lo"], rows["doc04"]["rank_hi"]) == (1, 6)
+    assert not rows["doc00"]["few_verdicts"]
+    from supposing import summarize
+
+    assert "2 items have too few verdicts to place yet." in summarize(res["leaderboard"], res["diagnostics"])
+    two = rank({"a": "[[q=0.9]] a", "b": "[[q=0.1]] b"}, "Better?", provider="mock", rounds=2)
+    assert "clearly" not in two.summary
+
+
+def test_max_calls_stops_a_run_and_says_so():
+    from supposing import RankConfig, planned_calls, rank
+
+    cfg = RankConfig(max_calls=5)
+    assert planned_calls(20, cfg) == 5 and RankConfig.from_dict(cfg.to_dict()) == cfg
+    docs = {"d%d" % i: "text %d [[q=0.%d]]" % (i, i) for i in range(10)}
+    r = rank(docs, "Better?", provider="mock", max_calls=5, concurrency=4)
+    assert len([c for c in r.comparisons if c.status in ("done", "failed")]) == 5
+    assert r.note and "call cap: 5 of 5" in r.note
+
+
+
+def test_a_state_file_from_before_fingerprints_is_refused_with_its_own_message(tmp_path):
+    from supposing import Comparison, RunError, SQLiteStore
+
+    store = SQLiteStore(tmp_path / "old.db")
+    store.add("run", [Comparison(id="r1-p1-a", round=1, pair_id=1, item_a="doc00", item_b="doc01", status="done",
+                                 winner_item="doc00")])  # no fingerprint, as 0.3.0 wrote them
+    with pytest.raises(RunError) as err:
+        rank(corpus(4), "Q?", provider="mock", rounds=1, store=store)
+    assert err.value.code == "state_mismatch" and "0.3.0 or earlier" in str(err.value)
+
+
+def test_results_can_cap_the_bootstrap_for_live_views():
+    from supposing import results
+
+    items = corpus(12)
+    comps, _ = plan_round(items, [], RankConfig(rounds=1), 1)
+    for c in comps:
+        c.status, c.winner_item = "done", c.item_a
+    assert results(items, comps, max_bootstrap=40)["n_bootstrap"] == 40
+    assert results(items, comps)["n_bootstrap"] > 40

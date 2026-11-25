@@ -186,3 +186,30 @@ def test_billing_and_pricing_client():
         with pytest.raises(CloudError) as e:
             sp.runs.create(ds.id, "x")
         assert e.value.code == "insufficient_credit" and e.value.status == 402 and "billing" in (e.value.hint or "")
+
+
+def test_a_short_rate_limit_is_waited_out_once(monkeypatch):
+    import httpx
+
+    from supposing.cloud import Client, CloudError
+
+    waits: list[float] = []
+    monkeypatch.setattr("supposing.cloud.client.time.sleep", waits.append)
+    calls = {"n": 0}
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        calls["n"] += 1
+        if req.url.path == "/v1/runs" and calls["n"] == 1:
+            return httpx.Response(429, headers={"Retry-After": "4"}, json={
+                "code": "rate_limited", "message": "Too many new runs. Try again in 4 seconds.", "hint": "Wait."})
+        if req.url.path == "/v1/runs":
+            return httpx.Response(429, headers={"Retry-After": "400"}, json={
+                "code": "rate_limited", "message": "Too many new runs. Try again in 400 seconds.", "hint": "Wait."})
+        return httpx.Response(404, json={"code": "not_found", "message": "x", "hint": None})
+
+    with Client("sp_test", "http://fake", transport=httpx.MockTransport(handler)) as sp, \
+            pytest.raises(CloudError) as exc:
+        sp.runs.create("ds", "Better?", judge="mock")  # 4 s: waited once; then 400 s: reported
+    assert waits == [4.0] and calls["n"] == 2
+    assert exc.value.code == "rate_limited" and "400 seconds" in exc.value.message
+

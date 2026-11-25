@@ -8,10 +8,11 @@ from typing import Any
 
 import httpx
 
-from .base import Completion, ProviderError
+from .base import Completion, ProviderError, is_local, unreachable
 
 ANTHROPIC_URL = "https://api.anthropic.com"
 FATAL_STATUS = (400, 401, 402, 403, 404)
+CONNECT_TIMEOUT = 5.0  # seconds to open a connection before giving up on the endpoint
 
 
 class AnthropicProvider:
@@ -28,7 +29,7 @@ class AnthropicProvider:
         self._client = httpx.AsyncClient(
             base_url=base_url,
             headers={"x-api-key": api_key, "anthropic-version": "2023-06-01"},
-            timeout=httpx.Timeout(300, connect=20),
+            timeout=httpx.Timeout(300, connect=CONNECT_TIMEOUT),
         )
 
     async def complete(self, system: str, user: str) -> Completion:
@@ -46,6 +47,12 @@ class AnthropicProvider:
             started = time.monotonic()
             try:
                 response = await self._client.post("/v1/messages", json=body)
+            except (httpx.ConnectError, httpx.ConnectTimeout) as exc:
+                # On this machine or a private network nothing is listening, or the address is wrong: retrying
+                # cannot help. A public service (OpenRouter, Anthropic) may have had a passing fault: retry.
+                if is_local(str(self._client.base_url)):
+                    raise ProviderError(unreachable(str(self._client.base_url), exc), retryable=False) from exc
+                last_error = unreachable(str(self._client.base_url), exc)
             except httpx.HTTPError as exc:
                 last_error = "network error: %r" % exc
             else:

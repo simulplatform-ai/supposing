@@ -44,6 +44,18 @@ from .models import (
 from .records import RecordsError, is_table, read_records
 
 RETRY_STATUS = (502, 503, 504)
+RATE_LIMIT_WAIT_MAX = 30  # seconds: a 429 asking for a longer wait is reported, not waited out
+
+
+def _retry_after(resp: httpx.Response) -> float | None:
+    """For a 429 with a short Retry-After, the seconds to wait before the one retry; None otherwise."""
+    if resp.status_code != 429:
+        return None
+    try:
+        wait = float(resp.headers.get("retry-after", ""))
+    except ValueError:
+        return None
+    return wait if 0 <= wait <= RATE_LIMIT_WAIT_MAX else None
 RANKING_OPTIONS = ("rounds", "both_orders", "pairing", "goal", "top_n", "max_chars", "seed")
 
 
@@ -407,7 +419,7 @@ class Client(_Base):
     def send[T](self, call: _Call[T]) -> T:
         if call.auth and "Authorization" not in self._headers:
             raise self._no_key()
-        attempt = 0
+        attempt, limited = 0, False
         while True:
             try:
                 resp = self._http.request(call.method, call.path, json=call.json, params=call.params or None,
@@ -421,6 +433,11 @@ class Client(_Base):
             if resp.status_code in RETRY_STATUS and call.idempotent and attempt < self.retries:
                 time.sleep(self._backoff(attempt))
                 attempt += 1
+                continue
+            wait = _retry_after(resp)
+            if wait is not None and not limited:  # refused, not run: safe to send once more, whatever the method
+                limited = True
+                time.sleep(wait)
                 continue
             return _parse_response(call, resp)
 
@@ -478,7 +495,7 @@ class AsyncClient(_Base):
     async def send[T](self, call: _Call[T]) -> T:
         if call.auth and "Authorization" not in self._headers:
             raise self._no_key()
-        attempt = 0
+        attempt, limited = 0, False
         while True:
             try:
                 resp = await self._http.request(call.method, call.path, json=call.json, params=call.params or None,
@@ -492,6 +509,11 @@ class AsyncClient(_Base):
             if resp.status_code in RETRY_STATUS and call.idempotent and attempt < self.retries:
                 await asyncio.sleep(self._backoff(attempt))
                 attempt += 1
+                continue
+            wait = _retry_after(resp)
+            if wait is not None and not limited:  # refused, not run: safe to send once more, whatever the method
+                limited = True
+                await asyncio.sleep(wait)
                 continue
             return _parse_response(call, resp)
 

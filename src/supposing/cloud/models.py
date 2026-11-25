@@ -199,17 +199,18 @@ class PriceTier(_Model):
 class Pricing(_Model):
     """What a judge call costs on our model key, by tier. ``provisional``: prices may still change."""
     provisional: bool
-    unit_chars: int  # one call is up to this many characters of all the judge reads: both items, rubric, instructions
+    unit_chars: int  # about this many characters of English text: both items, rubric and instructions together
     free_grant_usd: float
     min_topup_usd: int
     max_topup_usd: int
     tiers: list[PriceTier]
+    unit_bytes: int = 0  # what a call is counted in: UTF-8 bytes of everything the judge reads
 
     @classmethod
     def parse(cls, d: dict[str, Any]) -> Pricing:
         return cls(d, bool(d.get("provisional")), int(d.get("unit_chars") or 0), float(d.get("free_grant_usd") or 0),
                    int(d.get("min_topup_usd") or 0), int(d.get("max_topup_usd") or 0),
-                   [PriceTier.parse(t) for t in d.get("tiers") or []])
+                   [PriceTier.parse(t) for t in d.get("tiers") or []], int(d.get("unit_bytes") or 0))
 
 
 @dataclass

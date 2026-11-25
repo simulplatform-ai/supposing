@@ -19,6 +19,7 @@ def isolated(tmp_path, monkeypatch):
     monkeypatch.setenv("SUPPOSING_API_URL", "http://fake")
     monkeypatch.setattr("supposing.cloud.client.time.sleep", lambda s: None)
     monkeypatch.setattr("sys.stdin", io.StringIO(""))  # not a terminal: never prompt
+    monkeypatch.setattr("supposing.cli.preflight.check", lambda *a, **k: None)  # no network: test_preflight.py covers it
 
 
 @pytest.fixture
@@ -171,6 +172,151 @@ def test_models_lists_levels_first(api, capsys, monkeypatch):
     code, out, _ = run_cli(capsys, "models", "--dataset", "ds1", "--top-n", "3", "--json")
     assert code == 0 and json.loads(out)["default"] == "quick"
     assert api.models_params == {"dataset_id": "ds1", "goal": "top_n", "top_n": "3", "limit": "50"}
+
+
+def test_local_comparisons_with_reasons(docs, capsys, tmp_path):
+    state = tmp_path / "run.db"
+    flags = ["--rubric", "Better?", "--judge", "mock", "--rounds", "2"]
+    code, out, _ = run_cli(capsys, "rank", str(docs), *flags, "--with-comparisons", "--json")
+    rows = json.loads(out)["comparisons"]
+    assert code == 0 and rows and {"title_a", "title_b", "winner_item", "reasoning"} <= set(rows[0])
+    assert all(r["reasoning"] for r in rows if r["status"] == "done")
+    code, out, _ = run_cli(capsys, "rank", str(docs), *flags, "--with-comparisons")
+    assert code == 0 and "round 1 · " in out and " · winner " in out
+    code, out, _ = run_cli(capsys, "rank", str(docs), *flags, "--state", str(state))
+    assert "supposing comparisons --state %s" % state in out
+    code, out, _ = run_cli(capsys, "comparisons", "--state", str(state), "--json")
+    doc = json.loads(out)
+    assert code == 0 and doc["data"] and doc["run_id"] == str(docs.resolve())
+    one = doc["data"][0]["item_a"]
+    code, out, _ = run_cli(capsys, "comparisons", "--state", str(state), "--item", one, "--json")
+    assert all(one in (r["item_a"], r["item_b"]) for r in json.loads(out)["data"])
+    code, out, _ = run_cli(capsys, "comparisons", "--state", str(tmp_path / "none.db"), "--json")
+    assert code == 4 and json.loads(out)["error"]["hint"]
+    code, out, _ = run_cli(capsys, "comparisons", "--json")
+    assert code == 2 and "--state" in json.loads(out)["error"]["hint"]
+
+
+def test_run_with_comparisons(api, docs, capsys, monkeypatch):
+    monkeypatch.setenv("SUPPOSING_API_KEY", KEY)
+    code, out, _ = run_cli(capsys, "run", str(docs), "--rubric", "x", "--judge", "mock", "--with-comparisons", "--json")
+    doc = json.loads(out)
+    assert code == 0 and doc["comparisons"][0]["reasoning"] == "A is clearer."
+
+
+def test_only_a_run_that_costs_money_asks_first(docs, capsys, monkeypatch):
+    from supposing.providers import make_provider
+
+    monkeypatch.setattr("supposing.cli.local.make_provider", lambda spec: make_provider({"provider": "mock"}))
+    local = ["--judge", "openai_compat", "--model", "llama3.2", "--rounds", "1"]
+    for url in ("http://localhost:11434/v1", "http://127.0.0.1:8000/v1", "http://gpu-box.local:11434/v1",
+                "http://192.168.1.20:11434/v1"):
+        code, out, err = run_cli(capsys, "rank", str(docs), "--rubric", "x", *local, "--base-url", url, "--json")
+        assert code == 0, (url, out)
+        assert json.loads(out)["estimate"]["est_cost_usd"] == 0
+    code, _, err = run_cli(capsys, "rank", str(docs), "--rubric", "x", *local, "--base-url", "http://localhost:11434/v1")
+    assert code == 0 and "no charge: a model on your own machine or network (localhost)" in err
+    for flags in (["--judge", "openai_compat", "--model", "gpt-6", "--base-url", "https://api.openai.com/v1"],
+                  ["--judge", "quick"]):
+        code, out, _ = run_cli(capsys, "rank", str(docs), "--rubric", "x", *flags, "--json")
+        err = json.loads(out)["error"]
+        assert code == 7 and err["code"] == "confirmation_required" and "--max-cost" in err["hint"], flags
+        assert "price, which supposing does not know" in err["message"] and "input" in err["message"]
+    code, out, _ = run_cli(capsys, "rank", str(docs), "--rubric", "x", "--judge", "quick", "--dry-run", "--json")
+    est = json.loads(out)["estimate"]
+    assert est["est_cost_usd"] is None and est["est_input_tokens"] > 0 and "OpenRouter" in est["cost_basis"]
+
+
+def test_input_errors_say_what_was_found_and_left_out(capsys, tmp_path):
+    d = tmp_path / "few"
+    d.mkdir()
+    (d / "a.md").write_text("only one")
+    (d / "b.pdf").write_bytes(b"%PDF")
+    (d / "c.md").write_text("  ")
+    code, out, _ = run_cli(capsys, "rank", str(d), "--rubric", "x", "--judge", "mock", "--json")
+    err = json.loads(out)["error"]
+    assert code == 2 and err["code"] == "too_few_items" and err["message"].startswith("Only 1 item with text")
+    assert "b.pdf (not .md, .txt or .html)" in err["hint"] and "c.md (empty)" in err["hint"]
+    assert "supposing run" in err["hint"]  # PDFs are read in the cloud
+    (d / "a.md").unlink()
+    code, out, _ = run_cli(capsys, "rank", str(d), "--rubric", "x", "--judge", "mock", "--json")
+    assert json.loads(out)["error"]["message"].startswith("No items with text")
+
+
+def test_duplicates_are_flagged(capsys, tmp_path):
+    d = tmp_path / "dups"
+    d.mkdir()
+    for name, text in (("a.md", "Same text."), ("b.md", "Same text.\n"), ("c.md", "Other.")):
+        (d / name).write_text(text)
+    code, _, err = run_cli(capsys, "rank", str(d), "--rubric", "x", "--judge", "mock", "--json")
+    assert code == 0 and "Same text: a.md = b.md" in err
+
+
+def test_pricing_counts_bytes(api, capsys):
+    code, out, _ = run_cli(capsys, "pricing")
+    assert code == 0 and "24,000 bytes" in out and "3 bytes a character" in out
+
+
+def test_context_examples_and_system_reach_the_judge(docs, capsys, tmp_path, monkeypatch):
+    seen: list[tuple[str, str]] = []
+    from supposing.providers import make_provider
+
+    real = make_provider({"provider": "mock"})
+
+    class Spy:
+        name, model = "mock", "mock"
+
+        async def complete(self, system, user):
+            seen.append((system, user))
+            return await real.complete(system, user)
+
+        async def close(self):
+            await real.close()
+
+    monkeypatch.setattr("supposing.cli.local.make_provider", lambda spec: Spy())
+    brief = tmp_path / "brief.md"
+    brief.write_text("BRIEF: readers are nurses.")
+    ex = tmp_path / "past.jsonl"
+    ex.write_text(json.dumps({"a": "EXAMPLE-A", "b": "EXAMPLE-B", "winner": "A", "why": "shorter"}) + "\n")
+    system = tmp_path / "system.md"
+    system.write_text("You are a SYSTEM-MARK judge.\n{rules}\n{output_format}")
+    code, out, err = run_cli(capsys, "rank", str(docs), "--rubric", "x", "--judge", "openai_compat", "--model", "m",
+                             "--base-url", "http://localhost:1/v1", "--rounds", "1", "--context", str(brief),
+                             "--examples", str(ex), "--system", str(system), "--json")
+    assert code == 0, out
+    sys_text, user = seen[0]
+    assert "SYSTEM-MARK" in sys_text and "BRIEF: readers are nurses." in user and "EXAMPLE-A" in user
+    code, _, _ = run_cli(capsys, "rank", str(docs), "--rubric", "x", "--judge", "mock", "--rounds", "1",
+                         "--context", "plain words, not a file")
+    assert code == 0
+    bad = tmp_path / "bad.md"
+    bad.write_text("no placeholders")
+    code, out, _ = run_cli(capsys, "rank", str(docs), "--rubric", "x", "--judge", "mock", "--system", str(bad), "--json")
+    assert code == 2 and "output_format" in json.loads(out)["error"]["message"]
+    code, out, _ = run_cli(capsys, "rank", str(docs), "--rubric", "x", "--judge", "mock", "--examples",
+                           str(tmp_path / "none.jsonl"), "--json")
+    assert code == 2 and json.loads(out)["error"]["code"] == "invalid_file"
+
+
+def test_run_refuses_local_only_judge_settings(api, docs, capsys, monkeypatch):
+    monkeypatch.setenv("SUPPOSING_API_KEY", KEY)
+    code, out, _ = run_cli(capsys, "run", str(docs), "--rubric", "x", "--context", "brief", "--json")
+    err = json.loads(out)["error"]
+    assert code == 2 and err["code"] == "unsupported" and "supposing rank" in err["hint"] and not api.datasets
+
+
+def test_max_calls_caps_an_unpriced_run(docs, capsys, tmp_path):
+    many = tmp_path / "many"
+    many.mkdir()
+    for i in range(10):
+        (many / ("d%d.md" % i)).write_text("doc %d [[q=0.%d]]" % (i, i))
+    code, out, err = run_cli(capsys, "rank", str(many), "--rubric", "x", "--judge", "mock", "--max-calls", "7", "--json")
+    doc = json.loads(out)
+    assert code == 0 and doc["estimate"]["max_calls"] == 7
+    assert doc["run"]["progress"]["done"] + doc["run"]["progress"]["failed"] == 7
+    assert "Stopped by the call cap: 7 of 7 calls" in doc["run"]["note"]
+    _, _, err = run_cli(capsys, "rank", str(many), "--rubric", "x", "--judge", "mock", "--max-calls", "7", "--dry-run")
+    assert "7 judge calls (at most, --max-calls)" in err
 
 
 def test_detach_then_watch_and_cancel(api, docs, capsys, monkeypatch):
@@ -382,7 +528,7 @@ def test_billing_commands(api, capsys, monkeypatch):
 def test_pricing_needs_no_key(api, capsys):
     code, out, _ = run_cli(capsys, "pricing")
     assert code == 0 and "(provisional)" in out and "economy" in out and "Claude Haiku 5.5" in out
-    assert "24,000 characters" in out
+    assert "24,000 bytes" in out
     code, out, _ = run_cli(capsys, "pricing", "--json")
     assert json.loads(out)["tiers"][0]["price_per_call_usd"] == 0.004
 

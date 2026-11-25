@@ -74,6 +74,9 @@ class ClaudeCLIProvider:
                     latency_ms=int((time.monotonic() - started) * 1000),
                 )
             last_error = (str(data.get("result") or "") or err.decode() or out.decode() or "claude CLI failed")[:400]
+            if "unrecognized_model" in err.decode() + out.decode() or "issue with the selected model" in last_error:
+                raise ProviderError("The claude CLI does not know the model %r. Use haiku, sonnet or opus, or a full "
+                                    "Claude model id." % self.model, retryable=False)
             await asyncio.sleep(3 * (attempt + 1))
         raise ProviderError(last_error)
 

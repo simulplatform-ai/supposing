@@ -1,0 +1,24 @@
+name: Bug report
+description: Something in the supposing package does not work as documented
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you ran, what you expected, and what you got instead. Paste the full error.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: The smallest command or Python snippet that shows it. Use `--judge mock` if the problem does not depend on the model.
+      render: shell
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `supposing --version`, and your Python version and OS.
+    validations:
+      required: true

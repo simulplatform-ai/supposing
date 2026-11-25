@@ -1,6 +1,8 @@
 """MCP server over stdio, for coding agents on this machine: ``supposing mcp``.
 
-Needs the optional extra: ``uv tool install 'supposing[mcp]'``, or ``uvx 'supposing[mcp]' mcp``.
+Needs the optional extra: ``uvx --python 3.12 'supposing[mcp]' mcp``, or keep it with
+``uv tool install --python 3.12 'supposing[mcp]'``. (``--python 3.12`` lets uv fetch a Python new enough when
+the only one on the machine is older.)
 
 It offers the same tools as the hosted server at https://api.supposing.app/mcp, with the same arguments
 and result shapes. Where the work happens depends on credentials:
@@ -26,7 +28,7 @@ from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Annotated, Any, Protocol
+from typing import Annotated, Any, Literal, Protocol
 from uuid import UUID
 
 import anyio
@@ -36,7 +38,7 @@ from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import CallToolResult, TextContent, ToolAnnotations
 from pydantic import BaseModel, Field
 
-from . import present, samples
+from . import __version__, present, samples
 from . import ranking as rk
 from .cloud import JUDGE_HELP, AsyncClient, CloudError, JudgeError, parse_judge, read_folder, resolve
 from .providers import ProviderError, make_provider
@@ -52,8 +54,8 @@ DONE = ("done", "failed", "canceled")
 FREE = ("mock", "claude_cli")
 
 INSTRUCTIONS = """\
-Supposing ranks texts with an LLM judge: it runs a pairwise tournament and reports each item's rank with a 90% interval, so you know when a winner is real and when \
-items are tied.
+Supposing ranks documents with LLM judges: a model compares them two at a time against a rubric, and each document \
+gets a rank with a 90% interval, so you know when a winner is real and when items are tied.
 
 - Picking the best of 2 to 8 short options (drafts, prompts, names, answers): call compare_options. \
 It waits for the answer, usually 10 to 60 seconds.
@@ -87,6 +89,8 @@ class RunSpec:
     max_cost_usd: float | None = None
     options: dict[str, Any] = field(default_factory=dict)  # the ranking's own: rounds, goal, top_n, ...
     ephemeral: bool = False  # a one-off: kept out of the web app's lists
+    context: str | None = None  # a brief every comparison sees (local engine only, for now)
+    examples: list[dict[str, Any]] | None = None  # past judgements: {a, b, winner, why?}
 
 
 class Backend(Protocol):
@@ -130,9 +134,11 @@ class CloudBackend:
         return {**ds.raw, "skipped": ds.skipped}
 
     async def estimate(self, spec: RunSpec) -> dict[str, Any]:
+        _local_only(spec)
         return (await self._do(self.c.runs.estimate(spec.dataset_id, spec.rubric, **self._kw(spec)))).raw
 
     async def create_run(self, spec: RunSpec) -> dict[str, Any]:
+        _local_only(spec)
         return (await self._do(self.c.runs.create(spec.dataset_id, spec.rubric, **self._kw(spec)))).raw
 
     async def get_run(self, run_id: str) -> dict[str, Any]:
@@ -146,6 +152,13 @@ class CloudBackend:
 
     async def open_sample(self, sample_id: str) -> dict[str, Any] | None:
         return (await self._do(self.c.open_sample(sample_id))).raw
+
+
+def _local_only(spec: RunSpec) -> None:
+    if spec.context or spec.examples:
+        raise BackendError("unsupported", "context and examples work with the local engine for now; the cloud "
+                           "doesn't take them yet.", "Restart the server with `supposing mcp --local`, or put the "
+                           "brief in the rubric.")
 
 
 # --- local: the engine, in this process ---------------------------------------------------------------------
@@ -269,7 +282,7 @@ class LocalBackend:
         run.status, run.started_at = "running", time.time()
         try:
             result = await run_ranking(run.items, run.spec.rubric, provider, run.cfg, run.store, run.id,
-                                       self.concurrency)
+                                       self.concurrency, context=run.spec.context, examples=run.spec.examples)
             run.status, run.note = "done", result.note
         except asyncio.CancelledError:
             run.status = "canceled"
@@ -340,6 +353,19 @@ BothOrders = Annotated[bool, Field(description=(
 RubricOrSample = Annotated[str | None, Field(min_length=1, max_length=20000, description=(
     "What makes one text better than another, in a sentence or short paragraph. Say what to ignore too, "
     "e.g. 'Which is clearest to a new user? Ignore length.' Required unless you pass sample."))]
+class ExampleArg(BaseModel):
+    a: str = Field(min_length=1, description="The first text.")
+    b: str = Field(min_length=1, description="The second text.")
+    winner: Literal["A", "B"] = Field(description="Which one a person preferred.")
+    why: str | None = Field(default=None, description="Why, in a sentence.")
+
+
+ContextArg = Annotated[str | None, Field(max_length=20000, description=(
+    "A brief every comparison sees after the rubric: the audience, the situation, what was asked. On this "
+    "machine's engine only, for now."))]
+ExamplesArg = Annotated[list[ExampleArg] | None, Field(max_length=50, description=(
+    "Past judgements for the judge to follow, as {a, b, winner: 'A' or 'B', why}. On this machine's engine only, "
+    "for now."))]
 RunId = Annotated[UUID, Field(description="The run_id returned by rank_documents or compare_options.")]
 
 
@@ -350,6 +376,10 @@ def _sample(sample_id: str) -> dict[str, Any]:
     except KeyError as exc:
         raise ToolError(present.error_text("sample_not_found", exc.args[0], "Call list_samples.")) from exc
     return {**s, "items": [{"title": i["title"], "text": i["text"]} for i in s["items"]]}
+
+
+def _examples(rows: list[ExampleArg] | None) -> list[dict[str, Any]] | None:
+    return [r.model_dump() for r in rows] if rows else None
 
 
 def _now() -> str:
@@ -389,7 +419,7 @@ def hints(title: str, base: ToolAnnotations) -> ToolAnnotations:
 
 
 def build_server(backend: Backend) -> MCPServer:
-    mcp = MCPServer("supposing", title="Supposing", instructions=INSTRUCTIONS + (
+    mcp = MCPServer("supposing", title="Supposing", version=__version__, instructions=INSTRUCTIONS + (
         "\n\nThis server runs in %s mode." % backend.mode), website_url="https://supposing.app", subscriptions=False)
 
     async def call[T](aw: Awaitable[T]) -> T:
@@ -432,6 +462,8 @@ def build_server(backend: Backend) -> MCPServer:
             "Return the number of judge calls without starting anything. Items and folders are still saved as a "
             "dataset, whose id you can pass next time."))] = False,
         both_orders: BothOrders = False,
+        context: ContextArg = None,
+        examples: ExamplesArg = None,
         name: Annotated[str | None, Field(description="A name for the run.")] = None,
     ) -> CallToolResult:
         """Start ranking a set of documents against your rubric, in the background.
@@ -479,6 +511,7 @@ def build_server(backend: Backend) -> MCPServer:
         if top_n:
             options.update(goal="top_n", top_n=top_n)
         spec = _spec(str(dataset_id), rubric, name, judge, options, max_cost_usd)
+        spec.context, spec.examples = context, _examples(examples)
         est = await call(backend.estimate(spec))
         extra = {"skipped_files": skipped[:20]} if skipped else {}
         if estimate_only:
@@ -524,6 +557,8 @@ def build_server(backend: Backend) -> MCPServer:
         ctx: Context,
         judge: JudgeArg = None,
         both_orders: BothOrders = False,
+        context: ContextArg = None,
+        examples: ExamplesArg = None,
         wait_seconds: Annotated[int, Field(ge=0, le=300, description=(
             "How long to wait for the answer before handing back a run_id to poll. Keep it under your client's "
             "tool timeout."))] = 45,
@@ -540,6 +575,7 @@ def build_server(backend: Backend) -> MCPServer:
         ds = await call(backend.create_dataset("compare_options %s" % _now(), [
             {"title": "option %d" % (i + 1), "text": text} for i, text in enumerate(options)], ephemeral=True))
         spec = _spec(ds["id"], rubric, "compare_options %s" % _now(), judge, {**ROUND_ROBIN, "both_orders": both_orders})
+        spec.context, spec.examples = context, _examples(examples)
         spec.ephemeral = True
         run = await call(backend.create_run(spec))
         texts = {str(item["id"]): text for item, text in zip(ds["items"], options, strict=True)}

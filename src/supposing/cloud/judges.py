@@ -6,6 +6,7 @@ own machine only). The levels name the same models as the API's ``LEVEL_MODELS``
 """
 from __future__ import annotations
 
+import difflib
 from typing import Any
 
 LEVELS: dict[str, str] = {
@@ -35,7 +36,9 @@ def parse_judge(value: str | None, model: str | None = None, local: bool = False
     if v in providers:
         chosen = model or PROVIDER_DEFAULT_MODEL.get(v)
         if not chosen:
-            raise JudgeError("The %s judge needs a model: add --model, e.g. --model llama3." % v)
+            example = {"anthropic": "claude-haiku-5-5 (an Anthropic model id)",
+                       "openai_compat": "llama3.2 (the name your server uses)"}.get(v, "<name>")
+            raise JudgeError("The %s judge needs a model: add --model, e.g. --model %s." % (v, example))
         return {"provider": v, "model": chosen, "level": None}
     if model:
         raise JudgeError("--model goes with a provider judge (%s). For OpenRouter, pass the model as the judge: "
@@ -46,6 +49,9 @@ def parse_judge(value: str | None, model: str | None = None, local: bool = False
         return {"provider": "openrouter", "model": v, "level": next((k for k, m in LEVELS.items() if m == v), None)}
     if v in LOCAL_PROVIDERS:
         raise JudgeError("The %s judge works only on this machine: use supposing rank." % v)
+    near = difflib.get_close_matches(v, [*LEVELS, *PROVIDER_JUDGES, *LOCAL_PROVIDERS], n=1, cutoff=0.6)
+    if near:
+        raise JudgeError("Unknown judge %r. Did you mean %s?" % (v, near[0]))
     raise JudgeError("Unknown judge %r. Use quick, balanced, thorough, an OpenRouter model id like "
                      "anthropic/claude-haiku-5.5, mock or claude_cli." % v)
 

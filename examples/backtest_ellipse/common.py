@@ -1,4 +1,4 @@
-"""Shared by the essay back-tests: fetching, the judge runs, and agreement with human scores.
+"""Shared by the back-tests: fetching, the judge runs, and agreement with human scores.
 
 Agreement is reported two ways, each with a 90% bootstrap interval over essays:
 - pairs in the same order: of the essay pairs the humans scored differently, the share a ranking orders the same

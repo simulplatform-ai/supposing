@@ -2,6 +2,7 @@
  "tests": 60,
  "headlines": 304,
  "significant_pairs": 213,
+ "judge": "claude_cli/haiku",
  "calls": {
   "pairwise": 1176,
   "score_alone": 304,

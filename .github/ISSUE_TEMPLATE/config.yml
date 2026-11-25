@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security problem
+    url: https://supposing.app/support#security
+    about: Report vulnerabilities privately to security@supposing.app, not in a public issue.
+  - name: Documentation
+    url: https://app.supposing.app/docs/
+    about: Guides, the CLI and Python reference, and the API.

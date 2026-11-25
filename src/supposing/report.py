@@ -242,6 +242,9 @@ def summarize(leaderboard: list[dict[str, Any]], diagnostics: dict[str, Any], fi
         sentence = "%s ranks first, but any of the top %d could be first." % (_name(top), max(k, 2))
     if len(groups) > 1 and not sentence.startswith("The judge can't") and not top_n_run:
         sentence += " %d clear tiers." % len(groups)
+    few = sum(1 for r in leaderboard if r.get("few_verdicts"))
+    if few and few < n:
+        sentence += " %d item%s too few verdicts to place yet." % (few, " has" if few == 1 else "s have")
     if not final:
         sentence = "So far, " + (sentence[0].lower() + sentence[1:] if phrase else sentence)
     if caution and not trusted:

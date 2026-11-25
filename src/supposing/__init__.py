@@ -19,7 +19,17 @@ Three layers, each usable on its own:
 """
 from . import present, samples
 from .backtest import Split, TuneCall, Tuning, backtest, decided_pairs, planned_tune_calls, train_test_split, tune
-from .judge import SYSTEM_PROMPT, apply_error, apply_verdict, judge_pair
+from .judge import (
+    SYSTEM_PROMPT,
+    Example,
+    JudgePrompt,
+    Verdict,
+    apply_error,
+    apply_verdict,
+    judge_pair,
+    load_examples,
+    run_fingerprint,
+)
 from .providers import Completion, Provider, ProviderError, make_provider
 from .ranking import (
     Action,
@@ -37,10 +47,10 @@ from .ranking import (
 )
 from .report import display_groups, judge_checks, summarize, tiers
 from .rubric import Rubric
-from .runner import Ranking, RunError, rank, run_ranking
+from .runner import JudgeFunction, Ranking, RunError, rank, run_ranking
 from .store import MemoryStore, RunStore, SQLiteStore
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 __all__ = [
     # Run a ranking
@@ -53,7 +63,9 @@ __all__ = [
     # Check and tune a judge against past decisions
     "backtest", "train_test_split", "Split", "tune", "Tuning", "TuneCall", "decided_pairs", "planned_tune_calls",
     # One judge call
-    "judge_pair", "apply_verdict", "apply_error", "SYSTEM_PROMPT",
+    "judge_pair", "apply_verdict", "apply_error", "SYSTEM_PROMPT", "run_fingerprint", "Verdict",
+    # Customising the judge
+    "Example", "load_examples", "JudgePrompt", "JudgeFunction",
     # Judges and stores
     "Provider", "Completion", "ProviderError", "make_provider", "RunStore", "MemoryStore", "SQLiteStore",
 ]

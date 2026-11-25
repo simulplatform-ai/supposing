@@ -63,7 +63,8 @@ class MatchLog:
     def __init__(self, item_ids: list, comparisons: list):
         self.item_ids = list(item_ids)
         self.index = {item_id: i for i, item_id in enumerate(self.item_ids)}
-        self.comparisons = [c for c in comparisons if c.get("winner_item") in self.index]
+        self.comparisons = [c for c in comparisons if c.get("winner_item") in self.index
+                            and c["item_a"] in self.index and c["item_b"] in self.index]
         winners, losers, pairs = [], [], []
         for c in self.comparisons:
             loser = c["item_b"] if c["winner_item"] == c["item_a"] else c["item_a"]
@@ -90,6 +91,9 @@ def n_bootstrap_for(n_items: int, n_matches: int) -> int:
     """Keep the bootstrap around a second or two regardless of corpus size."""
     work = max(1, n_items + n_matches)
     return int(min(300, max(40, 3_000_000 // work)))
+
+
+MIN_VERDICTS = 3  # below this, an item's rank range is the whole leaderboard
 
 
 def compute_results(items: list, comparisons: list, top_n: int | None = None, seed: int = 0,
@@ -150,6 +154,15 @@ def compute_results(items: list, comparisons: list, top_n: int | None = None, se
             if top_n:
                 entry["p_top_n"] = None
         leaderboard.append(entry)
+    # An item with fewer than MIN_VERDICTS verdicts cannot be placed with any confidence: the bootstrap would
+    # show the prior's narrow spread (an item with none sits at 1500 in every resample). Show the widest range.
+    if leaderboard:
+        lowest = min(e["rating_lo"] for e in leaderboard)
+        highest = max(e["rating_hi"] for e in leaderboard)
+        for e in leaderboard:
+            e["few_verdicts"] = e["wins"] + e["losses"] < MIN_VERDICTS
+            if e["few_verdicts"]:
+                e.update(rank_lo=1, rank_hi=n, rating_lo=lowest, rating_hi=highest)
     leaderboard.sort(key=lambda e: e["rank"])
 
     return {

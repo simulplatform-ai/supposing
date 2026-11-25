@@ -17,6 +17,7 @@ WARMUP_ROUNDS = 3  # top-N runs rank everything this long before narrowing
 PLAN_BOOTSTRAP = 100  # resamples behind each top-N planning decision: steps of 1% in the chance of a place
 SETTLED = 0.05  # top-N: an item is settled in (out) when its chance of a top-N place is >= 95% (<= 5%)
 MAX_ATTEMPTS = 3  # a comparison that fails this often is given up on
+MAX_CATCH_UP = 200  # catch-up rounds after the planned ones, at most: a guard, never reached in practice
 
 Status = Literal["pending", "done", "failed"]
 
@@ -45,6 +46,8 @@ class RankConfig:
     - ``max_cost_usd``: a hard cap on recorded spend. No call starts that could take spend past it, judging
       each call as dear as the dearest so far, and the run's note says when the cap ended it. Providers that
       do not report a price (``claude_cli``) cannot be capped.
+    - ``max_calls``: a hard cap on judge calls, for any judge, priced or not (``claude_cli``, a local model).
+      No call starts past it, and the run's note says when the cap ended it. None means no cap.
     - ``seed``: pairing and the bootstrap are deterministic given the seed.
     """
 
@@ -55,6 +58,7 @@ class RankConfig:
     top_n: int = 10
     max_chars: int = 60000  # per item; longer texts are cut
     max_cost_usd: float | None = None
+    max_calls: int | None = None
     seed: int = 0
 
     def __post_init__(self) -> None:
@@ -74,6 +78,10 @@ class RankConfig:
                 self.max_cost_usd = None
             if self.max_cost_usd is not None:
                 self.max_cost_usd = float(self.max_cost_usd)
+            if self.max_calls in ("", 0):
+                self.max_calls = None
+            if self.max_calls is not None:
+                self.max_calls = max(1, int(self.max_calls))
         except (TypeError, ValueError) as exc:
             raise ConfigError("invalid run setting: %s" % exc) from exc
 
@@ -85,7 +93,7 @@ class RankConfig:
         unknown = set(raw) - known
         if unknown:
             raise ConfigError("unknown run setting: %s" % ", ".join(sorted(unknown)))
-        kwargs: dict[str, Any] = {k: v for k, v in raw.items() if v is not None or k == "max_cost_usd"}
+        kwargs: dict[str, Any] = {k: v for k, v in raw.items() if v is not None or k in ("max_cost_usd", "max_calls")}
         return cls(**kwargs)
 
     def to_dict(self) -> dict[str, Any]:
@@ -95,11 +103,15 @@ class RankConfig:
 
 @dataclass
 class Item:
-    """One document to rank. ``id`` must be unique within a run; ``title`` is for display."""
+    """One document to rank. ``id`` must be unique within a run; ``title`` is for display. ``context`` is shown
+    to the judge beside this document's text, in its own labelled block: a string, or a dict shown as
+    ``key: value`` lines (a keyword, a brief, the audience it targets). Keep data the judge must not see out of
+    it."""
 
     id: str
     text: str
     title: str | None = None
+    context: str | dict[str, Any] | None = None
 
     @property
     def n_words(self) -> int:
@@ -116,6 +128,8 @@ class Comparison:
     ``plan_round`` creates comparisons as ``pending``; ``apply_verdict`` and ``apply_error`` move them to
     ``done`` (with ``winner_item``) or, after ``MAX_ATTEMPTS`` tries, to ``failed``. The two orders of one
     pair share a ``pair_id``. A run's whole state is its list of comparisons, so store them as rows.
+    ``fingerprint`` identifies everything that gives a verdict its meaning (rubric, prompt, judge, order mode,
+    text cut); ``run_ranking`` sets it and refuses to mix verdicts with different fingerprints.
     """
 
     id: str
@@ -134,6 +148,7 @@ class Comparison:
     cost_usd: float | None = None
     latency_ms: int | None = None
     extra: dict[str, Any] = field(default_factory=dict)
+    fingerprint: str | None = None  # what the verdict means: see ``supposing.judge.run_fingerprint``
 
     def as_rating_row(self) -> dict[str, Any]:
         """The fields the rating model reads."""
@@ -155,7 +170,8 @@ class Action:
 def planned_calls(n_items: int, cfg: RankConfig) -> int:
     """Upper bound on judge calls. Top-N runs narrow after the warm-up and use fewer."""
     pairs = n_items * (n_items - 1) // 2 if cfg.pairing == "round_robin" else n_items // 2
-    return cfg.rounds * pairs * (2 if cfg.both_orders else 1)
+    plan = cfg.rounds * pairs * (2 if cfg.both_orders else 1)
+    return plan if cfg.max_calls is None else min(plan, cfg.max_calls)
 
 
 def fewest_calls(n_items: int, cfg: RankConfig) -> int:
@@ -163,7 +179,8 @@ def fewest_calls(n_items: int, cfg: RankConfig) -> int:
     narrows = cfg.goal == "top_n" and cfg.top_n < n_items and cfg.rounds > WARMUP_ROUNDS
     if not narrows:
         return planned_calls(n_items, cfg)
-    return WARMUP_ROUNDS * (n_items // 2) * (2 if cfg.both_orders else 1)
+    least = WARMUP_ROUNDS * (n_items // 2) * (2 if cfg.both_orders else 1)
+    return least if cfg.max_calls is None else min(least, cfg.max_calls)
 
 
 def decided(comparisons: list[Comparison]) -> list[Comparison]:
@@ -185,12 +202,20 @@ def call_cost(comparisons: list[Comparison]) -> float | None:
     return max(costs) if costs else None
 
 
+def calls_made(comparisons: list[Comparison]) -> int:
+    """Judge calls that have finished, with a verdict or failed."""
+    return sum(c.status in ("done", "failed") for c in comparisons)
+
+
 def affordable(comparisons: list[Comparison], cfg: RankConfig, in_flight: int = 0) -> bool:
-    """Whether one more call can start without risking the spend cap, with ``in_flight`` calls already running.
+    """Whether one more call can start without passing the call cap or risking the spend cap, with
+    ``in_flight`` calls already running.
 
     Each call, finished or running, is assumed to cost as much as the dearest one so far. Until the first
     price is known only one call may run at a time.
     """
+    if cfg.max_calls is not None and calls_made(comparisons) + in_flight + 1 > cfg.max_calls:
+        return False
     if cfg.max_cost_usd is None:
         return True
     per_call = call_cost(comparisons)
@@ -199,15 +224,43 @@ def affordable(comparisons: list[Comparison], cfg: RankConfig, in_flight: int = 
     return spent(comparisons) + (in_flight + 1) * per_call <= cfg.max_cost_usd + 1e-9  # float sums
 
 
-def next_action(comparisons: list[Comparison], cfg: RankConfig, n_items: int) -> Action:
+def games_target(cfg: RankConfig, n_items: int) -> int:
+    """How many pairs every item should have been planned into before a run counts as complete."""
+    if cfg.pairing == "round_robin":
+        return (n_items - 1) * cfg.rounds
+    rounds = min(cfg.rounds, WARMUP_ROUNDS) if cfg.goal == "top_n" else cfg.rounds
+    return rounds * (n_items - n_items % 2) // n_items  # with an odd count, one item sits out each round
+
+
+def behind(item_ids: list[str], comparisons: list[Comparison], cfg: RankConfig) -> list[str]:
+    """Items planned into fewer pairs than ``games_target``: in practice, items added to a run after it
+    started."""
+    met: dict[str, set[int]] = {i: set() for i in item_ids}
+    for c in comparisons:
+        for x in (c.item_a, c.item_b):
+            if x in met:
+                met[x].add(c.pair_id)
+    target = games_target(cfg, len(item_ids))
+    return [i for i in item_ids if len(met[i]) < target]
+
+
+def next_action(comparisons: list[Comparison], cfg: RankConfig, n_items: int,
+                item_ids: list[str] | None = None) -> Action:
     """What a run should do next, given everything recorded so far.
 
     Pure: the answer depends only on the arguments. Call it again after every batch of verdicts. With a
     spend cap, check ``affordable`` before starting each call, counting the calls already running.
+
+    Pass ``item_ids`` when items can be added to a run that has already started: once the planned rounds are
+    done, it keeps planning catch-up rounds (``plan_round`` with a round number past ``cfg.rounds``) until
+    every item has been planned into ``games_target`` pairs. Without it, a run is done after ``cfg.rounds`` rounds.
     """
     if n_items < 2:
         return Action("done", note="A ranking needs at least two items.")
     rounds_done = max((c.round for c in comparisons), default=0)
+    if cfg.max_calls is not None and calls_made(comparisons) >= cfg.max_calls:
+        return Action("done", note="Stopped by the call cap: %d of %d calls made (after %d of %d rounds)."
+                      % (calls_made(comparisons), cfg.max_calls, rounds_done, cfg.rounds))
     if not affordable(comparisons, cfg):
         return Action("done", note="Stopped by the spend cap: $%.4f spent of $%.2f, and another call could pass "
                       "it (after %d of %d rounds)." % (spent(comparisons), cfg.max_cost_usd or 0, rounds_done,
@@ -216,6 +269,8 @@ def next_action(comparisons: list[Comparison], cfg: RankConfig, n_items: int) ->
     if pending:
         return Action("judge", pending=pending)
     if rounds_done >= cfg.rounds:
+        if item_ids and behind(item_ids, comparisons, cfg) and rounds_done < cfg.rounds + MAX_CATCH_UP:
+            return Action("plan", round=rounds_done + 1)
         return Action("done")
     if rounds_done and not decided(comparisons):
         return Action("done", note="No comparison produced a readable verdict.")
@@ -258,7 +313,11 @@ def plan_round(items: list[Item], comparisons: list[Comparison], cfg: RankConfig
     done = decided(comparisons)
     ids = [it.id for it in items]
     rng = random.Random(cfg.seed * 1000 + round_no)
-    if cfg.pairing == "round_robin":
+    if round_no > cfg.rounds:
+        pairs = _catch_up(items, comparisons, cfg, rng)
+        if not pairs:
+            return [], "Nothing left to pair."
+    elif cfg.pairing == "round_robin":
         pairs = [(a, b) for i, a in enumerate(ids) for b in ids[i + 1:]]
         rng.shuffle(pairs)
     else:
@@ -280,6 +339,35 @@ def plan_round(items: list[Item], comparisons: list[Comparison], cfg: RankConfig
     if not out:
         return [], "Nothing left to pair."
     return out, None
+
+
+def _catch_up(items: list[Item], comparisons: list[Comparison], cfg: RankConfig, rng: random.Random
+              ) -> list[tuple[str, str]]:
+    """Pairs for items added after a run started: each item that is behind meets one opponent it has not met,
+    preferring others that are behind, then items of similar current rating."""
+    ids = [it.id for it in items]
+    late = behind(ids, comparisons, cfg)
+    if not late:
+        return []
+    played = {frozenset((c.item_a, c.item_b)) for c in comparisons}
+    if cfg.pairing == "round_robin":
+        return [(a, b) for a in late for b in ids if a != b and frozenset((a, b)) not in played
+                and (b not in late or a < b)]
+    done = decided(comparisons)
+    elo = rating.to_elo(rating.MatchLog(ids, [c.as_rating_row() for c in done]).fit())
+    ratings = {i: float(elo[k]) for k, i in enumerate(ids)}
+    pairs: list[tuple[str, str]] = []
+    taken: set[str] = set()
+    for a in sorted(late, key=lambda i: (-ratings[i], i)):
+        if a in taken:
+            continue
+        options = [b for b in ids if b != a and b not in taken and frozenset((a, b)) not in played]
+        if not options:
+            continue
+        b = min(options, key=lambda o: (o not in late, abs(ratings[o] - ratings[a]) + rng.gauss(0, 250), o))
+        pairs.append((a, b))
+        taken.update((a, b))
+    return pairs
 
 
 def cut_status(items: list[Item], done: list[Comparison], cfg: RankConfig
@@ -318,7 +406,7 @@ def _band_and_anchors(status: dict[str, str], ratings: dict[str, float]) -> list
 
 
 def results(items: list[Item], comparisons: list[Comparison], top_n: int | None = None, seed: int = 0,
-            live: bool = False) -> dict[str, Any]:
+            live: bool = False, max_bootstrap: int | None = None) -> dict[str, Any]:
     """The ranking so far: ``{"leaderboard", "diagnostics", "n_bootstrap", "interval", "groups"}``.
 
     Each leaderboard row has ``item_id``, ``title``, ``n_words``, ``rating`` (Elo scale: mean 1500, and a
@@ -331,12 +419,15 @@ def results(items: list[Item], comparisons: list[Comparison], top_n: int | None 
     ``diagnostics`` holds the judge checks as numbers, and ``diagnostics["reliability"]`` grades them in words
     (see ``supposing.report.judge_checks``).
 
+    ``max_bootstrap`` caps the resamples behind the intervals (``n_bootstrap`` says how many were used): fewer
+    are faster and coarser, for example while a large run is still going.
+
     Intervals come from resampling pairs, so they reflect how much the verdicts would move with a different
     draw of the same judge. An item that wins or loses nearly every comparison is pulled toward the middle
     and its rating interval may sit too close to the middle; its rank range is still reliable.
     """
     out = rating.compute_results([it.meta() for it in items], [c.as_rating_row() for c in decided(comparisons)],
-                                 top_n=top_n, seed=seed)
+                                 top_n=top_n, seed=seed, max_bootstrap=max_bootstrap)
     out["diagnostics"]["reliability"] = report.judge_checks(out["diagnostics"])
     out["groups"] = report.display_groups(out["leaderboard"], top_n, live=live)
     return out

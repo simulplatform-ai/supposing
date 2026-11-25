@@ -13,6 +13,30 @@ class ProviderError(Exception):
         self.retryable = retryable
 
 
+def is_local(base_url: str) -> bool:
+    """Whether a base URL points at this machine or a private network (where a refused connection means the
+    server is not running, not a passing network fault)."""
+    import ipaddress
+    from urllib.parse import urlparse
+
+    host = urlparse(base_url).hostname or ""
+    if host in ("localhost",) or host.endswith(".local"):
+        return True
+    try:
+        ip = ipaddress.ip_address(host)
+    except ValueError:
+        return False
+    return ip.is_private or ip.is_loopback or ip.is_link_local
+
+
+def unreachable(base_url: str, exc: Exception) -> str:
+    """One actionable line for an endpoint that cannot be reached."""
+    local = is_local(base_url)
+    hint = (" Is the server running (for Ollama: `ollama serve`)? Check the base URL." if local else
+            " Check the base URL and your network.")
+    return "Could not connect to %s (%s).%s" % (base_url, type(exc).__name__, hint)
+
+
 @dataclass
 class Completion:
     """A model's reply, with usage when the provider reports it. ``cost_usd`` is None when unknown."""
@@ -25,7 +49,8 @@ class Completion:
 
 
 class Provider(Protocol):
-    """A judge model. Implement ``complete`` (and ``close``, for cleanup) to plug in any model.
+    """A judge model. Implement ``complete`` (and ``close``, for cleanup) to plug in any model. Both may be
+    plain functions or ``async``; a plain ``complete`` runs in a worker thread.
 
     ``complete`` should retry transient failures itself and raise ``ProviderError`` when it gives up, with
     ``retryable=False`` if trying again cannot help.

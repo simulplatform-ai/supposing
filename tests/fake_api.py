@@ -85,7 +85,7 @@ class FakeAPI:
         if self.fail_next:
             return httpx.Response(self.fail_next.pop(0), text="bad gateway")
         if req.url.path == "/v1/pricing":  # public
-            return httpx.Response(200, json={"provisional": True, "unit_chars": 24000, "free_grant_usd": 2.0,
+            return httpx.Response(200, json={"provisional": True, "unit_chars": 24000, "unit_bytes": 24000, "free_grant_usd": 2.0,
                                              "min_topup_usd": 5, "max_topup_usd": 1000, "tiers": [
                                                  {"name": "economy", "price_per_call_usd": PRICE,
                                                   "examples": ["Claude Haiku 5.5"]},
@@ -263,7 +263,13 @@ class FakeAPI:
                     "ranking": {"leaderboard": board, "diagnostics": {"n_decided": 8}, "interval": "90%",
                                 "n_bootstrap": 200, "groups": display_groups(board)}})
             if parts[2] == "comparisons":
-                return httpx.Response(200, json={"data": [], "next_cursor": None})
+                ids = [i["id"] for i in self.datasets[run["dataset_id"]]["items"]][:2]
+                titles = [i["title"] for i in self.datasets[run["dataset_id"]]["items"]][:2]
+                row = {"id": str(uuid.uuid4()), "run_id": parts[1], "round": 1, "pair_id": 0, "item_a": ids[0],
+                       "item_b": ids[1], "title_a": titles[0], "title_b": titles[1], "status": "done",
+                       "winner_item": ids[0], "reasoning": "A is clearer.", "error": None, "attempts": 1,
+                       "cost_usd": 0.0, "latency_ms": 5, "created_at": "2026-11-22T10:00:00Z"}
+                return httpx.Response(200, json={"data": [row], "next_cursor": None})
         return _err(404, "not_found", "No route %s %s" % (m, req.url.path))
 
     def _ds(self, ds_id: str) -> dict[str, Any]:

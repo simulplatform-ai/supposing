@@ -79,16 +79,30 @@ def _run_flags(p: argparse.ArgumentParser, sample_ok: bool = False) -> None:
                    help="what the judge should prefer, in plain words, or the path of a .md or .txt file")
     p.add_argument("--judge", help=JUDGE_HELP[:-2] + "), and for `rank` anthropic and openai_compat (with --model)")
     p.add_argument("--model", help="the model of a claude_cli, anthropic or openai_compat judge, e.g. sonnet")
+    g = p.add_argument_group("telling the judge more (supposing rank; each is optional)")
+    g.add_argument("--context", metavar="TEXT|FILE", help="a brief every comparison sees, after the rubric: who the "
+                   "audience is, the situation, what was asked. Text, or a .md or .txt file")
+    g.add_argument("--examples", metavar="FILE.jsonl", help="past judgements to follow, one per line: "
+                   "{\"a\": ..., \"b\": ..., \"winner\": \"A\" or \"B\", \"why\": ...}")
+    g.add_argument("--system", metavar="FILE", help="your own system prompt, a .md or .txt template that keeps "
+                   "{output_format} (and {rules}, the built-in guard against instructions inside documents)")
     p.add_argument("--rounds", type=int, help="opponents per item (default 8); more rounds, tighter intervals")
     p.add_argument("--top-n", type=int, help="only settle the top N, spending fewer calls on the rest")
     p.add_argument("--both-orders", action="store_true", help="judge every pair twice, once in each order. Twice "
                    "the cost; adds the order check")
-    p.add_argument("--pairing", choices=["swiss", "random"])
+    p.add_argument("--pairing", choices=["swiss", "random", "round_robin"],
+                   help="who meets whom: swiss (default) pairs items of similar rating, random any two, round_robin "
+                   "every pair (small sets; not with --top-n)")
     p.add_argument("--max-chars", type=int, help="cut items longer than this before judging")
     p.add_argument("--max-cost", type=float, metavar="USD", help="hard spend cap: no judge call starts that could take the cost past USD")
-    p.add_argument("--seed", type=int)
+    p.add_argument("--max-calls", type=int, metavar="N", help="hard cap on judge calls, for any judge, priced or not "
+                   "(claude_cli, a local model): no call starts past N, and the run says the cap ended it")
+    p.add_argument("--seed", type=int, help="pairing and the resampling behind the ranges follow this number "
+                   "(default 0); same seed, same data and same verdicts give the same run")
     p.add_argument("-y", "--yes", action="store_true", help="start without asking, even if it costs money")
     p.add_argument("--dry-run", action="store_true", help="show the estimate and stop")
+    p.add_argument("--with-comparisons", action="store_true", help="also show every judge call with the judge's "
+                   "reasoning: after the ranking, or as \"comparisons\" in --json")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -99,7 +113,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser = Parser(
         prog="supposing", formatter_class=argparse.RawDescriptionHelpFormatter,
-        description="Rank documents with LLM judges: pairwise tournaments with confidence intervals.",
+        description="Open-source document ranking with LLM judges and confidence intervals.",
         epilog="quick start:\n  supposing rank ./docs --rubric \"Which is clearest?\" --judge mock\n"
                "  supposing login\n  supposing run ./docs --rubric \"Which is clearest?\"\n\n" + EXIT_CODES_HELP)
     parser.add_argument("--version", action="version", version="supposing %s" % __version__)
@@ -189,8 +203,11 @@ def build_parser() -> argparse.ArgumentParser:
     add("samples", local.samples, "the built-in sample datasets, for trying a ranking with no files of your own")
     add("usage", billing.usage, "this month's runs, judge calls and spend, and the credit balance")
 
-    r = add("comparisons", cloud.comparisons, "list a run's judge calls, with each verdict's reasoning")
-    r.add_argument("run_id")
+    r = add("comparisons", cloud.comparisons, "list a run's judge calls, with each verdict's reasoning: a cloud run "
+            "by its id, or a local run from its --state file")
+    r.add_argument("run_id", nargs="?", help="the cloud run's id; with --state, the local run's id when the file "
+                   "holds several")
+    r.add_argument("--state", type=Path, help="read a local run from the SQLite file `supposing rank --state` wrote")
     r.add_argument("--item", dest="item_id", help="only calls involving this item")
     r.add_argument("--status", choices=["pending", "claimed", "done", "failed"])
     r.add_argument("--limit", type=int, default=50)
@@ -222,7 +239,8 @@ def _mcp(args: argparse.Namespace) -> int:
         from ..mcp_server import main as mcp_main  # type: ignore[import-not-found]
     except ImportError as exc:
         raise CliError("The MCP server needs the mcp package (%s)." % exc, code="mcp_not_installed",
-                       exit_code=USAGE, hint="uv tool install 'supposing[mcp]' (in a project: uv add 'supposing[mcp]')") from exc
+                       exit_code=USAGE, hint="Run it with uvx --python 3.12 'supposing[mcp]' mcp, or keep it: uv tool install --python 3.12 "
+                       "'supposing[mcp]'") from exc
     rest = list(args.mcp_args)
     if args.local:
         rest.insert(0, "--local")
